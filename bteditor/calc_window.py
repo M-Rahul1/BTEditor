@@ -5,10 +5,10 @@ from PyQt5.QtCore import *
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
-from examples.example_calculator.calc_sub_window import CalculatorSubWindow
-from examples.example_calculator.calc_drag_listbox import QDMDragListbox
+from bteditor.calc_sub_window import CalculatorSubWindow
+from bteditor.calc_drag_listbox import QDMDragListbox
 from nodeeditor.utils import dumpException, pp
-from examples.example_calculator.calc_conf import *
+from bteditor.calc_conf import *
 
 # Enabling edge validators
 from nodeeditor.node_edge import Edge
@@ -19,7 +19,7 @@ Edge.registerEdgeValidator(edge_cannot_connect_input_and_output_of_same_node)
 
 
 # images for the dark skin
-import examples.example_calculator.qss.nodeeditor_dark_resources
+import bteditor.qss.nodeeditor_dark_resources
 
 
 DEBUG = False

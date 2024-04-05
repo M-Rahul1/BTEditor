@@ -1,6 +1,6 @@
 from PyQt5.QtCore import *
-from examples.example_calculator.calc_conf import *
-from examples.example_calculator.calc_node_base import *
+from bteditor.calc_conf import *
+from bteditor.calc_node_base import *
 from nodeeditor.utils import dumpException
 
 
