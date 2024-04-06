@@ -334,7 +334,7 @@ class Scene(Serializable):
         """Return the class representing Edge. Override me if needed"""
         return Edge
 
-    def setNodeClassSelector(self, class_selecting_function:'functon') -> 'Node class type':
+    def setNodeClassSelector(self, class_selecting_function: 'function') -> Node:
         """
         Set the function which decides what `Node` class to instantiate when deserializing `Scene`.
         If not set, we will always instantiate :class:`~nodeeditor.node_node.Node` for each `Node` in the `Scene`
@@ -346,7 +346,7 @@ class Scene(Serializable):
         """
         self.node_class_selector = class_selecting_function
 
-    def getNodeClassFromData(self, data:dict) -> 'Node class instance':
+    def getNodeClassFromData(self, data:dict) -> Node:
         """
         Takes `Node` serialized data and determines which `Node Class` to instantiate according the description
         in the serialized Node
