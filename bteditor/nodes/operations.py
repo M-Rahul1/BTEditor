@@ -1,7 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from bteditor.calc_conf import *
-from bteditor.calc_node_base import *
+from bteditor.conf import *
+from bteditor.node_base import *
 from nodeeditor.utils import dumpException
 
 class CalcInputContent(QDMNodeContentWidget):
@@ -31,7 +31,7 @@ class Sequence(CalcNode):
     icon = "icons/right_arrow.png"
     op_code = SEQUENCE
     op_title = "Sequence"
-    content_label_objname = "calc_node_input"
+    content_label_objname = "sequence_node"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[1])
@@ -64,7 +64,7 @@ class Fallback(CalcNode):
     icon = "icons/question.png"
     op_code = FALLBACK
     op_title = "Fallback"
-    content_label_objname = "calc_node_input"
+    content_label_objname = "fallback_node"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[1])

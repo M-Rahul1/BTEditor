@@ -2,7 +2,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 
-from bteditor.calc_conf import *
+from bteditor.conf import *
 from nodeeditor.utils import dumpException
 
 

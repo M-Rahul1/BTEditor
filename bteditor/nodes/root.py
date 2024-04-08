@@ -1,7 +1,7 @@
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
-from bteditor.calc_conf import *
-from bteditor.calc_node_base import *
+from bteditor.conf import *
+from bteditor.node_base import *
 from nodeeditor.utils import dumpException
 
 
@@ -30,10 +30,10 @@ class CalcInputContent(QDMNodeContentWidget):
 
 @register_node(ROOT)
 class Root(CalcNode):
-    icon = "icons/root.png"
+    icon = "./icons/root.png"
     op_code = ROOT
     op_title = "Root"
-    content_label_objname = "calc_node_input"
+    content_label_objname = "root_node"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[], outputs=[1])

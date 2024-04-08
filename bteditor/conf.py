@@ -1,9 +1,9 @@
 LISTBOX_MIMETYPE = "application/x-item"
 
 ROOT = 1
-ACTION = 2
-SEQUENCE = 3
-FALLBACK = 4
+SEQUENCE = 2
+FALLBACK = 3
+ACTION = 4
 
 
 CALC_NODES = {

@@ -13,6 +13,8 @@ from nodeeditor.node_edge import Edge
 from nodeeditor.node_scene_history import SceneHistory
 from nodeeditor.node_scene_clipboard import SceneClipboard
 from nodeeditor.utils import pp
+from PyQt5.QtWidgets import QGraphicsView
+from PyQt5.QtCore import QPointF
 
 
 DEBUG_REMOVE_WARNINGS = False

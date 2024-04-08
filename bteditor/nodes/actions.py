@@ -1,6 +1,7 @@
 from PyQt5.QtCore import *
-from bteditor.calc_conf import *
-from bteditor.calc_node_base import *
+from PyQt5.QtWidgets import *
+from bteditor.conf import *
+from bteditor.node_base import *
 from nodeeditor.utils import dumpException
 
 
@@ -10,13 +11,27 @@ class CalcOutputContent(QDMNodeContentWidget):
         self.edit.setAlignment(Qt.AlignLeft)
         self.edit.setObjectName(self.node.content_label_objname)
 
+    def serialize(self):
+        res = super().serialize()
+        res['value'] = self.edit.text()
+        return res
+
+    def deserialize(self, data, hashmap={}):
+        res = super().deserialize(data, hashmap)
+        try:
+            value = data['value']
+            self.edit.setText(str(value))
+            return True & res
+        except Exception as e:
+            dumpException(e)
+        return res
 
 @register_node(ACTION)
 class Action(CalcNode):
-    icon = "icons/tunder.png"
+    icon = ":icons/thunder.png"
     op_code = ACTION
     op_title = "Action"
-    content_label_objname = "calc_node_input"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[])

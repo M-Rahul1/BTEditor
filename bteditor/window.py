@@ -5,10 +5,10 @@ from PyQt5.QtCore import *
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
-from bteditor.calc_sub_window import CalculatorSubWindow
-from bteditor.calc_drag_listbox import QDMDragListbox
+from bteditor.sub_window import CalculatorSubWindow
+from bteditor.drag_listbox import QDMDragListbox
 from nodeeditor.utils import dumpException, pp
-from bteditor.calc_conf import *
+from bteditor.conf import *
 
 # Enabling edge validators
 from nodeeditor.node_edge import Edge
@@ -134,10 +134,7 @@ class CalculatorWindow(NodeEditorWindow):
 
 
     def about(self):
-        QMessageBox.about(self, "About Calculator NodeEditor Example",
-                "The <b>Calculator NodeEditor</b> example demonstrates how to write multiple "
-                "document interface applications using PyQt5 and NodeEditor. For more information visit: "
-                "<a href='https://www.blenderfreak.com/'>www.BlenderFreak.com</a>")
+        QMessageBox.about(self, "About BT NodeEditor","Mail me for help")
 
     def createMenus(self):
         super().createMenus()

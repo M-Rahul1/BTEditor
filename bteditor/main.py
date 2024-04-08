@@ -4,7 +4,7 @@ from PyQt5.QtWidgets import *
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from bteditor.calc_window import CalculatorWindow
+from bteditor.window import CalculatorWindow
 
 
 if __name__ == '__main__':
