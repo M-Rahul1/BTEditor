@@ -22,7 +22,7 @@ class NodeEditorWindow(QMainWindow):
         """
         super().__init__()
 
-        self.name_company = 'Blenderfreak'
+        self.name_company = 'ABB'
         self.name_product = 'NodeEditor'
 
         self.initUI()

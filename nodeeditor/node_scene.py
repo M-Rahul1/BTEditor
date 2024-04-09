@@ -38,6 +38,7 @@ class Scene(Serializable):
         """
         super().__init__()
         self.nodes = []
+        
         self.edges = []
 
         # current filename assigned to this scene
@@ -106,6 +107,18 @@ class Scene(Serializable):
             if node.id == node_id:
                 return node
         return None
+    
+    #turn onSelect to true for node in self.nodes when Monitor functin is triggered
+    def Monitor(self):
+    # Load nodes and edges from example.json
+        self.loadNodesAndEdgesFromJson("")   
+        # Get the root node (assuming it's the first node in the list)
+        root_node = self.nodes[0]
+
+        # Turn onSelect to True for each node in self.nodes
+        for node in self.nodes:
+            node.onSelected(True)
+
 
 
     def setSilentSelectionEvents(self, value:bool=True):

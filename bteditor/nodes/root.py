@@ -46,7 +46,7 @@ class Root(CalcNode):
 
     def evalImplementation(self):
         u_value = self.content.edit.text()
-        s_value = int(u_value)
+        s_value = u_value
         self.value = s_value
         self.markDirty(False)
         self.markInvalid(False)

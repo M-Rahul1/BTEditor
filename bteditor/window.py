@@ -2,11 +2,15 @@ import os
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+import time
+import json
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
 from bteditor.sub_window import CalculatorSubWindow
 from bteditor.drag_listbox import QDMDragListbox
+from nodeeditor.node_graphics_node import QDMGraphicsNode
+from nodeeditor.node_graphics_edge import QDMGraphicsEdge
 from nodeeditor.utils import dumpException, pp
 from bteditor.conf import *
 
@@ -28,7 +32,7 @@ DEBUG = False
 class CalculatorWindow(NodeEditorWindow):
 
     def initUI(self):
-        self.name_company = 'Blenderfreak'
+        self.name_company = 'ABB'
         self.name_product = 'NodeEditor'
 
         self.stylesheet_filename = os.path.join(os.path.dirname(__file__), "qss/nodeeditor.qss")
@@ -90,12 +94,41 @@ class CalculatorWindow(NodeEditorWindow):
         self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
         self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
         self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
+        self.actMonitor = QAction("&Monitor", self, statusTip="Color nodes and edges in tree structure", triggered=self.Monitor)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
 
         self.actAbout = QAction("&About", self, statusTip="Show the application's About box", triggered=self.about)
 
+    def onSelected(self):
+        """Our event handling when the node was selected"""
+        self.node.scene.grScene.itemSelected.emit()
+        
+    def Monitor(self):
+        self.node.scene.grScene.itemSelected.emit()
+    # Load nodes and edges from example.json
+        self.loadNodesAndEdgesFromJson("")   
+    # Get the root node (assuming it's the first node in the list)
+        root_node = self.nodes[0]
+         # Create an instance of QDMGraphicsNode
+        for node in self.nodes:
+            node.onSelected(True)
+        
+    # Call the onSelected method on the instance with True as an argument
+    def loadNodesAndEdgesFromJson(self, json_folder):
+        # Load nodes and edges data from the specified JSON folder
+        example_file = os.path.join(json_folder, "example.json")
+        
+        with open(example_file, "r") as f:
+            data = json.load(f)
+        
+        self.nodes = data["nodes"]
+        self.edges = data["edges"]  
+        print(self.nodes)
+        print(self.edges)
+        
+    
     def getCurrentNodeEditorWidget(self):
         """ we're returning NodeEditorWidget here... """
         activeSubWindow = self.mdiArea.activeSubWindow()
@@ -147,6 +180,7 @@ class CalculatorWindow(NodeEditorWindow):
 
         self.helpMenu = self.menuBar().addMenu("&Help")
         self.helpMenu.addAction(self.actAbout)
+        
 
         self.editMenu.aboutToShow.connect(self.updateEditMenu)
 
@@ -163,6 +197,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.actCascade.setEnabled(hasMdiChild)
         self.actNext.setEnabled(hasMdiChild)
         self.actPrevious.setEnabled(hasMdiChild)
+        self.actMonitor.setEnabled(hasMdiChild)
         self.actSeparator.setVisible(hasMdiChild)
 
         self.updateEditMenu()
@@ -203,6 +238,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.windowMenu.addSeparator()
         self.windowMenu.addAction(self.actNext)
         self.windowMenu.addAction(self.actPrevious)
+        self.windowMenu.addAction(self.actMonitor)
         self.windowMenu.addAction(self.actSeparator)
 
         windows = self.mdiArea.subWindowList()
