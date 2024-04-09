@@ -6,6 +6,7 @@ import os
 import json
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from nodeeditor.node_editor_widget import NodeEditorWidget
 
 
@@ -69,7 +70,7 @@ class NodeEditorWindow(QMainWindow):
         self.actCopy = QAction('&Copy', self, shortcut='Ctrl+C', statusTip="Copy to clipboard", triggered=self.onEditCopy)
         self.actPaste = QAction('&Paste', self, shortcut='Ctrl+V', statusTip="Paste from clipboard", triggered=self.onEditPaste)
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
-
+        self.actMonitor = QAction('&Monitor', self, shortcut='Ctrl+M', statusTip="Monitor", triggered=self.onMonitor)
 
     def createMenus(self):
         """Create Menus for `File` and `Edit`"""
@@ -98,6 +99,7 @@ class NodeEditorWindow(QMainWindow):
         self.editMenu.addAction(self.actPaste)
         self.editMenu.addSeparator()
         self.editMenu.addAction(self.actDelete)
+        self.editMenu.addAction(self.actMonitor)
 
     def setTitle(self):
         """Function responsible for setting window title"""
@@ -200,7 +202,15 @@ class NodeEditorWindow(QMainWindow):
             if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
             else: self.setTitle()
             return True
-
+    def onMonitor(self):
+        #monitor the flow of the graph and color the nodes
+        current_nodeeditor = self.getCurrentNodeEditorWidget()
+        if current_nodeeditor is not None:
+            self.getCurrentNodeEditorWidget().scene.history.monitor()
+        
+            
+        
+        
     def onFileSaveAs(self):
         """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()

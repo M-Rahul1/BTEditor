@@ -94,39 +94,20 @@ class CalculatorWindow(NodeEditorWindow):
         self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
         self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
         self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
-        self.actMonitor = QAction("&Monitor", self, statusTip="Color nodes and edges in tree structure", triggered=self.Monitor)
+        #self.actMonitor = QAction("&Monitor", self, statusTip="Color nodes and edges in tree structure", triggered=self.Monitor)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
 
         self.actAbout = QAction("&About", self, statusTip="Show the application's About box", triggered=self.about)
-
-    def onSelected(self):
-        """Our event handling when the node was selected"""
-        self.node.scene.grScene.itemSelected.emit()
-        
-    def Monitor(self):
-        self.node.scene.grScene.itemSelected.emit()
-    # Load nodes and edges from example.json
-        self.loadNodesAndEdgesFromJson("")   
-    # Get the root node (assuming it's the first node in the list)
-        root_node = self.nodes[0]
-         # Create an instance of QDMGraphicsNode
-        for node in self.nodes:
-            node.onSelected(True)
-        
-    # Call the onSelected method on the instance with True as an argument
-    def loadNodesAndEdgesFromJson(self, json_folder):
-        # Load nodes and edges data from the specified JSON folder
-        example_file = os.path.join(json_folder, "example.json")
-        
-        with open(example_file, "r") as f:
-            data = json.load(f)
-        
-        self.nodes = data["nodes"]
-        self.edges = data["edges"]  
-        print(self.nodes)
-        print(self.edges)
+    
+    def changeColor(self, color):
+        """Change color of the edge from string hex value '#00ff00'"""
+        # print("^Called change color to:", color.red(), color.green(), color.blue(), "on edge:", self.edge)
+        self._color = QColor(color) if type(color) == str else color
+        self._pen = QPen(self._color)
+        self._pen.setWidthF(3.0)
+           
         
     
     def getCurrentNodeEditorWidget(self):

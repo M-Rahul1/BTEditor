@@ -370,7 +370,8 @@ class QDMGraphicsView(QGraphicsView):
 
         super().mouseReleaseEvent(event)
 
-
+    
+            
     def rightMouseButtonPress(self, event:QMouseEvent):
         """When Right mouse button was pressed"""
         super().mousePressEvent(event)
