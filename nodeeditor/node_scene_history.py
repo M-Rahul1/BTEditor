@@ -13,7 +13,7 @@ DEBUG_SELECTION = False
 
 class SceneHistory():
     """Class contains all the code for undo/redo operations"""
-    def __init__(self, scene:'Scene'):
+    def __init__(self, scene):
         """
         :param scene: Reference to the :class:`~nodeeditor.node_scene.Scene`
         :type scene: :class:`~nodeeditor.node_scene.Scene`

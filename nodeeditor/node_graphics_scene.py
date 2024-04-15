@@ -17,7 +17,7 @@ class QDMGraphicsScene(QGraphicsScene):
     #: pyqtSignal emitted when items are deselected in the `Scene`
     itemsDeselected = pyqtSignal()
 
-    def __init__(self, scene:'Scene', parent:QWidget=None):
+    def __init__(self, scene, parent:QWidget=None):
         """
         :param scene: reference to the :class:`~nodeeditor.node_scene.Scene`
         :type scene: :class:`~nodeeditor.node_scene.Scene`

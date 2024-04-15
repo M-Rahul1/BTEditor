@@ -269,7 +269,7 @@ class NodeEditorWindow(QMainWindow):
             raw_data = QApplication.instance().clipboard().text()
 
             try:
-                data = json.loads(raw_data)
+                data = json.loads(raw_data, encoding='utf-8')
             except ValueError as e:
                 print("Pasting of not valid json data!", e)
                 return

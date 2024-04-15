@@ -21,7 +21,7 @@ class Edge(Serializable):
 
     edge_validators = []        #: class variable containing list of registered edge validators
 
-    def __init__(self, scene:'Scene', start_socket:'Socket'=None, end_socket:'Socket'=None, edge_type=EDGE_TYPE_DIRECT):
+    def __init__(self, scene, start_socket=None, end_socket=None, edge_type=EDGE_TYPE_DIRECT):
         """
 
         :param scene: Reference to the :py:class:`~nodeeditor.node_scene.Scene`
@@ -142,7 +142,7 @@ class Edge(Serializable):
         cls.edge_validators.append(validator_callback)
 
     @classmethod
-    def validateEdge(cls, start_socket: 'Socket', end_socket: 'Socket') -> bool:
+    def validateEdge(cls, start_socket, end_socket) -> bool:
         """Validate Edge agains all registered `Edge Validator Callbacks`
 
         :param start_socket: Starting :class:`~nodeeditor.node_socket.Socket` of Edge to check
@@ -157,7 +157,7 @@ class Edge(Serializable):
                 return False
         return True
 
-    def reconnect(self, from_socket: 'Socket', to_socket: 'Socket'):
+    def reconnect(self, from_socket, to_socket):
         """Helper function which reconnects edge `from_socket` to `to_socket`"""
         if self.start_socket == from_socket:
             self.start_socket = to_socket
@@ -179,7 +179,7 @@ class Edge(Serializable):
             self.updatePositions()
         return self.grEdge
 
-    def getOtherSocket(self, known_socket:'Socket'):
+    def getOtherSocket(self, known_socket):
         """
         Returns the opposite socket on this ``Edge``
 
@@ -227,7 +227,7 @@ class Edge(Serializable):
         self.start_socket = None
 
 
-    def remove(self, silent_for_socket:'Socket'=None, silent=False):
+    def remove(self, silent_for_socket=None, silent=False):
         """
         Safely remove this Edge.
 
