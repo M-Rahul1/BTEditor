@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import *
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
-
+import py_trees as pt
 
 class CalcOutputContent(QDMNodeContentWidget):
     def initUI(self):

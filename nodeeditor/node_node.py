@@ -237,24 +237,26 @@ class Node(Serializable):
         :return: Position of described Socket on the `Node`
         :rtype: ``x, y``
         """
-        x = self.socket_offsets[position] if (position in (TOP_LEFT, TOP_CENTER, TOP_RIGHT)) else self.grNode.width + self.socket_offsets[position]
+        y = self.socket_offsets[position] if (position in (TOP_LEFT, TOP_CENTER, TOP_RIGHT)) else self.grNode.height + self.socket_offsets[position]
 
         if position in (TOP_RIGHT, BOTTOM_LEFT):
             # start from bottom
             y = self.grNode.height - self.grNode.edge_roundness - self.grNode.title_vertical_padding - index * self.socket_spacing
         elif position in (TOP_CENTER, BOTTOM_CENTER):
             num_sockets = num_out_of
+            node_width = self.grNode.width
             node_height = self.grNode.height
-            top_offset = self.grNode.title_height + 2 * self.grNode.title_vertical_padding + self.grNode.edge_padding
-            available_height = node_height - top_offset
+            """left_offset = self.grNode.title_width + 2 * self.grNode.title_vertical_padding + self.grNode.edge_padding
+            available_width = node_width - left_offset
 
-            total_height_of_all_sockets = num_sockets * self.socket_spacing
-            new_top = available_height - total_height_of_all_sockets
+            total_width_of_all_sockets = num_sockets * self.socket_spacing
+            new_left = available_width - total_width_of_all_sockets"""
 
-            # y = top_offset + index * self.socket_spacing + new_top / 2
-            y = top_offset + available_height/2.0 + (index-0.5)*self.socket_spacing
+            # y = left_offset + index * self.socket_spacing + new_left / 2
+            # x = left_offset + available_width/2.0 + (index-0.5)*self.socket_spacing
+            x=node_height+0.5
             if num_sockets > 1:
-                y -= self.socket_spacing * (num_sockets-1)/2
+                x -= self.socket_spacing * (num_sockets-1)/2
 
         elif position in (TOP_LEFT, BOTTOM_RIGHT):
             # start from top
