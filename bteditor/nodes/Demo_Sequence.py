@@ -3,12 +3,15 @@ from PyQt5.QtWidgets import *
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
+from bteditor.node_base import NodeBase
 
 class CalcOutputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit("Success/Fail", self)
-        self.edit.setAlignment(Qt.AlignLeft)
-        self.edit.setObjectName(self.node.content_label_objname)
+        self.tree_view = QTreeView(self)
+        self.tree_view.setHeaderHidden(True)
+        self.tree_model = QStandardItemModel()
+        self.tree_view.setModel(self.tree_model)
+        self.tree_view.setObjectName(self.node.content_label_objname)
 
     def serialize(self):
         res = super().serialize()
@@ -25,8 +28,8 @@ class CalcOutputContent(QDMNodeContentWidget):
             dumpException(e)
         return res
 
-@register_node(ACTION)
-class Action(CalcNode):
+@register_node(Demo_Sequence)
+class Demo_Sequence(CalcNode):
     icon = "icons/thunder.png"
     op_code = ACTION
     op_title = "Action"

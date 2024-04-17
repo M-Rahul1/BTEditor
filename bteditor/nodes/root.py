@@ -30,7 +30,7 @@ class CalcInputContent(QDMNodeContentWidget):
 
 @register_node(ROOT)
 class Root(CalcNode):
-    icon = "./icons/root.png"
+    icon = "icons/root.png"
     op_code = ROOT
     op_title = "Root"
     content_label_objname = "root_node"

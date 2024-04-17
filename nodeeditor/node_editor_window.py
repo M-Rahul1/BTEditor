@@ -9,6 +9,7 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from nodeeditor.node_editor_widget import NodeEditorWidget
 
+from bteditor.monitor import SceneMonitor
 
 class NodeEditorWindow(QMainWindow):
     NodeEditorWidget_class = NodeEditorWidget
@@ -202,6 +203,7 @@ class NodeEditorWindow(QMainWindow):
             if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
             else: self.setTitle()
             return True
+    
     def onMonitor(self):
         #monitor the flow of the graph and color the nodes
         current_nodeeditor = self.getCurrentNodeEditorWidget()

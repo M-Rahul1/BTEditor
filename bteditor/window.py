@@ -94,7 +94,6 @@ class CalculatorWindow(NodeEditorWindow):
         self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
         self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
         self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
-        #self.actMonitor = QAction("&Monitor", self, statusTip="Color nodes and edges in tree structure", triggered=self.Monitor)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
@@ -178,7 +177,6 @@ class CalculatorWindow(NodeEditorWindow):
         self.actCascade.setEnabled(hasMdiChild)
         self.actNext.setEnabled(hasMdiChild)
         self.actPrevious.setEnabled(hasMdiChild)
-        self.actMonitor.setEnabled(hasMdiChild)
         self.actSeparator.setVisible(hasMdiChild)
 
         self.updateEditMenu()
@@ -219,7 +217,6 @@ class CalculatorWindow(NodeEditorWindow):
         self.windowMenu.addSeparator()
         self.windowMenu.addAction(self.actNext)
         self.windowMenu.addAction(self.actPrevious)
-        self.windowMenu.addAction(self.actMonitor)
         self.windowMenu.addAction(self.actSeparator)
 
         windows = self.mdiArea.subWindowList()
@@ -255,6 +252,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.nodesDock.setFloating(False)
 
         self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
+        
 
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")
