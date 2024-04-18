@@ -31,7 +31,7 @@ class CalcInputContent(QDMNodeContentWidget):
 
 @register_node(SEQUENCE)
 class Sequence(CalcNode, pt.composites.Sequence):
-    icon = "icons/right_arrow.png"
+    icon = "icons/sequenceow.png"
     op_code = SEQUENCE
     op_title = "Sequence"
     content_label_objname = "sequence_node"

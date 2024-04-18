@@ -27,7 +27,7 @@ class CalcOutputContent(QDMNodeContentWidget):
 
 @register_node(ACTION)
 class Action(CalcNode):
-    icon = "icons/thunder.png"
+    icon = "icons/action.png"
     op_code = ACTION
     op_title = "Action"
     content_label_objname = "action_node"

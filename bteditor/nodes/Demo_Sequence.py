@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import *
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
-from bteditor.node_base import NodeBase
 
 class CalcOutputContent(QDMNodeContentWidget):
     def initUI(self):
@@ -30,7 +29,7 @@ class CalcOutputContent(QDMNodeContentWidget):
 
 @register_node(Demo_Sequence)
 class Demo_Sequence(CalcNode):
-    icon = "icons/thunder.png"
+    icon = "icons/action.png"
     op_code = ACTION
     op_title = "Action"
     content_label_objname = "action_node"

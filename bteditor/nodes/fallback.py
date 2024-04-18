@@ -30,7 +30,7 @@ class CalcInputContent(QDMNodeContentWidget):
 
 @register_node(FALLBACK)
 class Fallback(CalcNode, pt.Selector):
-    icon = "icons/question.png"
+    icon = "icons/fallback.png"
     op_code = FALLBACK
     op_title = "Fallback"
     content_label_objname = "fallback_node"
