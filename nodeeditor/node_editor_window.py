@@ -72,7 +72,8 @@ class NodeEditorWindow(QMainWindow):
         self.actPaste = QAction('&Paste', self, shortcut='Ctrl+V', statusTip="Paste from clipboard", triggered=self.onEditPaste)
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
         self.actMonitor = QAction('&Monitor', self, shortcut='Ctrl+M', statusTip="Monitor", triggered=self.onMonitor)
-
+        self.actBuild = QAction('&Build', self, shortcut='Ctrl+B', statusTip="Build", triggered=self.onBuild)
+        
     def createMenus(self):
         """Create Menus for `File` and `Edit`"""
         self.createFileMenu()
@@ -101,6 +102,7 @@ class NodeEditorWindow(QMainWindow):
         self.editMenu.addSeparator()
         self.editMenu.addAction(self.actDelete)
         self.editMenu.addAction(self.actMonitor)
+        self.editMenu.addAction(self.actBuild)
 
     def setTitle(self):
         """Function responsible for setting window title"""
@@ -210,7 +212,11 @@ class NodeEditorWindow(QMainWindow):
         if current_nodeeditor is not None:
             self.getCurrentNodeEditorWidget().scene.history.monitor()
         
-            
+    def onBuild(self):
+        #build the tree
+        current_nodeeditor = self.getCurrentNodeEditorWidget()
+        if current_nodeeditor is not None:
+            self.getCurrentNodeEditorWidget().scene.history.build()        
         
         
     def onFileSaveAs(self):
