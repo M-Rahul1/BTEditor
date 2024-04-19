@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import *
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
-from bteditor.node_base import NodeBase
 
 class CalcOutputContent(QDMNodeContentWidget):
     def initUI(self):

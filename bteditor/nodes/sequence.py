@@ -37,20 +37,21 @@ class Sequence(CalcNode, pt.composites.Sequence):
     content_label_objname = "sequence_node"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[1], outputs=[1])
+        CalcNode.__init__(self, scene, inputs=[1], outputs=[1])
+        pt.composites.Sequence.__init__(self, name="Sequence",memory=False, children=[])
         self.eval()
 
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
         self.grNode = CalcGraphicsNode(self)
         self.content.edit.textChanged.connect(self.onInputChanged)
-
+    
     def evalImplementation(self):
         u_value = self.content.edit.text()
         s_value = int(u_value)
         self.value = s_value
         self.markDirty(False)
-        self.markInvalid(False)
+        self.markInvalid(False)   
 
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()

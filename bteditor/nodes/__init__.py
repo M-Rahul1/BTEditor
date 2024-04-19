@@ -1,6 +1,6 @@
 
 
-# __all__ = [ "root", "sequence", "fallback", "action" ]
+# __all__ = [ "selector", "sequence", "fallback", "action" ]
 
 
 from os.path import dirname, basename, isfile, join

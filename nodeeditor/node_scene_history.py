@@ -90,53 +90,8 @@ class SceneHistory():
         if self.canUndo():
             self.history_current_step -= 1
             self.restoreHistory()
-            self.scene.has_been_modified = True
-            
-    def build(self):
-        root_nodes = []
-        sequence_nodes = []
-        action_nodes = []
-        self.node_list = self.scene.nodes[:]
-        
-        # Separate nodes based on their titles
-        for node in self.node_list:
-            if node.title == "Root":
-                root_nodes.append(node)
-            elif node.title == "Sequence":
-                sequence_nodes.append(node)
-            elif node.title == "Action":
-                action_nodes.append(node)
-        
-        # Check if there are any root nodes
-        if not root_nodes:
-            return None
-        
-        # Create py_trees nodes for each node type
-        root_pt_nodes = [self.create_pt_node(node) for node in root_nodes]
-        sequence_pt_nodes = [self.create_pt_node(node) for node in sequence_nodes]
-        action_pt_nodes = [self.create_pt_node(node) for node in action_nodes]
-        
-        # Organize nodes into desired structure (e.g., connect sequence nodes to root nodes)
-        for root_pt_node in root_pt_nodes:
-            for sequence_pt_node in sequence_pt_nodes:
-                root_pt_node.add_child(sequence_pt_node)
-            for action_pt_node in action_pt_nodes:
-                sequence_pt_node.add_child(action_pt_node)
-        
-        # Return the root nodes
-        return root_pt_nodes
-
-    def create_pt_node(self, node):
-        
-        if node.title == "Sequence":
-            pt_node = pt.composites.Sequence("Sequence")
-        elif node.title == "Action":
-            pt_node = pt.behaviours()
-        else:
-            # Handle unknown node types if needed
-            return None
-        
-        return pt_node
+            self.scene.has_been_modified = True     
+    
         
     def monitor(self):
         # Monitor the flow of the graph and color the nodes

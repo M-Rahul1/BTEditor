@@ -35,42 +35,6 @@ Conditions nodes are also childless leaf nodes but may return RUNNING state. The
 also be the last child of any parent.
 """
 
-global ATOMIC_FALLBACK_NODES
-"""
-Atomic fallback nodes are fallback nodes that have a predetermined set of children/subtrees
-that cannot be changed.  They behave mostly like action nodes except that they may not be the
-children of fallback nodes. Length is counted as one.
-"""
-global ATOMIC_SEQUENCE_NODES
-"""
-Atomic sequence nodes are sequence nodes that have a predetermined set of children/subtrees
-that cannot be changed.  They behave mostly like action nodes except that they may not be the
-children of sequence nodes. Length is counted as one.
-"""
-
-global UP_NODE
-"""
-The up node is not really a node but a character that marks the end of a control nodes
-set of children and subtrees
-"""
-
-global LEAF_NODES
-"""
-CONDITIONS + ACTION_NODES + ATOMIC_FALLBACK_NODES + ATOMIC_SEQUENCE_NODES
-Any kind of leaf node.
-"""
-
-global BEHAVIOR_NODES
-"""
-ACTION_NODES + ATOMIC_FALLBACK_NODES + ATOMIC_SEQUENCE_NODES
-Basically leaf nodes that actually do something and that may be implemented as the last child.
-"""
-
-global ALL_NODES
-"""
-All list of all the nodes
-"""
-
 def load_settings_from_file(file):
     # pylint: disable=too-many-statements
     """
@@ -101,59 +65,24 @@ def load_settings_from_file(file):
 
     with open(file) as f:
         bt_settings = json.load(f)
-    try:
-        FALLBACK_NODES = bt_settings["fallback_nodes"]
-        if FALLBACK_NODES is None:
-            FALLBACK_NODES = []
-    except KeyError:
-        pass
-    try:
-        SEQUENCE_NODES = bt_settings["sequence_nodes"]
-        if SEQUENCE_NODES is None:
-            SEQUENCE_NODES = []
-    except KeyError:
-        pass
-    try:
-        CONTROL_NODES = bt_settings["control_nodes"]
-    except KeyError:
-        pass
-    CONTROL_NODES += FALLBACK_NODES
-    CONTROL_NODES += SEQUENCE_NODES
-    ALL_NODES += CONTROL_NODES
-    try:
-        CONDITION_NODES = bt_settings["condition_nodes"]
-    except KeyError:
-        pass
-    LEAF_NODES += CONDITION_NODES
-    ALL_NODES += CONDITION_NODES
-    try:
-        ACTION_NODES = bt_settings["action_nodes"]
-    except KeyError:
-        pass
-    BEHAVIOR_NODES += ACTION_NODES
-    ALL_NODES += ACTION_NODES
-    try:
-        ATOMIC_FALLBACK_NODES = bt_settings["atomic_fallback_nodes"]
-        if ATOMIC_FALLBACK_NODES is None:
-            ATOMIC_FALLBACK_NODES = []
-    except KeyError:
-        pass
-    BEHAVIOR_NODES += ATOMIC_FALLBACK_NODES
-    ALL_NODES += ATOMIC_FALLBACK_NODES
-    try:
-        ATOMIC_SEQUENCE_NODES = bt_settings["atomic_sequence_nodes"]
-        if ATOMIC_SEQUENCE_NODES is None:
-            ATOMIC_SEQUENCE_NODES = []
-    except KeyError:
-        pass
-    BEHAVIOR_NODES += ATOMIC_SEQUENCE_NODES
-    ALL_NODES += ATOMIC_SEQUENCE_NODES
-    try:
-        UP_NODE = bt_settings["up_node"]
-    except KeyError:
-        pass
-    ALL_NODES += UP_NODE
-    LEAF_NODES += BEHAVIOR_NODES
+    nodes = bt_settings.get("nodes", [])
+    for node in nodes:
+        title = node.get("title", "")
+        if title:
+            if title.lower() == "sequence":
+                SEQUENCE_NODES.append(title)
+            elif title.lower() == "fallback":
+                FALLBACK_NODES.append(title)
+            elif title.lower() == "condition":
+                CONDITION_NODES.append(title)
+            elif title.lower() == "action":
+                ACTION_NODES.append(title)
+            elif title.lower() == "atomic_fallback":
+                ATOMIC_FALLBACK_NODES.append(title)
+            elif title.lower() == "atomic_sequence":
+                ATOMIC_SEQUENCE_NODES.append(title)
+            else:
+                CONTROL_NODES.append(title)
 
 def get_action_list():
     """
@@ -553,6 +482,6 @@ class BT:
 
     def is_subtree(self, index):
         """
-        Checks if node at index is root of a subtree
+        Checks if node at index is selector of a subtree
         """
         return bool(0 <= index < len(self.bt) and self.bt[index] not in UP_NODE)

@@ -35,7 +35,7 @@ QDMNodeContentWidget QLabel#action_node {
   margin-top: 5px;
   font-size: 28px;
 }
-QDMNodeContentWidget QLineEdit#root_node,
+QDMNodeContentWidget QLineEdit#selector_node,
 QDMNodeContentWidget QLineEdit#sequence_node,
 QDMNodeContentWidget QLineEdit#fallback_node,
 QDMNodeContentWidget QLineEdit#action_node {

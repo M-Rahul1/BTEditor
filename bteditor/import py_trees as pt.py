@@ -2,9 +2,9 @@ import py_trees as pt
    
 def onBuild():
     
-    root = pt.composites.Selector("root", children=[])
+    selector = pt.composites.Selector("selector", children=[])
     seq = pt.composites.Sequence("seq", children=[])
-    root.add_child(seq)
+    selector.add_child(seq)
     act1 = pt.behaviour.Behaviour("Action1")
     seq.add_child(act1)
     
@@ -14,7 +14,7 @@ def onBuild():
     seq_color = color_from_status(seq.status)
     
     
-    return pt.trees.BehaviourTree(root)
+    return pt.trees.BehaviourTree(selector)
 
-def onRun(root: pt.behaviour.Behaviour):
-    root.tick()
+def onRun(selector: pt.behaviour.Behaviour):
+    selector.tick()

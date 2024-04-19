@@ -6,7 +6,8 @@ from nodeeditor.node_content_widget import QDMNodeContentWidget
 from nodeeditor.node_graphics_node import QDMGraphicsNode
 from nodeeditor.node_socket import TOP_CENTER, BOTTOM_CENTER
 from nodeeditor.utils import dumpException
-
+import py_trees as pt
+import bteditor.nodes.actions as action
 
 class CalcGraphicsNode(QDMGraphicsNode):
     def initSizes(self):
@@ -59,8 +60,46 @@ class CalcNode(Node):
 
         # it's really important to mark all nodes Dirty by default
         self.markDirty()
+        
+    """def build(self):
+        root_node = self.scene.nodes[0]
+        root_node.get_pytrees()"""                     
+        
+    def get_pytrees(self):
+        # 1. Create the corresponding PyTrees object
+        self.py_trees_object = self.getnode()
+        
+        # 2. Call the same recursive function for every child
+        
+        for node in self.getChildrenNodes():
+            child_py_trees = node.get_pytrees()
+            self.py_trees_object.add_child(child_py_trees)
+            print(self.py_trees_object)
+        # 4. Return the PyTrees object
+        return self.py_trees_object
 
+    def getnode(self):
+        try:
+            if self.op_title == "Sequence":
+                return pt.composites.Sequence(name=self.op_title, memory=False, children=[])
+            elif self.op_title == "Fallback":
+                return pt.composites.Selector(name=self.op_title, memory=False, children=[])
+            elif self.op_title == "Action":
+                return action.Pick(name=self.op_title)
+            else :
+                return pt.composites.Sequence(name=self.op_title, memory=False, children=[])    
+        except Exception as e:
+            print(e)
+            return None
+            
 
+    def getChildrenNodes(self):
+        children_nodes = []
+        for output_socket in self.outputs:
+            for edge in output_socket.edges:
+                other_node = edge.getOtherSocket(output_socket).node
+                children_nodes.append(other_node)
+        return children_nodes
     def initSettings(self):
         super().initSettings()
         self.input_socket_position = TOP_CENTER

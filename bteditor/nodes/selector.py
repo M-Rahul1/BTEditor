@@ -7,7 +7,7 @@ from nodeeditor.utils import dumpException
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit("Root Node", self)
+        self.edit = QLineEdit("Selector Node", self)
         self.edit.setAlignment(Qt.AlignCenter)
         self.edit.setObjectName(self.node.content_label_objname)
         
@@ -28,12 +28,12 @@ class CalcInputContent(QDMNodeContentWidget):
         return res
 
 
-@register_node(ROOT)
-class Root(CalcNode):
-    icon = "icons/root.png"
-    op_code = ROOT
-    op_title = "Root"
-    content_label_objname = "root_node"
+@register_node(SELECTOR)
+class Selector(CalcNode):
+    icon = "icons/selector.png"
+    op_code = SELECTOR
+    op_title = "Selector"
+    content_label_objname = "selector_node"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[], outputs=[1])
