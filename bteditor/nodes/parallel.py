@@ -1,10 +1,11 @@
+import py_trees as pt
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from py_trees.common import Status
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
-from py_trees import composites as pt
+
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
@@ -28,28 +29,29 @@ class CalcInputContent(QDMNodeContentWidget):
             dumpException(e)
         return res
 
-@register_node(FALLBACK)
-class Fallback(CalcNode, pt.Selector):
-    icon = "icons/question.png"
-    op_code = FALLBACK
-    op_title = "Fallback"
-    content_label_objname = "fallback_node"
+@register_node(PARALLEL)
+class Parallel(CalcNode, pt.composites.Parallel):
+    icon = "icons/right_arrow.png"
+    op_code = PARALLEL
+    op_title = "Parallel"
+    content_label_objname = "parallel_node"
 
-    def __init__(self, scene, name: str = "Fallback"):
-        super().__init__(scene, inputs=[1], outputs=[1])
+    def __init__(self, scene):
+        CalcNode.__init__(self, scene, inputs=[], outputs=[1])
+        pt.composites.Parallel.__init__(self, name="Parallel",memory=False, children=[])
         self.eval()
 
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
         self.grNode = CalcGraphicsNode(self)
         self.content.edit.textChanged.connect(self.onInputChanged)
-
+    
     def evalImplementation(self):
         u_value = self.content.edit.text()
-        s_value = int(u_value)
+        s_value = u_value
         self.value = s_value
         self.markDirty(False)
-        self.markInvalid(False)
+        self.markInvalid(False)   
 
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
@@ -59,7 +61,8 @@ class Fallback(CalcNode, pt.Selector):
         self.evalChildren()
 
         return self.value
-
+    
+    
     def initialise(self) -> None:
         return super().initialise()
     
@@ -68,4 +71,5 @@ class Fallback(CalcNode, pt.Selector):
     
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
-
+    
+ 

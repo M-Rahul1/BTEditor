@@ -2,9 +2,9 @@ LISTBOX_MIMETYPE = "application/x-item"
 
 SELECTOR = 1
 SEQUENCE = 2
-FALLBACK = 3
+PARALLEL = 3
 ACTION = 4
-Demo_Sequence=5
+
 
 
 CALC_NODES = {

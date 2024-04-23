@@ -85,7 +85,7 @@ class CalcNode(Node):
             elif self.op_title == "Fallback":
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])
             elif self.op_title == "Action":
-                return action.Pick(name=self.op_title)
+                return pt.behaviour.Behaviour(name=self.op_title)
             else :
                 return pt.composites.Sequence(name=self.op_title, memory=False, children=[])    
         except Exception as e:
