@@ -62,13 +62,13 @@ class Action(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Turn(py_trees.behaviour.Behaviour):
+class Turn(py_trees.behaviour.Behaviour):   
 
     def initialise(self) -> None:
         return super().initialise()
     
     def update(self) -> pt.common.Status.SUCCESS:
-        return super().update()
+        return pt.common.Status.SUCCESS
     
     def terminate(self) -> None:
         return super().terminate()

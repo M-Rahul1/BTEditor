@@ -82,10 +82,12 @@ class CalcNode(Node):
         try:
             if self.op_title == "Sequence":
                 return pt.composites.Sequence(name=self.op_title, memory=False, children=[])
-            elif self.op_title == "Fallback":
+            elif self.op_title == "Selector":
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])
-            elif self.op_title == "Action":
-                return pt.behaviour.Behaviour(name=self.op_title)
+            elif self.op_title == "Parallel":
+                return pt.composites.Parallel(name=self.op_title, memory=False, children=[])
+            elif self.op_title == "Turn":
+                return action.Turn(name=self.op_title)
             else :
                 return pt.composites.Sequence(name=self.op_title, memory=False, children=[])    
         except Exception as e:

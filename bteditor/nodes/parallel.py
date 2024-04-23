@@ -38,7 +38,7 @@ class Parallel(CalcNode, pt.composites.Parallel):
 
     def __init__(self, scene):
         CalcNode.__init__(self, scene, inputs=[], outputs=[1])
-        pt.composites.Parallel.__init__(self, name="Parallel",memory=False, children=[])
+        pt.composites.Parallel.__init__(self, name="Parallel", policy="", children=[])
         self.eval()
 
     def initInnerClasses(self):

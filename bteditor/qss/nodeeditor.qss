@@ -37,6 +37,7 @@ QDMNodeContentWidget QLabel#action_node {
 }
 QDMNodeContentWidget QLineEdit#selector_node,
 QDMNodeContentWidget QLineEdit#sequence_node,
+QDMNodeContentWidget QLineEdit#parallel_node,
 QDMNodeContentWidget QLineEdit#fallback_node,
 QDMNodeContentWidget QLineEdit#action_node {
   width: 140px;
