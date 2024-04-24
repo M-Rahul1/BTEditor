@@ -85,8 +85,8 @@ class CalcNode(Node):
             elif self.op_title == "Selector":
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])
             elif self.op_title == "Parallel":
-                return pt.composites.Parallel(name=self.op_title, memory=False, children=[])
-            elif self.op_title == "Turn":
+                return pt.composites.Parallel(name=self.op_title, policy="", children=[])
+            elif self.op_title == "Action":
                 return action.Turn(name=self.op_title)
             else :
                 return pt.composites.Sequence(name=self.op_title, memory=False, children=[])    

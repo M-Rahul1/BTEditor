@@ -208,22 +208,34 @@ class NodeEditorWindow(QMainWindow):
             return True
     
     def onMonitor(self):
-        #monitor the flow of the graph and color the nodes
         current_nodeeditor = self.getCurrentNodeEditorWidget()
         if current_nodeeditor is not None:
             self.getCurrentNodeEditorWidget().scene.history.monitor()
         
     def onBuild(self):
-        #build the tree
-        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]
-        
+        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
         self.bt_tree=root_node.get_pytrees()  
         print(self.bt_tree)
     
     def onRun(self):
-        #run the tree
-        self.bt_tree.tick()
-            
+        for i in range(10): 
+            self.bt_tree.tick_once()
+            print(self.bt_tree.status)
+            current_node_editor = self.getCurrentNodeEditorWidget()
+            if current_node_editor is not None:
+                self.node_list = self.scene.nodes[:] 
+                for node in self.node_list:
+                    print(NodeEditorWidget)
+                    content_widget = node.grNode.content
+                    if node.py_trees_object.status.value == 'RUNNING':
+                        content_widget.setStyleSheet = QColor("#FF0000")
+                    elif  node.py_trees_object.status.value == 'SUCCESS':
+                        content_widget.setStyleSheet = QColor("#00FF00")
+                    elif  node.py_trees_object.status.value == 'FAILURE':
+                        content_widget.setStyleSheet = QColor("#0000FF")
+                    else:
+                        content_widget.setStyleSheet = QColor("#FF0FFF")
+                            
     def onFileSaveAs(self):
         """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()

@@ -69,6 +69,3 @@ class Turn(py_trees.behaviour.Behaviour):
     
     def update(self) -> pt.common.Status.SUCCESS:
         return pt.common.Status.SUCCESS
-    
-    def terminate(self) -> None:
-        return super().terminate()
