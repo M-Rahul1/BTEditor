@@ -4,6 +4,7 @@ A module containing the Main Window class
 """
 import os
 import json
+import time
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -216,26 +217,27 @@ class NodeEditorWindow(QMainWindow):
         root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
         self.bt_tree=root_node.get_pytrees()  
         print(self.bt_tree)
-    
+       
     def onRun(self):
         for i in range(10): 
             self.bt_tree.tick_once()
-            print(self.bt_tree.status)
             current_node_editor = self.getCurrentNodeEditorWidget()
             if current_node_editor is not None:
-                self.node_list = self.scene.nodes[:] 
+                self.node_list = current_node_editor.scene.nodes[:] 
                 for node in self.node_list:
-                    print(NodeEditorWidget)
                     content_widget = node.grNode.content
+                    content_widget.setStyleSheet("background-color: #FFFFFF;")
                     if node.py_trees_object.status.value == 'RUNNING':
-                        content_widget.setStyleSheet = QColor("#FF0000")
-                    elif  node.py_trees_object.status.value == 'SUCCESS':
-                        content_widget.setStyleSheet = QColor("#00FF00")
-                    elif  node.py_trees_object.status.value == 'FAILURE':
-                        content_widget.setStyleSheet = QColor("#0000FF")
+                        content_widget.setStyleSheet("background-color: #FF0000;")
+                    elif node.py_trees_object.status.value == 'SUCCESS':
+                        content_widget.setStyleSheet("background-color: #00FF00;")
+                    elif node.py_trees_object.status.value == 'FAILURE':
+                        content_widget.setStyleSheet("background-color: #0000FF;")
                     else:
-                        content_widget.setStyleSheet = QColor("#FF0FFF")
-                            
+                        content_widget.setStyleSheet("background-color: #FF0FFF;")
+                    time.sleep(1)
+                        
+
     def onFileSaveAs(self):
         """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()
