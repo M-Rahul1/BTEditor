@@ -1,6 +1,6 @@
 
 
-# __all__ = [ "selector", "sequence", "fallback", "action" ]
+# __all__ = [ "selector", "sequence", "fallback", "action", "pick", "place"  ]
 
 
 from os.path import dirname, basename, isfile, join

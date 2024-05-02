@@ -3,14 +3,13 @@ from PyQt5.QtWidgets import *
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
-
+import py_trees as pt
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit("Selector Node", self)
-        self.edit.setAlignment(Qt.AlignCenter)
+        self.edit = QLineEdit("Success/Fail", self)
+        self.edit.setAlignment(Qt.AlignLeft)
         self.edit.setObjectName(self.node.content_label_objname)
-        
 
     def serialize(self):
         res = super().serialize()
@@ -27,29 +26,32 @@ class CalcInputContent(QDMNodeContentWidget):
             dumpException(e)
         return res
 
-
-@register_node(SELECTOR)
-class Selector(CalcNode,pt.composites.Selector):
-    icon = "icons/selector.png"
-    op_code = SELECTOR
-    op_title = "Selector"
-    content_label_objname = "selector_node"
+@register_node(PLACE)
+class Place(CalcNode,pt.behaviour.Behaviour):
+    
+    icon = "icons/thunder.png"
+    op_code = PLACE
+    op_title = "Place"
+    content_label_objname = "place_node"
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[], outputs=[1])
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Place")
         self.eval()
-
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
         self.grNode = CalcGraphicsNode(self)
-        self.content.edit.textChanged.connect(self.onInputChanged)
-
+    
     def evalImplementation(self):
         u_value = self.content.edit.text()
         s_value = u_value
         self.value = s_value
         self.markDirty(False)
-        self.markInvalid(False)
+        self.markInvalid(False)   
 
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
@@ -59,10 +61,11 @@ class Selector(CalcNode,pt.composites.Selector):
         self.evalChildren()
 
         return self.value
-    
+
+class Place_(pt.behaviour.Behaviour):   
+
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> pt.common.Status:
-        return super().update()
-    
+    def update(self) -> pt.common.Status.SUCCESS:
+        return pt.common.Status.SUCCESS

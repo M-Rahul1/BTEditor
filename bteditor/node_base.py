@@ -8,6 +8,10 @@ from nodeeditor.node_socket import TOP_CENTER, BOTTOM_CENTER
 from nodeeditor.utils import dumpException
 import py_trees as pt
 import bteditor.nodes.actions as action
+#import bteditor.nodes.place as places
+#import bteditor.nodes.pick as pick
+#import bteditor.nodes.move_to_station as move_to_station
+#import bteditor.nodes.move_to_obj_action as move_to_obj_action
 
 class CalcGraphicsNode(QDMGraphicsNode):
     def initSizes(self):
@@ -61,9 +65,9 @@ class CalcNode(Node):
         # it's really important to mark all nodes Dirty by default
         self.markDirty()
         
-    """def build(self):
+    def build(self):
         root_node = self.scene.nodes[0]
-        root_node.get_pytrees()"""                     
+        root_node.get_pytrees()                     
         
     def get_pytrees(self):
         # 1. Create the corresponding PyTrees object
@@ -87,9 +91,17 @@ class CalcNode(Node):
             elif self.op_title == "Parallel":
                 return pt.composites.Parallel(name=self.op_title, policy="", children=[])
             elif self.op_title == "Action":
-                return action.Turn(name=self.op_title)
+                return pt.behaviour.Behaviour(name=self.op_title)
+            elif self.op_title == "Pick":
+                return pick.Pick_(name=self.op_title)
+            elif self.op_title == "Place":
+                return places.Place_(name=self.op_title)
+            elif self.op_title == "Move_to_station":
+                return move_to_station.move_to_station_(name=self.op_title)
+            elif self.op_title == "Move_to_obj":
+                return move_to_obj_action.move_to_obj_(name=self.op_title)
             else :
-                return pt.composites.Sequence(name=self.op_title, memory=False, children=[])    
+                print("Invalid node")                    
         except Exception as e:
             print(e)
             return None

@@ -219,7 +219,7 @@ class NodeEditorWindow(QMainWindow):
         print(self.bt_tree)
        
     def onRun(self):
-        for i in range(10): 
+        for i in range(2): 
             self.bt_tree.tick_once()
             current_node_editor = self.getCurrentNodeEditorWidget()
             if current_node_editor is not None:
