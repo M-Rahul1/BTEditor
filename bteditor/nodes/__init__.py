@@ -1,6 +1,6 @@
 
 
-# __all__ = [ "selector", "sequence", "fallback", "action", "pick", "place"  ]
+# __all__ = [ "selector", "sequence", "fallback", "action", "cube_in_delivery?", "cube_in_hand?"  ]
 
 
 from os.path import dirname, basename, isfile, join

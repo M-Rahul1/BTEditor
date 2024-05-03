@@ -77,10 +77,6 @@ def load_settings_from_file(file):
                 CONDITION_NODES.append(title)
             elif title.lower() == "action":
                 ACTION_NODES.append(title)
-            elif title.lower() == "pick":
-                ACTION_NODES.append(title)
-            elif title.lower() == "place":
-                ACTION_NODES.append(title)
             elif title.lower() == "atomic_fallback":
                 ATOMIC_FALLBACK_NODES.append(title)
             elif title.lower() == "atomic_sequence":

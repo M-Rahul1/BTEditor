@@ -37,7 +37,7 @@ class Parallel(CalcNode, pt.composites.Parallel):
     content_label_objname = "parallel_node"
 
     def __init__(self, scene):
-        CalcNode.__init__(self, scene, inputs=[], outputs=[1])
+        CalcNode.__init__(self, scene, inputs=[1], outputs=[1])
         pt.composites.Parallel.__init__(self, name="Parallel", policy="", children=[])
         self.eval()
 

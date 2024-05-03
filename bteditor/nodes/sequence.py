@@ -37,7 +37,7 @@ class Sequence(CalcNode, pt.composites.Sequence):
     content_label_objname = "sequence_node"
 
     def __init__(self, scene):
-        CalcNode.__init__(self, scene, inputs=[], outputs=[1])
+        CalcNode.__init__(self, scene, inputs=[1], outputs=[1])
         pt.composites.Sequence.__init__(self, name="Sequence",memory=False, children=[])
         self.eval()
 

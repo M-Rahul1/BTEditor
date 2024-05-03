@@ -5,7 +5,7 @@
     "nodes": [
         {
             "id": 2392663993296,
-            "title": "Selector",
+            "title": "Fallback",
             "pos_x": -372.0,
             "pos_y": -150.0,
             "inputs": [],
@@ -19,7 +19,7 @@
                 }
             ],
             "content": {
-                "value": "Selector Node"
+                "value": "Fallback Node"
             },
             "op_code": 1
         },

@@ -8,10 +8,7 @@ from nodeeditor.node_socket import TOP_CENTER, BOTTOM_CENTER
 from nodeeditor.utils import dumpException
 import py_trees as pt
 import bteditor.nodes.actions as action
-#import bteditor.nodes.place as places
-#import bteditor.nodes.pick as pick
-#import bteditor.nodes.move_to_station as move_to_station
-#import bteditor.nodes.move_to_obj_action as move_to_obj_action
+
 
 class CalcGraphicsNode(QDMGraphicsNode):
     def initSizes(self):
@@ -90,16 +87,22 @@ class CalcNode(Node):
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])
             elif self.op_title == "Parallel":
                 return pt.composites.Parallel(name=self.op_title, policy="", children=[])
-            elif self.op_title == "Action":
-                return pt.behaviour.Behaviour(name=self.op_title)
-            elif self.op_title == "Pick":
-                return pick.Pick_(name=self.op_title)
-            elif self.op_title == "Place":
-                return places.Place_(name=self.op_title)
-            elif self.op_title == "Move_to_station":
-                return move_to_station.move_to_station_(name=self.op_title)
-            elif self.op_title == "Move_to_obj":
-                return move_to_obj_action.move_to_obj_(name=self.op_title)
+            elif self.op_title == "Cube_in_delivery":
+                return action.Cube_in_delivery_(name=self.op_title)
+            elif self.op_title == "Cube_in_hand":
+                return action.Cube_in_hand_(name=self.op_title)
+            elif self.op_title == "Robot_at_cube":
+                return action.Robot_at_cube_(name=self.op_title)
+            elif self.op_title == "Move_to_cube":
+                return action.Move_to_cube_(name=self.op_title)
+            elif self.op_title == "Pick_cube":
+                return action.Pick_cube_(name=self.op_title)
+            elif self.op_title == "Robot_at_delivery":
+                return action.Robot_at_delivery_(name=self.op_title)
+            elif self.op_title == "Move_to_delivery":
+                return action.Move_to_delivery_(name=self.op_title)
+            elif self.op_title == "Place_cube":
+                return action.Place_cube_(name=self.op_title)
             else :
                 print("Invalid node")                    
         except Exception as e:
