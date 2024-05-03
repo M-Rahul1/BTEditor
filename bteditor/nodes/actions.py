@@ -7,7 +7,7 @@ import py_trees as pt
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit("Success/Fail", self)
+        self.edit = QLineEdit("Success", self)
         self.edit.setAlignment(Qt.AlignLeft)
         self.edit.setObjectName(self.node.content_label_objname)
 
@@ -26,11 +26,11 @@ class CalcInputContent(QDMNodeContentWidget):
             dumpException(e)
         return res
 
-@register_node(CUBE_IN_DELIVERY)
-class Cube_in_delivery(CalcNode,pt.behaviour.Behaviour):
-    icon = "icons/thunder.png"
-    op_code = CUBE_IN_DELIVERY
-    op_title = "Cube_in_delivery"
+@register_node(CUBE2_DELIVERED)
+class Cube2_delivered(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = CUBE2_DELIVERED
+    op_title = "Cube2_delivered?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
@@ -61,24 +61,69 @@ class Cube_in_delivery(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Cube_in_delivery_(pt.behaviour.Behaviour):   
+class Cube2_delivered_(pt.behaviour.Behaviour):   
+    
 
     def initialise(self) -> None:
         return super().initialise()
     
     def update(self) -> pt.common.Status.SUCCESS:
         return pt.common.Status.SUCCESS
-@register_node(CUBE_IN_HAND)
-class Cube_in_hand(CalcNode,pt.behaviour.Behaviour):
-    
-    icon = "icons/thunder.png"
-    op_code = CUBE_IN_HAND
-    op_title = "Cube_in_hand"
-    content_label_objname = "place_node"
+
+@register_node(ROBOT_AT_CUBE2)
+class Robot_at_cube2(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = ROBOT_AT_CUBE2
+    op_title = "Robot_at_cube2?"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Cube_in_hand?")
+        pt.behaviour.Behaviour.__init__(self, name="Robot_at_cube2")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Robot_at_cube2_(pt.behaviour.Behaviour):   
+
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.SUCCESS:
+        return pt.common.Status.SUCCESS
+    
+@register_node(CUBE2_IN_HAND)
+class Cube2_in_hand(CalcNode,pt.behaviour.Behaviour):
+    
+    icon = "icons/action.png"
+    op_code = CUBE2_IN_HAND
+    op_title = "Cube2_in_hand?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Cube2_in_hand?")
         self.eval()
     
     def update(self) -> pt.common.Status:
@@ -104,24 +149,23 @@ class Cube_in_hand(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Cube_in_hand_(pt.behaviour.Behaviour): 
+class Cube2_in_hand_(pt.behaviour.Behaviour): 
     def initialise(self) -> None:
         return super().initialise()
     
     def update(self) -> pt.common.Status.SUCCESS:
         return pt.common.Status.SUCCESS  
-
-
-@register_node(ROBOT_AT_CUBE)
-class Robot_at_cube(CalcNode):
-    icon = "icons/thunder.png"
-    op_code = ROBOT_AT_CUBE
-    op_title = "Robot_at_cube"
-    content_label_objname = "move_to_station_node"
+    
+@register_node(MOVE_TO_CUBE2)
+class Move_to_cube2(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = MOVE_TO_CUBE2
+    op_title = "Move_to_cube2!"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Robot_at_cube")
+        pt.behaviour.Behaviour.__init__(self, name="Move_to_cube2")
         self.eval()
 
     def update(self) -> pt.common.Status:
@@ -146,8 +190,7 @@ class Robot_at_cube(CalcNode):
         self.evalChildren()
 
         return self.value
-
-class Robot_at_cube_(pt.behaviour.Behaviour):   
+class Move_to_cube2_(pt.behaviour.Behaviour):   
 
     def initialise(self) -> None:
         return super().initialise()
@@ -155,61 +198,17 @@ class Robot_at_cube_(pt.behaviour.Behaviour):
     def update(self) -> pt.common.Status.SUCCESS:
         return pt.common.Status.SUCCESS
     
-@register_node(MOVE_TO_CUBE)
-class Move_to_cube(CalcNode):
-    icon = "icons/thunder.png"
-    op_code = MOVE_TO_CUBE
-    op_title = "Move_to_cube"
-    content_label_objname = "move_to_obj_node"
+@register_node(PICK_CUBE2)
+class Pick_cube2(CalcNode,pt.behaviour.Behaviour):
+    
+    icon = "icons/action.png"
+    op_code = PICK_CUBE2
+    op_title = "Pick_cube2!"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Move_to_cube")
-        self.eval()
-
-    def update(self) -> pt.common.Status:
-        return super().update()
-    
-    def initInnerClasses(self):
-        self.content = CalcInputContent(self)
-        self.grNode = CalcGraphicsNode(self)
-
-    def evalImplementation(self):
-        u_value = self.content.edit.text()
-        s_value = u_value
-        self.value = s_value
-        self.markDirty(False)
-        self.markInvalid(False)   
-
-        self.markDescendantsInvalid(False)
-        self.markDescendantsDirty()
-
-        self.grNode.setToolTip("")
-
-        self.evalChildren()
-
-        return self.value
-
-class Move_to_cube_(pt.behaviour.Behaviour):   
-
-    def initialise(self) -> None:
-        return super().initialise()
-    
-    def update(self) -> pt.common.Status.SUCCESS:
-        return pt.common.Status.SUCCESS
-
-    
-@register_node(PICK_CUBE)
-class Pick_cube(CalcNode,pt.behaviour.Behaviour):
-    
-    icon = "icons/thunder.png"
-    op_code = PICK_CUBE
-    op_title = "Pick_cube"
-    content_label_objname = "place_node"
-
-    def __init__(self, scene):
-        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Pick_cube?")
+        pt.behaviour.Behaviour.__init__(self, name="Pick_cube2?")
         self.eval()
     
     def update(self) -> pt.common.Status:
@@ -235,7 +234,7 @@ class Pick_cube(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Pick_cube_(pt.behaviour.Behaviour):   
+class Pick_cube2_(pt.behaviour.Behaviour):   
 
     def initialise(self) -> None:
         return super().initialise()
@@ -246,10 +245,10 @@ class Pick_cube_(pt.behaviour.Behaviour):
 @register_node(ROBOT_AT_DELIVERY)
 class Robot_at_delivery(CalcNode,pt.behaviour.Behaviour):
     
-    icon = "icons/thunder.png"
+    icon = "icons/action.png"
     op_code = ROBOT_AT_DELIVERY
-    op_title = "Robot_at_delivery"
-    content_label_objname = "place_node"
+    op_title = "Robot_at_delivery?"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
@@ -290,10 +289,10 @@ class Robot_at_delivery_(pt.behaviour.Behaviour):
 @register_node(MOVE_TO_DELIVERY)
 class Move_to_delivery(CalcNode,pt.behaviour.Behaviour):
     
-    icon = "icons/thunder.png"
+    icon = "icons/action.png"
     op_code = MOVE_TO_DELIVERY
-    op_title = "Move_to_delivery"
-    content_label_objname = "place_node"
+    op_title = "Move_to_delivery!"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
@@ -330,17 +329,17 @@ class Move_to_delivery_(pt.behaviour.Behaviour):
     
     def update(self) -> pt.common.Status.SUCCESS:
         return pt.common.Status.SUCCESS
-@register_node(PLACE_CUBE)
-class Place_cube(CalcNode,pt.behaviour.Behaviour):
+@register_node(PLACE_CUBE2)
+class Place_cube2(CalcNode,pt.behaviour.Behaviour):
     
-    icon = "icons/thunder.png"
-    op_code = PLACE_CUBE
-    op_title = "Place_cube"
-    content_label_objname = "place_node"
+    icon = "icons/action.png"
+    op_code = PLACE_CUBE2
+    op_title = "Place_cube2!"
+    content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Place_cube?")
+        pt.behaviour.Behaviour.__init__(self, name="Place_cube2?")
         self.eval()
     
     def update(self) -> pt.common.Status:
@@ -366,7 +365,7 @@ class Place_cube(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Place_cube_(pt.behaviour.Behaviour):   
+class Place_cube2_(pt.behaviour.Behaviour):   
 
     def initialise(self) -> None:
         return super().initialise()

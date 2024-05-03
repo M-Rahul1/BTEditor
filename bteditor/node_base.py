@@ -83,26 +83,26 @@ class CalcNode(Node):
         try:
             if self.op_title == "Sequence":
                 return pt.composites.Sequence(name=self.op_title, memory=False, children=[])
-            elif self.op_title == "Selector":
+            elif self.op_title == "Fallback":
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])
             elif self.op_title == "Parallel":
                 return pt.composites.Parallel(name=self.op_title, policy="", children=[])
-            elif self.op_title == "Cube_in_delivery":
-                return action.Cube_in_delivery_(name=self.op_title)
-            elif self.op_title == "Cube_in_hand":
-                return action.Cube_in_hand_(name=self.op_title)
-            elif self.op_title == "Robot_at_cube":
-                return action.Robot_at_cube_(name=self.op_title)
-            elif self.op_title == "Move_to_cube":
-                return action.Move_to_cube_(name=self.op_title)
-            elif self.op_title == "Pick_cube":
-                return action.Pick_cube_(name=self.op_title)
-            elif self.op_title == "Robot_at_delivery":
+            elif self.op_title == "Cube2_delivered?":
+                return action.Cube2_delivered_(name=self.op_title)
+            elif self.op_title == "Cube2_in_hand":
+                return action.Cube2_in_hand_(name=self.op_title)
+            elif self.op_title == "Move_to_cube2!":
+                return action.Move_to_cube2_(name=self.op_title)
+            elif self.op_title == "Robot_at_cube2?":
+                return action.Robot_at_cube2_(name=self.op_title)
+            elif self.op_title == "Pick_cube2!":
+                return action.Pick_cube2_(name=self.op_title)
+            elif self.op_title == "Robot_at_delivery?":
                 return action.Robot_at_delivery_(name=self.op_title)
-            elif self.op_title == "Move_to_delivery":
+            elif self.op_title == "Move_to_delivery!":
                 return action.Move_to_delivery_(name=self.op_title)
-            elif self.op_title == "Place_cube":
-                return action.Place_cube_(name=self.op_title)
+            elif self.op_title == "Place_cube2!":
+                return action.Place_cube2_(name=self.op_title)
             else :
                 print("Invalid node")                    
         except Exception as e:
