@@ -108,19 +108,6 @@ class Scene(Serializable):
                 return node
         return None
     
-    #turn onSelect to true for node in self.nodes when Monitor functin is triggered
-    def Monitor(self):
-    # Load nodes and edges from example.json
-        self.loadNodesAndEdgesFromJson("")   
-        # Get the root node (assuming it's the first node in the list)
-        root_node = self.nodes[0]
-
-        # Turn onSelect to True for each node in self.nodes
-        for node in self.nodes:
-            node.onSelected(True)
-
-
-
     def setSilentSelectionEvents(self, value:bool=True):
         """Calling this can suppress onItemSelected events to be triggered. This is useful when working with clipboard"""
         self._silent_selection_events = value

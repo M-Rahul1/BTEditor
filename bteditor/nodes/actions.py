@@ -287,7 +287,7 @@ class Robot_at_delivery_(pt.behaviour.Behaviour):
         return pt.common.Status.SUCCESS
 
 @register_node(MOVE_TO_DELIVERY)
-class Move_to_delivery(CalcNode,pt.behaviour.Behaviour):
+class Move_to_delivery(CalcNode,pt.behaviours.TickCounter):
     
     icon = "icons/action.png"
     op_code = MOVE_TO_DELIVERY
@@ -296,11 +296,8 @@ class Move_to_delivery(CalcNode,pt.behaviour.Behaviour):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Move_to_delivery?")
+        pt.behaviours.TickCounter.__init__(self, name="Move_to_delivery?", duration=3, completion_status=pt.common.Status.SUCCESS)
         self.eval()
-    
-    def update(self) -> pt.common.Status:
-        return super().update()
     
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
@@ -322,15 +319,17 @@ class Move_to_delivery(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Move_to_delivery_(pt.behaviour.Behaviour):   
-
-    def initialise(self) -> None:
-        return super().initialise()
+class Move_to_delivery_(pt.behaviours.TickCounter):   
     
-    def update(self) -> pt.common.Status.SUCCESS:
-        return pt.common.Status.SUCCESS
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+        
 @register_node(PLACE_CUBE2)
-class Place_cube2(CalcNode,pt.behaviour.Behaviour):
+class Place_cube2(CalcNode,pt.behaviours.TickCounter):
     
     icon = "icons/action.png"
     op_code = PLACE_CUBE2
@@ -339,11 +338,8 @@ class Place_cube2(CalcNode,pt.behaviour.Behaviour):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Place_cube2?")
+        pt.behaviours.TickCounter.__init__(self, name="Move_to_delivery?", duration=3, completion_status=pt.common.Status.SUCCESS)
         self.eval()
-    
-    def update(self) -> pt.common.Status:
-        return super().update()
     
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
@@ -365,10 +361,11 @@ class Place_cube2(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Place_cube2_(pt.behaviour.Behaviour):   
-
-    def initialise(self) -> None:
-        return super().initialise()
+class Place_cube2_(pt.behaviours.TickCounter):   
     
-    def update(self) -> pt.common.Status.SUCCESS:
-        return pt.common.Status.SUCCESS
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status

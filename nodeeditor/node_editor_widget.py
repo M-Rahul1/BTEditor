@@ -44,7 +44,6 @@ class NodeEditorWidget(QWidget):
 
         # crate graphics scene
         self.scene = self.__class__.Scene_class()
-
         # create graphics view
         self.view = self.__class__.GraphicsView_class(self.scene.grScene, self)
         self.layout.addWidget(self.view)

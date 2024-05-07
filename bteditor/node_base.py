@@ -61,10 +61,7 @@ class CalcNode(Node):
 
         # it's really important to mark all nodes Dirty by default
         self.markDirty()
-        
-    def build(self):
-        root_node = self.scene.nodes[0]
-        root_node.get_pytrees()                     
+                          
         
     def get_pytrees(self):
         # 1. Create the corresponding PyTrees object
@@ -75,10 +72,10 @@ class CalcNode(Node):
         for node in self.getChildrenNodes():
             child_py_trees = node.get_pytrees()
             self.py_trees_object.add_child(child_py_trees)
-            print(self.py_trees_object)
+            #print(self.py_trees_object)
         # 4. Return the PyTrees object
         return self.py_trees_object
-
+    
     def getnode(self):
         try:
             if self.op_title == "Sequence":
@@ -100,9 +97,9 @@ class CalcNode(Node):
             elif self.op_title == "Robot_at_delivery?":
                 return action.Robot_at_delivery_(name=self.op_title)
             elif self.op_title == "Move_to_delivery!":
-                return action.Move_to_delivery_(name=self.op_title)
+                return action.Move_to_delivery_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Place_cube2!":
-                return action.Place_cube2_(name=self.op_title)
+                return action.Place_cube2_(name=self.op_title , duration=10, completion_status=pt.common.Status.SUCCESS)
             else :
                 print("Invalid node")                    
         except Exception as e:
@@ -116,6 +113,7 @@ class CalcNode(Node):
             for edge in output_socket.edges:
                 other_node = edge.getOtherSocket(output_socket).node
                 children_nodes.append(other_node)
+                #print(children_nodes)
         return children_nodes
     def initSettings(self):
         super().initSettings()

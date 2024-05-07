@@ -9,8 +9,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from nodeeditor.node_editor_widget import NodeEditorWidget
-
-from bteditor.monitor import SceneMonitor
+import py_trees as pt
 
 class NodeEditorWindow(QMainWindow):
     NodeEditorWidget_class = NodeEditorWidget
@@ -74,7 +73,9 @@ class NodeEditorWindow(QMainWindow):
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
         self.actMonitor = QAction('&Monitor', self, shortcut='Ctrl+M', statusTip="Monitor", triggered=self.onMonitor)
         self.actBuild = QAction('&Build', self, shortcut='Ctrl+B', statusTip="Build", triggered=self.onBuild)
-        self.actRun = QAction('&Run', self, shortcut='Ctrl+R', statusTip="Run", triggered=self.onRun)
+        self.actRunOnce = QAction('&RunOnce', self, shortcut='Ctrl+R', statusTip="Run Once", triggered=self.onRunOnce)
+        self.actRun = QAction('&Run', self, shortcut='Ctrl+T', statusTip="Run", triggered=self.onRun)
+        
     def createMenus(self):
         """Create Menus for `File` and `Edit`"""
         self.createFileMenu()
@@ -104,6 +105,7 @@ class NodeEditorWindow(QMainWindow):
         self.editMenu.addAction(self.actDelete)
         self.editMenu.addAction(self.actMonitor)
         self.editMenu.addAction(self.actBuild)
+        self.editMenu.addAction(self.actRunOnce)
         self.editMenu.addAction(self.actRun)
 
     def setTitle(self):
@@ -214,30 +216,50 @@ class NodeEditorWindow(QMainWindow):
             self.getCurrentNodeEditorWidget().scene.history.monitor()
         
     def onBuild(self):
+        current_node_editor = self.getCurrentNodeEditorWidget()
+        self.node_list = current_node_editor.scene.nodes[:]
+        for node in self.node_list:
+            content_widget = node.grNode.content
+            content_widget.setStyleSheet("background-color: lightgrey;")
         root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
-        self.bt_tree=root_node.get_pytrees()  
+        self.root=root_node.get_pytrees()
+        self.bt_tree = pt.trees.BehaviourTree(self.root)  
+        #print(self.bt_tree)
+    
+    """def onBuild(self):
+        current_node_editor = self.getCurrentNodeEditorWidget()
+        self.node_list = current_node_editor.scene.nodes[:]
+        for node in self.node_list:
+            content_widget = node.grNode.content
+            node.py_trees_object = node.get_pytrees()
+            content_widget.setStyleSheet("background-color: lightgrey;")
+            time.sleep(2)
+        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
+        self.root=root_node.get_pytrees()
+        self.bt_tree = pt.trees.BehaviourTree(self.root)  
         print(self.bt_tree)
-       
-    def onRun(self):
-        for i in range(2): 
-            self.bt_tree.tick_once()
+        time.sleep(2)"""
+           
+    def onRunOnce(self):
+        self.bt_tree.root.tick_once()
+        for node in self.node_list:
             current_node_editor = self.getCurrentNodeEditorWidget()
-            if current_node_editor is not None:
-                self.node_list = current_node_editor.scene.nodes[:] 
-                for node in self.node_list:
-                    content_widget = node.grNode.content
-                    content_widget.setStyleSheet("background-color: #FFFFFF;")
-                    if node.py_trees_object.status.value == 'RUNNING':
-                        content_widget.setStyleSheet("background-color: #FF0000;")
-                    elif node.py_trees_object.status.value == 'SUCCESS':
-                        content_widget.setStyleSheet("background-color: #00FF00;")
-                    elif node.py_trees_object.status.value == 'FAILURE':
-                        content_widget.setStyleSheet("background-color: #0000FF;")
-                    else:
-                        content_widget.setStyleSheet("background-color: #FF0FFF;")
-                    time.sleep(1)
-                        
+            self.node_list = current_node_editor.scene.nodes[:] 
+            content_widget = node.grNode.content
+            if node.py_trees_object.status.value == 'SUCCESS':
+                content_widget.setStyleSheet("background-color: green;")
+            elif node.py_trees_object.status.value == 'RUNNING':
+                content_widget.setStyleSheet("background-color: orange;")
+            elif node.py_trees_object.status.value == 'FAILURE':
+                content_widget.setStyleSheet("background-color: red;")
+            else:
+                content_widget.setStyleSheet("background-color: black;")
 
+    def onRun(self):
+        for _ in range(10):
+            self.onRunOnce()
+            time.sleep(0.3)
+            
     def onFileSaveAs(self):
         """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()
