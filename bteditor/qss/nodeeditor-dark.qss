@@ -85,7 +85,7 @@ QMdiArea QTabBar QToolButton {
     stop: 0.89 #4f4f4f,
     stop: 1 #4f4f4f
   );
-  border: 1px solid #333;
+  border : 1px solid #333;
   border-radius: 0;
 }
 QMdiArea QTabBar QToolButton::left-arrow {

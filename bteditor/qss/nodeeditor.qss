@@ -22,10 +22,6 @@ QDMNodeContentWidget QLabel#fallback_node {
   min-height: 49px;
   padding-left: 94px;
 }
-QDMNodeContentWidget QLabel#calc_node_mul,
-QDMNodeContentWidget QLabel#calc_node_div {
-  padding-top: 12px;
-}
 QDMNodeContentWidget QLabel#action_node,
 QDMNodeContentWidget QLabel#place_node,
 QDMNodeContentWidget QLabel#pick_node {
@@ -41,9 +37,7 @@ QDMNodeContentWidget QLineEdit#selector_node,
 QDMNodeContentWidget QLineEdit#sequence_node,
 QDMNodeContentWidget QLineEdit#parallel_node,
 QDMNodeContentWidget QLineEdit#fallback_node,
-QDMNodeContentWidget QLineEdit#action_node,
-QDMNodeContentWidget QLabel#place_node,
-QDMNodeContentWidget QLabel#pick_node {
+QDMNodeContentWidget QLineEdit#action_node {
   width: 140px;
   height: 36px;
   margin-top: 5px;
