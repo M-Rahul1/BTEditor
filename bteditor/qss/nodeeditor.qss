@@ -42,7 +42,7 @@ QDMNodeContentWidget QLineEdit#action_node {
   height: 36px;
   margin-top: 5px;
   margin-left: 5px;
-  font-size: 28px;
+  font-size: 22px;
 }
 QGraphicsView {
   background-color: #fff;

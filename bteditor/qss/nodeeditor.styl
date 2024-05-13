@@ -10,7 +10,7 @@ QDMNodeContentWidget
     QLabel
         color: #e0e0e0
 
-    QLabel#calc_node_bg, QLabel#calc_node_mul, QLabel#calc_node_div
+    QLabel#selector_node, QLabel#sequence_node, QLabel#parallel_node
         background: transparent
         height: 0px
         color: #373737
@@ -18,9 +18,6 @@ QDMNodeContentWidget
         max-height: 49px
         min-height: 49px
         padding-left: 94px
-
-    QLabel#calc_node_mul, QLabel#calc_node_div
-        padding-top: 12px
 
     QLabel#action_node,
     QLabel#place_node,
@@ -33,8 +30,8 @@ QDMNodeContentWidget
         margin-top: 5px
         font-size: 28px
 
-    QLineEdit#selector_node,QLineEdit#calcsequence_node,
-    QLineEdit#fallback_node,QLineEdit#action_node,QLineEdit#parallel_node,
+    QLineEdit#selector_node,QLineEdit#sequence_node,
+    QLineEdit#action_node,QLineEdit#parallel_node,
     QLineEdit#place_node,
     QLineEdit#pick_node
         width: 140px
