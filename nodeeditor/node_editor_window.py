@@ -224,22 +224,7 @@ class NodeEditorWindow(QMainWindow):
         root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
         self.root=root_node.get_pytrees()
         self.bt_tree = pt.trees.BehaviourTree(self.root)  
-        #print(self.bt_tree)
-    
-    """def onBuild(self):
-        current_node_editor = self.getCurrentNodeEditorWidget()
-        self.node_list = current_node_editor.scene.nodes[:]
-        for node in self.node_list:
-            content_widget = node.grNode.content
-            node.py_trees_object = node.get_pytrees()
-            content_widget.setStyleSheet("background-color: lightgrey;")
-            time.sleep(2)
-        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
-        self.root=root_node.get_pytrees()
-        self.bt_tree = pt.trees.BehaviourTree(self.root)  
-        print(self.bt_tree)
-        time.sleep(2)"""
-           
+        #print(self.bt_tree)   
     def onRunOnce(self):
         self.bt_tree.root.tick_once()
         for node in self.node_list:
