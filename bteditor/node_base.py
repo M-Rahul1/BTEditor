@@ -88,12 +88,12 @@ class CalcNode(Node):
                 return action.Cube2_delivered_(name=self.op_title)
             elif self.op_title == "Cube2_in_hand":
                 return action.Cube2_in_hand_(name=self.op_title)
-            elif self.op_title == "Move_to_cube2!":
-                return action.Move_to_cube2_(name=self.op_title)
             elif self.op_title == "Robot_at_cube2?":
                 return action.Robot_at_cube2_(name=self.op_title)
+            elif self.op_title == "Move_to_cube2!":
+                return action.Move_to_cube2_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Pick_cube2!":
-                return action.Pick_cube2_(name=self.op_title)
+                return action.Pick_cube2_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Robot_at_delivery?":
                 return action.Robot_at_delivery_(name=self.op_title)
             elif self.op_title == "Move_to_delivery!":
