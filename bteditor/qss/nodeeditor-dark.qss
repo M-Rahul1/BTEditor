@@ -150,10 +150,12 @@ QDockWidget::close-button {
 QDockWidget::float-button {
   right: 18px;
 }
-QMenuBar {
+QMenuBar,
+QToolBar{
   background: #474747;
 }
-QMenuBar::item {
+QMenuBar::item,
+QToolBar::item {
   spacing: 3px;
   padding: 3px 5px;
   color: #eee;
@@ -163,22 +165,27 @@ QMenuBar::item:selected,
 QMenuBar::item:pressed {
   background: #4f9eee;
 }
-QMenu {
+QMenu,
+QToolBar {
   background: #474747;
   border: 1px solid #2e2e2e;
 }
-QMenu::item {
+QMenu::item,
+QToolBar::item {
   background: #474747;
   color: #eee;
 }
-QMenu::item:selected {
+QMenu::item:selected ,
+QToolBar::item:selected {
   background: #616161;
 }
-QMenu::active {
+QMenu::active,
+QToolBar::active {
   background: #616161;
   color: #eee;
 }
-QMenu::separator {
+QMenu::separator ,
+QToolBar::separator {
   height: 1px;
   background: #2e2e2e;
 }

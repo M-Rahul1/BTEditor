@@ -42,6 +42,7 @@ class CalculatorWindow(NodeEditorWindow):
         )
 
         self.empty_icon = QIcon(".")
+        self.icon = QIcon(os.path.join(os.path.dirname(__file__), 'icons/abb.png'))
 
         if DEBUG:
             print("Registered nodes:")
@@ -72,6 +73,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.readSettings()
 
         self.setWindowTitle("BT NodeEditor")
+        self.setWindowIcon(self.icon)
 
     def closeEvent(self, event):
         self.mdiArea.closeAllSubWindows()
@@ -84,7 +86,13 @@ class CalculatorWindow(NodeEditorWindow):
             import sys
             sys.exit(0)
 
+    def createToolBars(self):
+        """self.projectToolbar = QToolBar('Project toolbar', self)
+        self.projectToolbar.setObjectName('projectToolbar')
+        self.projectToolbar.setIconSize(QSize(18, 18))
 
+        self.projectToolbar.addAction(QIcon('data/icons/folder_page'), 'New', self.actNew)"""
+        
     def createActions(self):
         super().createActions()
 
@@ -240,9 +248,8 @@ class CalculatorWindow(NodeEditorWindow):
             self.nodesDock.hide()
         else:
             self.nodesDock.show()
-
-    def createToolBars(self):
-        pass
+    
+    
 
     def createNodesDock(self):
         self.nodesListWidget = QDMDragListbox()
