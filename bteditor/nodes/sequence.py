@@ -1,18 +1,41 @@
 import py_trees as pt
 from PyQt5.QtCore import *
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from py_trees.common import Status
 from bteditor.conf import *
 from bteditor.node_base import *
 from nodeeditor.utils import dumpException
 
+class CalcGraphicsSequenceNode(CalcGraphicsNode):
+    def initSizes(self):
+        super().initSizes()
+        self.width = 40
+        self.height = 40
+        self.edge_roundness = 6
+        self.edge_padding = 0
+
+        
+    def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
+        super().paint(painter, QStyleOptionGraphicsItem, widget)
+        
+        # Draw only the icon
+        painter.drawImage(
+            QRectF(-10, -10, 24.0, 24.0),
+            self.icons,
+            QRectF(24.0, 0, 24.0, 24.0)
+        )
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
         self.edit = QLineEdit("Condition", self)
         self.edit.setAlignment(Qt.AlignCenter)
         self.edit.setObjectName(self.node.content_label_objname)
-        
+        self.edit.hide()  # Hide the text input field initially
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        self.edit.hide()  # Ensure the text input field remains hidden when shown
 
     def serialize(self):
         res = super().serialize()
@@ -38,20 +61,20 @@ class Sequence(CalcNode, pt.composites.Sequence):
 
     def __init__(self, scene):
         CalcNode.__init__(self, scene, inputs=[1], outputs=[1])
-        pt.composites.Sequence.__init__(self, name="Sequence",memory=False, children=[])
+        pt.composites.Sequence.__init__(self, name="Sequence", memory=False, children=[])
         self.eval()
 
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
-        self.grNode = CalcGraphicsNode(self)
+        self.grNode = CalcGraphicsSequenceNode(self)
         self.content.edit.textChanged.connect(self.onInputChanged)
-    
+
     def evalImplementation(self):
         u_value = self.content.edit.text()
         s_value = u_value
         self.value = s_value
         self.markDirty(False)
-        self.markInvalid(False)   
+        self.markInvalid(False)
 
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
@@ -61,15 +84,12 @@ class Sequence(CalcNode, pt.composites.Sequence):
         self.evalChildren()
 
         return self.value
-    
-    
+
     def initialise(self) -> None:
         return super().initialise()
-    
+
     def update(self) -> pt.common.Status:
         return super().update()
-    
+
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
-    
- 
