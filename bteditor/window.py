@@ -4,9 +4,11 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import time
 import json
+import py_trees as pt
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
+from nodeeditor.node_editor_widget import NodeEditorWidget
 from bteditor.sub_window import CalculatorSubWindow
 from bteditor.drag_listbox import QDMDragListbox
 from nodeeditor.node_graphics_node import QDMGraphicsNode
@@ -43,7 +45,13 @@ class CalculatorWindow(NodeEditorWindow):
 
         self.empty_icon = QIcon(".")
         self.icon = QIcon(os.path.join(os.path.dirname(__file__), 'icons/abb.png'))
-
+        self.openimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/folder_page.png'))
+        self.saveimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/save.png'))
+        self.undoimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/undo1.png'))
+        self.redoimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/redo1.png'))
+        self.buildimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/wrench_blue.png'))
+        self.runimg = QIcon(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        
         if DEBUG:
             print("Registered nodes:")
             pp(CALC_NODES)
@@ -96,6 +104,12 @@ class CalculatorWindow(NodeEditorWindow):
     def createActions(self):
         super().createActions()
 
+        self.actNew1= QAction(self.openimg, "New", self, triggered=self.onFileNew)
+        self.actSave1 = QAction(self.saveimg, "Save", self, triggered=self.onFileSaveAs)
+        self.undo1= QAction(self.undoimg, "Undo", self, triggered=self.onEditUndo)
+        self.redo1= QAction(self.redoimg, "Redo", self, triggered=self.onEditRedo)
+        self.actBuild1 = QAction(self.buildimg, "Build", self, triggered=self.onBuild)
+        self.actRun1 = QAction(self.runimg, "Run", self, triggered=self.onRun)
         self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
@@ -114,9 +128,122 @@ class CalculatorWindow(NodeEditorWindow):
         self._color = QColor(color) if type(color) == str else color
         self._pen = QPen(self._color)
         self._pen.setWidthF(3.0)
-           
+
+    def onFileSave(self):
+        """Handle File Save operation"""
+        current_nodeeditor = self.getCurrentNodeEditorWidget()
+        if current_nodeeditor is not None:
+            if not current_nodeeditor.isFilenameSet(): return self.onFileSaveAs()
+
+            current_nodeeditor.fileSave()
+            self.statusBar().showMessage("Successfully saved %s" % current_nodeeditor.filename, 5000)
+
+            # support for MDI app
+            if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
+            else: self.setTitle()
+            return True
         
-    
+    def onBuild(self):
+        current_node_editor = self.getCurrentNodeEditorWidget()
+        self.node_list = current_node_editor.scene.nodes[:]
+        for node in self.node_list:
+            content_widget = node.grNode.content
+            content_widget.setStyleSheet("background-color: lightgrey;")
+        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
+        self.root=root_node.get_pytrees()
+        self.bt_tree = pt.trees.BehaviourTree(self.root)  
+        #print(self.bt_tree)   
+    def onRunOnce(self):
+        self.bt_tree.root.tick_once()
+        for node in self.node_list:
+            current_node_editor = self.getCurrentNodeEditorWidget()
+            self.node_list = current_node_editor.scene.nodes[:] 
+            content_widget = node.grNode.content
+            if node.py_trees_object.status.value == 'SUCCESS':
+                content_widget.setStyleSheet("background-color: green;")
+            elif node.py_trees_object.status.value == 'RUNNING':
+                content_widget.setStyleSheet("background-color: orange;")
+            elif node.py_trees_object.status.value == 'FAILURE':
+                content_widget.setStyleSheet("background-color: red;")
+            else:
+                content_widget.setStyleSheet("background-color: black;")
+
+    def onRun(self):
+        for _ in range(200):
+            self.onRunOnce()
+            #time.sleep(0.3)
+            
+    def onFileSaveAs(self):
+        """Handle File Save As operation"""
+        current_nodeeditor = self.getCurrentNodeEditorWidget()
+        if current_nodeeditor is not None:
+            fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file', self.getFileDialogDirectory(), self.getFileDialogFilter())
+            if fname == '': return False
+
+            self.onBeforeSaveAs(current_nodeeditor, fname)
+            current_nodeeditor.fileSave(fname)
+            self.statusBar().showMessage("Successfully saved as %s" % current_nodeeditor.filename, 5000)
+
+            # support for MDI app
+            if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
+            else: self.setTitle()
+            return True
+
+    def onBeforeSaveAs(self, current_nodeeditor: 'NodeEditorWidget', filename: str):
+        """
+        Event triggered after choosing filename and before actual fileSave(). We are passing current_nodeeditor because
+        we will loose focus after asking with QFileDialog and therefore getCurrentNodeEditorWidget will return None
+        """
+        pass
+
+    def onEditUndo(self):
+        """Handle Edit Undo operation"""
+        if self.getCurrentNodeEditorWidget():
+            self.getCurrentNodeEditorWidget().scene.history.undo()
+
+    def onEditRedo(self):
+        """Handle Edit Redo operation"""
+        if self.getCurrentNodeEditorWidget():
+            self.getCurrentNodeEditorWidget().scene.history.redo()
+
+    def onEditDelete(self):
+        """Handle Delete Selected operation"""
+        if self.getCurrentNodeEditorWidget():
+            self.getCurrentNodeEditorWidget().scene.getView().deleteSelected()
+
+    def onEditCut(self):
+        """Handle Edit Cut to clipboard operation"""
+        if self.getCurrentNodeEditorWidget():
+            data = self.getCurrentNodeEditorWidget().scene.clipboard.serializeSelected(delete=True)
+            str_data = json.dumps(data, indent=4)
+            QApplication.instance().clipboard().setText(str_data)
+
+    def onEditCopy(self):
+        """Handle Edit Copy to clipboard operation"""
+        if self.getCurrentNodeEditorWidget():
+            data = self.getCurrentNodeEditorWidget().scene.clipboard.serializeSelected(delete=False)
+            str_data = json.dumps(data, indent=4)
+            QApplication.instance().clipboard().setText(str_data)
+
+    def onEditPaste(self):
+        """Handle Edit Paste from clipboard operation"""
+        if self.getCurrentNodeEditorWidget():
+            raw_data = QApplication.instance().clipboard().text()
+
+            try:
+                data = json.loads(raw_data, encoding='utf-8')
+            except ValueError as e:
+                print("Pasting of not valid json data!", e)
+                return
+
+            # check if the json data are correct
+            if 'nodes' not in data:
+                print("JSON does not contain any nodes!")
+                return
+
+            return self.getCurrentNodeEditorWidget().scene.clipboard.deserializeFromClipboard(data)
+
+
     def getCurrentNodeEditorWidget(self):
         """ we're returning NodeEditorWidget here... """
         activeSubWindow = self.mdiArea.activeSubWindow()
@@ -168,9 +295,19 @@ class CalculatorWindow(NodeEditorWindow):
 
         self.helpMenu = self.menuBar().addMenu("&Help")
         self.helpMenu.addAction(self.actAbout)
-        
 
         self.editMenu.aboutToShow.connect(self.updateEditMenu)
+        
+        spacer = QWidgetAction(self)
+        spacer.setSeparator(True)
+        self.menuBar().addAction(spacer)
+        
+        self.menuBar().addAction(self.actNew1)
+        self.menuBar().addAction(self.actSave1)
+        self.menuBar().addAction(self.undo1)
+        self.menuBar().addAction(self.redo1)
+        self.menuBar().addAction(self.actBuild1)
+        self.menuBar().addAction(self.actRun1)
 
     def updateMenus(self):
         # print("update Menus")

@@ -107,8 +107,7 @@ class NodeEditorWindow(QMainWindow):
         self.editMenu.addAction(self.actRun)
     
     def createToolBars(self):
-        toolbar = self.addToolBar("Toolbar")
-        toolbar.addAction(QIcon('data/icons/folder_page.png'), "New", self.onFileNew)
+        pass
 
     def setTitle(self):
         """Function responsible for setting window title"""
@@ -238,9 +237,9 @@ class NodeEditorWindow(QMainWindow):
                 content_widget.setStyleSheet("background-color: black;")
 
     def onRun(self):
-        for _ in range(10):
+        for _ in range(200):
             self.onRunOnce()
-            time.sleep(0.3)
+            #time.sleep(0.3)
             
     def onFileSaveAs(self):
         """Handle File Save As operation"""
