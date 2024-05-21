@@ -78,7 +78,10 @@ class CalcNode(Node):
     
     def getnode(self):
         try:
-            if self.op_title == "Sequence":
+            
+            if self.op_title == "Root":
+                return pt.composites.Sequence(name=self.op_title, memory=False, children=[])
+            elif self.op_title == "Sequence":
                 return pt.composites.Sequence(name=self.op_title, memory=False, children=[])
             elif self.op_title == "Fallback":
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])

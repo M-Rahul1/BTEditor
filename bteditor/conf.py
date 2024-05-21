@@ -1,5 +1,6 @@
 LISTBOX_MIMETYPE = "application/x-item"
 
+ROOT = 0
 FALLBACK = 1
 SEQUENCE = 2
 PARALLEL = 3

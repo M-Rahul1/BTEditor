@@ -68,6 +68,8 @@ class QDMGraphicsNode(QGraphicsItem):
         """Set up internal attributes like `width`, `height`, etc."""
         self.width = 180
         self.height = 240
+        #whole node roundness
+        self.boundingRect_roundness = 10.0
         self.edge_roundness = 10.0
         self.edge_padding = 10.0
         self.title_height = 24.0

@@ -95,11 +95,8 @@ class CalculatorWindow(NodeEditorWindow):
             sys.exit(0)
 
     def createToolBars(self):
-        """self.projectToolbar = QToolBar('Project toolbar', self)
-        self.projectToolbar.setObjectName('projectToolbar')
-        self.projectToolbar.setIconSize(QSize(18, 18))
-
-        self.projectToolbar.addAction(QIcon('data/icons/folder_page'), 'New', self.actNew)"""
+        super().createToolBars()
+        self.actNew1= QAction(self.openimg, "New", self, triggered=self.onFileNew)
         
     def createActions(self):
         super().createActions()
@@ -284,6 +281,19 @@ class CalculatorWindow(NodeEditorWindow):
     def about(self):
         QMessageBox.about(self, "About BT NodeEditor","Mail me for help")
 
+    def createToolBars(self):
+        super().createToolBars()
+        self.toolbar = self.addToolBar("Tools")
+        self.toolbar.setMovable(False)
+        self.toolbar.setFloatable(False)
+        self.toolbar.setIconSize(QSize(16, 16))
+        self.toolbar.addAction(self.actNew1)
+        self.toolbar.addAction(self.actSave1)
+        self.toolbar.addAction(self.undo1)
+        self.toolbar.addAction(self.redo1)
+        self.toolbar.addAction(self.actBuild1)
+        self.toolbar.addAction(self.actRun1)
+        
     def createMenus(self):
         super().createMenus()
 
@@ -302,12 +312,6 @@ class CalculatorWindow(NodeEditorWindow):
         spacer.setSeparator(True)
         self.menuBar().addAction(spacer)
         
-        self.menuBar().addAction(self.actNew1)
-        self.menuBar().addAction(self.actSave1)
-        self.menuBar().addAction(self.undo1)
-        self.menuBar().addAction(self.redo1)
-        self.menuBar().addAction(self.actBuild1)
-        self.menuBar().addAction(self.actRun1)
 
     def updateMenus(self):
         # print("update Menus")
