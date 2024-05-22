@@ -37,6 +37,10 @@ DEBUG = False
 
 class CalculatorWindow(NodeEditorWindow):
 
+    def __init__(self):
+        super().__init__()        
+        self.status_bar = self.statusBar()        
+        
     def initUI(self):
         self.name_company = 'ABB'
         self.name_product = 'NodeEditor'
@@ -185,6 +189,7 @@ class CalculatorWindow(NodeEditorWindow):
             content_widget = node.grNode.content
             status = node.py_trees_object.status.value
             logging.info(f'Node {node}: Status {status}')
+            self.status_bar.showMessage(f'Node {node}: Status {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
             elif status == 'RUNNING':

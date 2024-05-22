@@ -43,11 +43,11 @@ class QDMDragListbox(QListWidget):
         spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
         self.addItem(spacer_item)
         
-        self.addMyItem("CUBE2_DELIVERED", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_DELIVERED, section_name="Task 1")
-        self.addMyItem("Cube2_in_hand", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_IN_HAND, section_name="Task 1")
-        self.addMyItem("Robot_at_cube2", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_CUBE2, section_name="Task 1")
-        self.addMyItem("Move_to_cube2", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_CUBE2, section_name="Task 1")
-        self.addMyItem("Pick_cube2", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_CUBE2, section_name="Task 1")
+        self.addMyItem("CUBE2_DELIVERED?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_DELIVERED, section_name="Task 1")
+        self.addMyItem("Cube2_in_hand?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_IN_HAND, section_name="Task 1")
+        self.addMyItem("Robot_at_cube2?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_CUBE2, section_name="Task 1")
+        self.addMyItem("Move_to_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_CUBE2, section_name="Task 1")
+        self.addMyItem("Pick_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_CUBE2, section_name="Task 1")
 
         self.add_section("Task 2")
         
@@ -56,9 +56,9 @@ class QDMDragListbox(QListWidget):
         spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
         self.addItem(spacer_item)
         
-        self.addMyItem("Robot_at_delivery", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_DELIVERY, section_name="Task 2")
-        self.addMyItem("Move_to_delivery", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_DELIVERY, section_name="Task 2")
-        self.addMyItem("Place_cube2", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PLACE_CUBE2, section_name="Task 2")
+        self.addMyItem("Robot_at_delivery?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_DELIVERY, section_name="Task 2")
+        self.addMyItem("Move_to_delivery!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_DELIVERY, section_name="Task 2")
+        self.addMyItem("Place_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PLACE_CUBE2, section_name="Task 2")
 
     def add_section(self, section_name):
         if self.sections:
