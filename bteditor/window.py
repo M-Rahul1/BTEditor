@@ -26,6 +26,10 @@ Edge.registerEdgeValidator(edge_cannot_connect_input_and_output_of_same_node)
 
 # images for the dark skin
 import bteditor.qss.nodeeditor_dark_resources
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 
 DEBUG = False
@@ -51,7 +55,9 @@ class CalculatorWindow(NodeEditorWindow):
         self.redoimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/redo1.png'))
         self.buildimg = QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/wrench_blue.png'))
         self.runimg = QIcon(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
-        
+        self.tickimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/tick.png'))
+        self.pauseimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/pause.png'))
+        self.resetimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/reset.png'))
         if DEBUG:
             print("Registered nodes:")
             pp(CALC_NODES)
@@ -96,17 +102,40 @@ class CalculatorWindow(NodeEditorWindow):
 
     def createToolBars(self):
         super().createToolBars()
-        self.actNew1= QAction(self.openimg, "New", self, triggered=self.onFileNew)
+        self.toolbar = self.addToolBar("Tools")
+        self.toolbar.setMovable(False)
+        self.toolbar.setFloatable(False)
+        self.toolbar.setIconSize(QSize(24, 24))
+        
+        self.toolbar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon)
+        
+        self.toolbar.addAction(self.actNew1)
+        self.toolbar.addAction(self.actSave1)
+        self.toolbar.addAction(self.undo1)
+        self.toolbar.addAction(self.redo1)
+        
+        spacer = QWidget()
+        spacer.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.toolbar.addWidget(spacer)
+        
+        self.toolbar.addAction(self.actBuild1)
+        self.toolbar.addAction(self.actRunOnce1)
+        self.toolbar.addAction(self.actRun1)
+        self.toolbar.addAction(self.actPause1)
+        self.toolbar.addAction(self.actReset1)        
         
     def createActions(self):
         super().createActions()
 
         self.actNew1= QAction(self.openimg, "New", self, triggered=self.onFileNew)
-        self.actSave1 = QAction(self.saveimg, "Save", self, triggered=self.onFileSaveAs)
+        self.actSave1= QAction(self.saveimg, "Save", self, triggered=self.onFileSaveAs)
         self.undo1= QAction(self.undoimg, "Undo", self, triggered=self.onEditUndo)
         self.redo1= QAction(self.redoimg, "Redo", self, triggered=self.onEditRedo)
-        self.actBuild1 = QAction(self.buildimg, "Build", self, triggered=self.onBuild)
-        self.actRun1 = QAction(self.runimg, "Run", self, triggered=self.onRun)
+        self.actBuild1 = QAction(self.buildimg, "Build Tree", self, triggered=self.onBuild)
+        self.actRunOnce1 = QAction(self.tickimg, "Tick Once", self, triggered=self.onRunOnce)
+        self.actRun1 = QAction(self.runimg, "Tick Until Result", self, triggered=self.onRun)
+        self.actPause1 = QAction(self.pauseimg, "Pause", self, triggered=self.onPause)
+        self.actReset1 = QAction(self.resetimg, "Reset", self, triggered=self.onReset)
         self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
@@ -150,26 +179,48 @@ class CalculatorWindow(NodeEditorWindow):
         self.root=root_node.get_pytrees()
         self.bt_tree = pt.trees.BehaviourTree(self.root)  
         #print(self.bt_tree)   
-    def onRunOnce(self):
-        self.bt_tree.root.tick_once()
+        
+    def update_node_colors(self):
         for node in self.node_list:
-            current_node_editor = self.getCurrentNodeEditorWidget()
-            self.node_list = current_node_editor.scene.nodes[:] 
             content_widget = node.grNode.content
-            if node.py_trees_object.status.value == 'SUCCESS':
+            status = node.py_trees_object.status.value
+            logging.info(f'Node {node}: Status {status}')
+            if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
-            elif node.py_trees_object.status.value == 'RUNNING':
+            elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")
-            elif node.py_trees_object.status.value == 'FAILURE':
+            elif status == 'FAILURE':
                 content_widget.setStyleSheet("background-color: red;")
             else:
                 content_widget.setStyleSheet("background-color: black;")
-
+    
+    def onRunOnce(self):
+        self.bt_tree.root.tick_once()
+        current_node_editor = self.getCurrentNodeEditorWidget()
+        self.node_list = current_node_editor.scene.nodes[:] 
+        self.update_node_colors()
+        
+        
     def onRun(self):
-        for _ in range(200):
+        #if self.bt_tree.root.status != pt.common.Status.SUCCESS and self.bt_tree.root.status != pt.common.Status.FAILURE:
+        for _ in range(50):
             self.onRunOnce()
-            #time.sleep(0.3)
+            time.sleep(0.2)
+            self.update_node_colors()
             
+    def onPause(self):
+        pass
+    
+    def onReset(self):
+        current_node_editor = self.getCurrentNodeEditorWidget()
+        self.node_list = current_node_editor.scene.nodes[:]
+        for node in self.node_list:
+            content_widget = node.grNode.content
+            content_widget.setStyleSheet("background-color: default;")
+        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
+        self.root=root_node.get_pytrees()
+        self.bt_tree = pt.trees.BehaviourTree(self.root) 
+                
     def onFileSaveAs(self):
         """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()
@@ -281,18 +332,7 @@ class CalculatorWindow(NodeEditorWindow):
     def about(self):
         QMessageBox.about(self, "About BT NodeEditor","Mail me for help")
 
-    def createToolBars(self):
-        super().createToolBars()
-        self.toolbar = self.addToolBar("Tools")
-        self.toolbar.setMovable(False)
-        self.toolbar.setFloatable(False)
-        self.toolbar.setIconSize(QSize(16, 16))
-        self.toolbar.addAction(self.actNew1)
-        self.toolbar.addAction(self.actSave1)
-        self.toolbar.addAction(self.undo1)
-        self.toolbar.addAction(self.redo1)
-        self.toolbar.addAction(self.actBuild1)
-        self.toolbar.addAction(self.actRun1)
+
         
     def createMenus(self):
         super().createMenus()

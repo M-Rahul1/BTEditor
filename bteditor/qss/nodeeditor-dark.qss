@@ -150,12 +150,11 @@ QDockWidget::close-button {
 QDockWidget::float-button {
   right: 18px;
 }
-QMenuBar,
-QToolBar{
+QMenuBar
+{
   background: #474747;
 }
-QMenuBar::item,
-QToolBar::item {
+QMenuBar::item {
   spacing: 3px;
   padding: 3px 5px;
   color: #eee;
@@ -165,27 +164,32 @@ QMenuBar::item:selected,
 QMenuBar::item:pressed {
   background: #4f9eee;
 }
-QMenu,
 QToolBar {
+  background: #c1c1c1;
+}
+QMenu {
   background: #474747;
   border: 1px solid #2e2e2e;
 }
+QToolBar QToolButton{
+  background: #ebebeb;
+  color: #000000;
+}
 QMenu::item,
-QToolBar::item {
+QToolBar QToolButton::item {
   background: #474747;
   color: #eee;
 }
 QMenu::item:selected ,
-QToolBar::item:selected {
+QToolBar QToolButton::item:selected {
   background: #616161;
 }
-QMenu::active,
-QToolBar::active {
+QMenu::active{
   background: #616161;
   color: #eee;
 }
 QMenu::separator ,
-QToolBar::separator {
+QToolBar QToolButton::separator {
   height: 1px;
   background: #2e2e2e;
 }
@@ -203,6 +207,9 @@ QListView::item {
 }
 QListView::item:hover {
   background: #6e6e6e;
+}
+QToolBar QToolButton::content{
+  background-color: #4f9eee;
 }
 QListView::item::active:hover {
   color: #fff;
@@ -240,6 +247,7 @@ QLineEdit {
 }
 QDMNodeContentWidget {
   background: transparent;
+
 }
 QDMNodeContentWidget QFrame {
   background: transparent;
