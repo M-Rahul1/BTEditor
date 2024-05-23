@@ -1,4 +1,4 @@
-import os
+import os, sys
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
@@ -15,6 +15,7 @@ from nodeeditor.node_graphics_node import QDMGraphicsNode
 from nodeeditor.node_graphics_edge import QDMGraphicsEdge
 from nodeeditor.utils import dumpException, pp
 from bteditor.conf import *
+from bteditor.output_log import OutputDock
 
 # Enabling edge validators
 from nodeeditor.node_edge import Edge
@@ -92,6 +93,15 @@ class CalculatorWindow(NodeEditorWindow):
 
         self.setWindowTitle("BT NodeEditor")
         self.setWindowIcon(self.icon)
+        
+        # Creating and adding OutputDock
+        self._dockOutput = OutputDock('Output', self)
+        self._dockOutput.setObjectName('output')
+        self._dockOutput.setAllowedAreas(Qt.AllDockWidgetAreas)
+        self.addDockWidget(Qt.BottomDockWidgetArea, self._dockOutput)
+        
+        # Redirecting stdout to the output dock
+        sys.stdout = self._dockOutput
 
     def closeEvent(self, event):
         self.mdiArea.closeAllSubWindows()
