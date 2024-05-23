@@ -188,8 +188,8 @@ class CalculatorWindow(NodeEditorWindow):
         for node in self.node_list:
             content_widget = node.grNode.content
             status = node.py_trees_object.status.value
-            logging.info(f'Node {node}: Status {status}')
-            self.status_bar.showMessage(f'Node {node}: Status {status}')
+            logging.info(f'Node {node.op_title}: Status {status}')
+            self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
             elif status == 'RUNNING':

@@ -310,7 +310,7 @@ class Move_to_delivery(CalcNode,pt.behaviours.TickCounter):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Move_to_delivery?", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Move_to_delivery!", duration=10, completion_status=pt.common.Status.SUCCESS)
         self.eval()
     
     def initInnerClasses(self):
@@ -354,7 +354,7 @@ class Place_cube2(CalcNode,pt.behaviours.TickCounter):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Place_cube2", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Place_cube2!", duration=10, completion_status=pt.common.Status.SUCCESS)
         self.eval()
     
     def initInnerClasses(self):
