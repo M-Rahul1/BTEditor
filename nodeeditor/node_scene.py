@@ -3,7 +3,7 @@
 A module containing the representation of the NodeEditor's Scene
 """
 import os
-import json
+import json, uuid
 from collections import OrderedDict
 from nodeeditor.utils import dumpException
 from nodeeditor.node_serializable import Serializable
@@ -49,6 +49,8 @@ class Scene(Serializable):
 
         # custom flag used to suppress triggering onItemSelected which does a bunch of stuff
         self._silent_selection_events = False
+        
+        self.id = uuid.uuid4()
 
         self._has_been_modified = False
         self._last_selected_items = None

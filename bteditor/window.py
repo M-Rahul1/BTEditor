@@ -193,12 +193,31 @@ class CalculatorWindow(NodeEditorWindow):
         self.root=root_node.get_pytrees()
         self.bt_tree = pt.trees.BehaviourTree(self.root)  
         #print(self.bt_tree)   
-        
+    
+    def printConnections(self):
+        current_node_editor = self.getCurrentNodeEditorWidget()
+        if current_node_editor:
+            self.print_node_connections(current_node_editor.scene)
+
+    def print_node_connections(self, scene):
+        for node in scene.nodes:
+            for socket in node.inputs:
+                for edge in socket.edges:
+                    if edge.start_socket.node != node:
+                        connected_node = edge.start_socket.node
+                        print(f"Node '{node.title}' is connected to Node '{connected_node.title}' (input)")
+            for socket in node.outputs:
+                for edge in socket.edges:
+                    if edge.end_socket.node != node:
+                        connected_node = edge.end_socket.node
+                        print(f"Node '{node.title}' is connected to Node '{connected_node.title}' (output)")
+    
     def update_node_colors(self):
         for node in self.node_list:
             content_widget = node.grNode.content
             status = node.py_trees_object.status.value
-            logging.info(f'Node {node.op_title}: Status {status}')
+            #logging.info(f'Node {node.op_title}: Status {status}')
+            print(f'Node {node.op_title}: Status {status}')
             self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
