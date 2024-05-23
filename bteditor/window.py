@@ -102,6 +102,7 @@ class CalculatorWindow(NodeEditorWindow):
         
         # Redirecting stdout to the output dock
         sys.stdout = self._dockOutput
+        self._dockOutput.setStyleSheet("QTextEdit { font-size: 11pt; }")
 
     def closeEvent(self, event):
         self.mdiArea.closeAllSubWindows()
