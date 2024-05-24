@@ -3,7 +3,7 @@
 A module containing the representation of the NodeEditor's Scene
 """
 import os
-import json
+import json, uuid
 from collections import OrderedDict
 from nodeeditor.utils import dumpException
 from nodeeditor.node_serializable import Serializable
@@ -22,7 +22,12 @@ DEBUG_REMOVE_WARNINGS = False
 
 class InvalidFile(Exception): pass
 
-
+class CustomJSONEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, uuid.UUID):
+            return str(obj)
+        return super().default(obj)
+    
 class Scene(Serializable):
     """Class representing NodeEditor's `Scene`"""
     def __init__(self):
@@ -297,7 +302,7 @@ class Scene(Serializable):
         self.has_been_modified = False
 
 
-    def saveToFile(self, filename:str):
+    def saveToFile(self, filename: str):
         """
         Save this `Scene` to the file on disk.
 
@@ -305,32 +310,27 @@ class Scene(Serializable):
         :type filename: ``str``
         """
         with open(filename, "w") as file:
-            file.write( json.dumps( self.serialize(), indent=4 ) )
-            print("saving to", filename, "was successfull.")
+            file.write(json.dumps(self.serialize(), indent=4, cls=CustomJSONEncoder))
+            print("saving to", filename, "was successful.")
 
             self.has_been_modified = False
             self.filename = filename
 
-    def loadFromFile(self, filename:str):
+    def loadFromFile(self, filename: str):
         """
-        Load `Scene` from a file on disk
+        Load this `Scene` from the file on disk.
 
-        :param filename: from what file to load the `Scene`
+        :param filename: from where to load this scene
         :type filename: ``str``
-        :raises: :class:`~nodeeditor.node_scene.InvalidFile` if there was an error decoding JSON file
         """
-
         with open(filename, "r") as file:
             raw_data = file.read()
-            try:
-                data = json.loads(raw_data, encoding='utf-8')
-                self.filename = filename
-                self.deserialize(data)
-                self.has_been_modified = False
-            except json.JSONDecodeError:
-                raise InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
-            except Exception as e:
-                dumpException(e)
+            data = json.loads(raw_data)  # Remove the encoding argument
+            self.deserialize(data)
+            print("loading from", filename, "was successful.")
+
+            self.has_been_modified = False
+            self.filename = filename
 
     def getEdgeClass(self):
         """Return the class representing Edge. Override me if needed"""
