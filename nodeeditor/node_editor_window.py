@@ -71,7 +71,6 @@ class NodeEditorWindow(QMainWindow):
         self.actCopy = QAction('&Copy', self, shortcut='Ctrl+C', statusTip="Copy to clipboard", triggered=self.onEditCopy)
         self.actPaste = QAction('&Paste', self, shortcut='Ctrl+V', statusTip="Paste from clipboard", triggered=self.onEditPaste)
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
-        self.actMonitor = QAction('&Monitor', self, shortcut='Ctrl+M', statusTip="Monitor", triggered=self.onMonitor)
         self.actBuild = QAction('&Build', self, shortcut='Ctrl+B', statusTip="Build", triggered=self.onBuild)
         self.actRunOnce = QAction('&RunOnce', self, shortcut='Ctrl+R', statusTip="Run Once", triggered=self.onRunOnce)
         self.actRun = QAction('&Run', self, shortcut='Ctrl+T', statusTip="Run", triggered=self.onRun)
@@ -103,10 +102,12 @@ class NodeEditorWindow(QMainWindow):
         self.editMenu.addAction(self.actPaste)
         self.editMenu.addSeparator()
         self.editMenu.addAction(self.actDelete)
-        self.editMenu.addAction(self.actMonitor)
         self.editMenu.addAction(self.actBuild)
         self.editMenu.addAction(self.actRunOnce)
         self.editMenu.addAction(self.actRun)
+    
+    def createToolBars(self):
+        pass
 
     def setTitle(self):
         """Function responsible for setting window title"""
@@ -209,11 +210,6 @@ class NodeEditorWindow(QMainWindow):
             if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
             else: self.setTitle()
             return True
-    
-    def onMonitor(self):
-        current_nodeeditor = self.getCurrentNodeEditorWidget()
-        if current_nodeeditor is not None:
-            self.getCurrentNodeEditorWidget().scene.history.monitor()
         
     def onBuild(self):
         current_node_editor = self.getCurrentNodeEditorWidget()
@@ -241,9 +237,9 @@ class NodeEditorWindow(QMainWindow):
                 content_widget.setStyleSheet("background-color: black;")
 
     def onRun(self):
-        for _ in range(10):
+        for _ in range(200):
             self.onRunOnce()
-            time.sleep(0.3)
+            #time.sleep(0.3)
             
     def onFileSaveAs(self):
         """Handle File Save As operation"""

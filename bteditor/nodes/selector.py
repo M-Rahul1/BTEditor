@@ -1,3 +1,4 @@
+import os
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from bteditor.conf import *
@@ -30,7 +31,7 @@ class CalcInputContent(QDMNodeContentWidget):
 
 @register_node(FALLBACK)
 class Fallback(CalcNode,pt.composites.Selector):
-    icon = "icons/fallback.png"
+    icon = os.path.join(os.path.dirname(__file__), 'icons/action.png')
     op_code = FALLBACK
     op_title = "Fallback"
     content_label_objname = "selector_node"

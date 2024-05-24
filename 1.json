@@ -1,0 +1,81 @@
+{
+    "id": "25daec82-5ac9-43e6-b0ba-858b67c92c06",
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": "19fdabaa-9feb-48ca-bac1-d37ddb1db0fb",
+            "title": "Root",
+            "pos_x": 148.0,
+            "pos_y": -236.0,
+            "inputs": [],
+            "outputs": [
+                {
+                    "id": 3075882662128,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 0
+        },
+        {
+            "id": "db3df57f-b997-474a-883d-631511d9d0dd",
+            "title": "Move_to_delivery!",
+            "pos_x": 48.0,
+            "pos_y": -39.0,
+            "inputs": [
+                {
+                    "id": 3075905203200,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 11
+        },
+        {
+            "id": "a9ae4ae7-4f56-4cb4-b18a-ddcf357e50aa",
+            "title": "Place_cube2!",
+            "pos_x": 383.0,
+            "pos_y": -9.0,
+            "inputs": [
+                {
+                    "id": 3075905276864,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 12
+        }
+    ],
+    "edges": [
+        {
+            "id": 3075894467360,
+            "edge_type": 2,
+            "start": 3075882662128,
+            "end": 3075905203200
+        },
+        {
+            "id": 3075905276672,
+            "edge_type": 2,
+            "start": 3075882662128,
+            "end": 3075905276864
+        }
+    ]
+}

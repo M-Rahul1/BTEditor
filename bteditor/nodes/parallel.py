@@ -1,3 +1,4 @@
+import os
 import py_trees as pt
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -31,7 +32,7 @@ class CalcInputContent(QDMNodeContentWidget):
 
 @register_node(PARALLEL)
 class Parallel(CalcNode, pt.composites.Parallel):
-    icon = "icons/right_arrow.png"
+    icon = os.path.join(os.path.dirname(__file__), 'icons/action.png')
     op_code = PARALLEL
     op_title = "Parallel"
     content_label_objname = "parallel_node"

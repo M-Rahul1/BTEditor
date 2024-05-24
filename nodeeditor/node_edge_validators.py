@@ -28,12 +28,12 @@ def print_error(*args):
 
 def edge_validator_debug(input: 'Socket', output: 'Socket') -> bool:
     """This will consider edge always valid, however writes bunch of debug stuff into console"""
-    print("VALIDATING:")
+    """print("VALIDATING:")
     print(input, "input" if input.is_input else "output",  "of node", input.node)
     for s in input.node.inputs+input.node.outputs: print("\t", s, "input" if s.is_input else "output")
     print(output, "input" if input.is_input else "output", "of node", output.node)
     for s in output.node.inputs+output.node.outputs: print("\t", s, "input" if s.is_input else "output")
-
+"""
     return True
 
 def edge_cannot_connect_two_outputs_or_two_inputs(input: 'Socket', output: 'Socket') -> bool:
