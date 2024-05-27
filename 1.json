@@ -1,17 +1,17 @@
 {
-    "id": "25daec82-5ac9-43e6-b0ba-858b67c92c06",
+    "id": "6106fc8a-e2f3-48dc-8fdc-2ecaef974822",
     "scene_width": 64000,
     "scene_height": 64000,
     "nodes": [
         {
-            "id": "19fdabaa-9feb-48ca-bac1-d37ddb1db0fb",
+            "id": "b505bb5b-d038-4feb-9fe9-1d8b8ba73b9f",
             "title": "Root",
-            "pos_x": 148.0,
-            "pos_y": -236.0,
+            "pos_x": 65.0,
+            "pos_y": -293.0,
             "inputs": [],
             "outputs": [
                 {
-                    "id": 3075882662128,
+                    "id": 2454639784160,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -24,13 +24,301 @@
             "op_code": 0
         },
         {
-            "id": "db3df57f-b997-474a-883d-631511d9d0dd",
-            "title": "Move_to_delivery!",
-            "pos_x": 48.0,
-            "pos_y": -39.0,
+            "id": 2454639783680,
+            "title": "Fallback",
+            "pos_x": 49.0,
+            "pos_y": -164.0,
             "inputs": [
                 {
-                    "id": 3075905203200,
+                    "id": 2454632371392,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2454632381520,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "8f71e87d-509c-4cf6-a8fe-0bdcc937d497",
+            "title": "Cube2_delivered?",
+            "pos_x": -66.0,
+            "pos_y": -21.0,
+            "inputs": [
+                {
+                    "id": 2454639867280,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 5
+        },
+        {
+            "id": "0c205533-a097-4eb6-b68b-c9b8e6bc0a80",
+            "title": "Sequence",
+            "pos_x": 196.0,
+            "pos_y": -22.0,
+            "inputs": [
+                {
+                    "id": 2454639867472,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2454639867520,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": 2454639867088,
+            "title": "Fallback",
+            "pos_x": 39.0625,
+            "pos_y": 144.53124999999997,
+            "inputs": [
+                {
+                    "id": 2454639868720,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2454639868768,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": 2454639868480,
+            "title": "Fallback",
+            "pos_x": 312.49999999999994,
+            "pos_y": 144.53124999999997,
+            "inputs": [
+                {
+                    "id": 2454639868864,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2454639868912,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "9682feea-a407-4eb0-b502-d044a823f782",
+            "title": "Cube2_in_hand?",
+            "pos_x": -132.81249999999997,
+            "pos_y": 277.34374999999994,
+            "inputs": [
+                {
+                    "id": 2454639869056,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 6
+        },
+        {
+            "id": "e1f078ff-34e2-4b90-9581-bfce13a86e5b",
+            "title": "Sequence",
+            "pos_x": 119.14062499999994,
+            "pos_y": 283.20312499999994,
+            "inputs": [
+                {
+                    "id": 2454639869584,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2454639869680,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": 2454639869344,
+            "title": "Fallback",
+            "pos_x": 46.874999999999986,
+            "pos_y": 431.6406249999999,
+            "inputs": [
+                {
+                    "id": 2454639869824,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2454639869920,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "3e83e409-a9f0-4813-8523-e04fe3bb7e83",
+            "title": "Robot_at_cube2?",
+            "pos_x": -68.35937499999999,
+            "pos_y": 564.4531249999999,
+            "inputs": [
+                {
+                    "id": 2454640246960,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 7
+        },
+        {
+            "id": "7fa42e55-3e6f-4cf8-b7f3-727b80e0b1ba",
+            "title": "Move_to_cube2!",
+            "pos_x": 167.96874999999994,
+            "pos_y": 580.0781249999999,
+            "inputs": [
+                {
+                    "id": 2454640247152,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 8
+        },
+        {
+            "id": "1a82c419-840a-4657-a19b-5fea80fe7391",
+            "title": "Pick_cube2!",
+            "pos_x": 289.06249999999983,
+            "pos_y": 435.5468749999999,
+            "inputs": [
+                {
+                    "id": 2454640247344,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 9
+        },
+        {
+            "id": "2ec022a8-5254-4f31-be13-2b5edea7c899",
+            "title": "Robot_at_delivery?",
+            "pos_x": 384.7656249999999,
+            "pos_y": 275.39062499999994,
+            "inputs": [
+                {
+                    "id": 2454640247680,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 10
+        },
+        {
+            "id": "adec88f2-cc05-40db-bb46-de88375133b9",
+            "title": "Move_to_delivery!",
+            "pos_x": 607.4218749999999,
+            "pos_y": 273.43749999999994,
+            "inputs": [
+                {
+                    "id": 2454640247872,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -44,13 +332,13 @@
             "op_code": 11
         },
         {
-            "id": "a9ae4ae7-4f56-4cb4-b18a-ddcf357e50aa",
+            "id": "399124b4-9712-414b-99b7-eb48ea3b8b68",
             "title": "Place_cube2!",
-            "pos_x": 383.0,
-            "pos_y": -9.0,
+            "pos_x": 578.1249999999999,
+            "pos_y": 119.14062499999997,
             "inputs": [
                 {
-                    "id": 3075905276864,
+                    "id": 2454640248160,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -66,16 +354,88 @@
     ],
     "edges": [
         {
-            "id": 3075894467360,
+            "id": 2454578620048,
             "edge_type": 2,
-            "start": 3075882662128,
-            "end": 3075905203200
+            "start": 2454639784160,
+            "end": 2454632371392
         },
         {
-            "id": 3075905276672,
+            "id": 2454639867040,
             "edge_type": 2,
-            "start": 3075882662128,
-            "end": 3075905276864
+            "start": 2454632381520,
+            "end": 2454639867280
+        },
+        {
+            "id": 2454639867424,
+            "edge_type": 2,
+            "start": 2454632381520,
+            "end": 2454639867472
+        },
+        {
+            "id": 2454639867568,
+            "edge_type": 2,
+            "start": 2454639867520,
+            "end": 2454639868720
+        },
+        {
+            "id": 2454639867904,
+            "edge_type": 2,
+            "start": 2454639867520,
+            "end": 2454639868864
+        },
+        {
+            "id": 2454639868576,
+            "edge_type": 2,
+            "start": 2454639868768,
+            "end": 2454639869056
+        },
+        {
+            "id": 2454639867232,
+            "edge_type": 2,
+            "start": 2454639868768,
+            "end": 2454639869584
+        },
+        {
+            "id": 2454639868960,
+            "edge_type": 2,
+            "start": 2454639869680,
+            "end": 2454639869824
+        },
+        {
+            "id": 2454639868816,
+            "edge_type": 2,
+            "start": 2454639869920,
+            "end": 2454640246960
+        },
+        {
+            "id": 2454640246864,
+            "edge_type": 2,
+            "start": 2454639869920,
+            "end": 2454640247152
+        },
+        {
+            "id": 2454640247440,
+            "edge_type": 2,
+            "start": 2454639869680,
+            "end": 2454640247344
+        },
+        {
+            "id": 2454639868672,
+            "edge_type": 2,
+            "start": 2454639868912,
+            "end": 2454640247680
+        },
+        {
+            "id": 2454639869248,
+            "edge_type": 2,
+            "start": 2454639868912,
+            "end": 2454640247872
+        },
+        {
+            "id": 2454640247920,
+            "edge_type": 2,
+            "start": 2454639867520,
+            "end": 2454640248160
         }
     ]
 }
