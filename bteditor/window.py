@@ -40,7 +40,8 @@ class CalculatorWindow(NodeEditorWindow):
 
     def __init__(self):
         super().__init__()        
-        self.status_bar = self.statusBar()        
+        self.status_bar = self.statusBar()   
+        self.timer = QTimer()    
         
     def initUI(self):
         self.name_company = 'ABB'
@@ -239,16 +240,23 @@ class CalculatorWindow(NodeEditorWindow):
         self.node_list = current_node_editor.scene.nodes[:] 
         self.update_node_colors()
         
-        
+        root_status = self.bt_tree.root.status
+        self.iterations = 0
+        self.max_iterations = 50
+        self.iterations += 1
+        if self.iterations >= self.max_iterations or root_status != pt.common.Status.RUNNING:
+            self.stopRun()
+
     def onRun(self):
-        #if self.bt_tree.root.status != pt.common.Status.SUCCESS and self.bt_tree.root.status != pt.common.Status.FAILURE:
-        for _ in range(50):
-            self.onRunOnce()
-            time.sleep(0.2)
-            self.update_node_colors()
+        self.timer.timeout.connect(self.onRunOnce) 
+
+        self.timer.start(200)  # Timer calls onRunOnce every 200 milliseconds
+
+    def stopRun(self):
+        self.timer.stop()
             
     def onPause(self):
-        pass
+        self.timer.stop()
     
     def onReset(self):
         current_node_editor = self.getCurrentNodeEditorWidget()
