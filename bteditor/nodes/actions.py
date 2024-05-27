@@ -36,7 +36,7 @@ class Cube2_delivered(CalcNode,pt.behaviour.Behaviour):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Cube2_delivered")
+        pt.behaviour.Behaviour.__init__(self, name="Cube2_delivered?")
         self.eval()
 
     def update(self) -> pt.common.Status:
@@ -81,7 +81,7 @@ class Cube2_in_hand(CalcNode,pt.behaviour.Behaviour):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Cube2_in_hand")
+        pt.behaviour.Behaviour.__init__(self, name="Cube2_in_hand?")
         self.eval()
     
     def update(self) -> pt.common.Status:
@@ -125,7 +125,7 @@ class Robot_at_cube2(CalcNode,pt.behaviour.Behaviour):
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Robot_at_cube2")
+        pt.behaviour.Behaviour.__init__(self, name="Robot_at_cube2?")
         self.eval()
 
     def update(self) -> pt.common.Status:
