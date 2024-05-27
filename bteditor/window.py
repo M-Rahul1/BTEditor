@@ -230,6 +230,10 @@ class CalculatorWindow(NodeEditorWindow):
                 content_widget.setStyleSheet("background-color: black;")
     
     def onRunOnce(self):
+        # Check if the tree is built, if not, build it
+        if not hasattr(self, 'bt_tree'):
+            self.onBuild()
+            
         self.bt_tree.root.tick_once()
         current_node_editor = self.getCurrentNodeEditorWidget()
         self.node_list = current_node_editor.scene.nodes[:] 
