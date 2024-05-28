@@ -155,8 +155,8 @@ class Robot_at_cube2_(pt.behaviour.Behaviour):
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> pt.common.Status.SUCCESS:
-        return pt.common.Status.SUCCESS  
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE  
     
 @register_node(MOVE_TO_CUBE2)
 class Move_to_cube2(CalcNode,pt.behaviours.TickCounter):
@@ -288,17 +288,11 @@ class Robot_at_delivery(CalcNode,pt.behaviour.Behaviour):
 
 class Robot_at_delivery_(pt.behaviour.Behaviour):   
 
-    def update(self) -> pt.common.Status:
-        self.counter += 1
-        if self.counter <= self.duration:
-            return pt.common.Status.RUNNING
-        else:
-            return self.completion_status
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> pt.common.Status.SUCCESS:
-        return pt.common.Status.SUCCESS
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
 
 @register_node(MOVE_TO_DELIVERY)
 class Move_to_delivery(CalcNode,pt.behaviours.TickCounter):

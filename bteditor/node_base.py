@@ -89,7 +89,7 @@ class CalcNode(Node):
                 return pt.composites.Parallel(name=self.op_title, policy="", children=[])
             elif self.op_title == "Cube2_delivered?":
                 return action.Cube2_delivered_(name=self.op_title)
-            elif self.op_title == "Cube2_in_hand":
+            elif self.op_title == "Cube2_in_hand?":
                 return action.Cube2_in_hand_(name=self.op_title)
             elif self.op_title == "Robot_at_cube2?":
                 return action.Robot_at_cube2_(name=self.op_title)

@@ -185,16 +185,51 @@ class CalculatorWindow(NodeEditorWindow):
             else: self.setTitle()
             return True
         
+    def get_connected_nodes(self, node):
+        connected_nodes = set()
+        for node in self.node_list:
+            for socket in node.inputs:
+                for edge in socket.edges:
+                    if edge.start_socket.node != node:
+                        connected_node = edge.start_socket.node
+                        connected_nodes.add(connected_node)
+            for socket in node.outputs:
+                for edge in socket.edges:
+                    if edge.end_socket.node != node:
+                        connected_node = edge.end_socket.node
+                        connected_nodes.add(connected_node)
+        return connected_nodes
+    
+    def showWarningMessage(self, message):
+        QMessageBox.warning(self, 'Warning', message)
+    
     def onBuild(self):
         current_node_editor = self.getCurrentNodeEditorWidget()
         self.node_list = current_node_editor.scene.nodes[:]
+        unconnected_nodes = []
+        
         for node in self.node_list:
+            connected_nodes = self.get_connected_nodes(node)
+            
+            if node not in connected_nodes:
+                unconnected_nodes.append(node)
+                continue  # Skip styling and conversion for unconnected nodes
+            
             content_widget = node.grNode.content
             content_widget.setStyleSheet("background-color: lightgrey;")
-        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
-        self.root=root_node.get_pytrees()
-        self.bt_tree = pt.trees.BehaviourTree(self.root)  
-        #print(self.bt_tree)   
+        
+        if unconnected_nodes:
+            warning_message = "Warning: The following nodes are not connected\n"
+            for node in unconnected_nodes:
+                warning_message += f"- Node: {node.title}\n"
+            self.showWarningMessage(warning_message)
+        
+        if len(self.node_list) != len(unconnected_nodes):
+            root_node = next((node for node in self.node_list if node not in unconnected_nodes), None)
+            if root_node:
+                self.root = root_node.get_pytrees()
+                self.bt_tree = pt.trees.BehaviourTree(self.root)
+                #print(self.bt_tree)
     
     def printConnections(self):
         current_node_editor = self.getCurrentNodeEditorWidget()
@@ -214,28 +249,14 @@ class CalculatorWindow(NodeEditorWindow):
                         connected_node = edge.end_socket.node
                         print(f"Node '{node.title}' is connected to Node '{connected_node.title}' (output)")
     
-    def get_connected_nodes(self, node):
-        connected_nodes = set()
-        for node in self.node_list:
-            for socket in node.inputs:
-                for edge in socket.edges:
-                    if edge.start_socket.node != node:
-                        connected_node = edge.start_socket.node
-                        connected_nodes.add(connected_node)
-            for socket in node.outputs:
-                for edge in socket.edges:
-                    if edge.end_socket.node != node:
-                        connected_node = edge.end_socket.node
-                        connected_nodes.add(connected_node)
-        return connected_nodes
-    
     def update_node_colors(self):
-        connected_nodes = self.get_connected_nodes(self.bt_tree.root)
+    
         for node in self.node_list:
+            connected_nodes = self.get_connected_nodes(node)
             if node not in connected_nodes:
-                continue  # Skip nodes that are not connected to the root
+                continue
             
-            content_widget = node.grNode.content
+            content_widget = node.grNode.content           
             status = node.py_trees_object.status.value
             #logging.info(f'Node {node.op_title}: Status {status}')
             print(f'Node {node.op_title}: Status {status}')
