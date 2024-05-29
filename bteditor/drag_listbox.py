@@ -26,7 +26,7 @@ class QDMDragListbox(QListWidget):
         spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
         self.addItem(spacer_item)
         
-        self.addMyItem("Root", icon=os.path.join(os.path.dirname(__file__), "icons/root.png"), op_code=ROOT, section_name="Task 1")
+        #self.addMyItem("Root", icon=os.path.join(os.path.dirname(__file__), "icons/root.png"), op_code=ROOT, section_name="Task 1")
         self.addMyItem("Sequence", icon=os.path.join(os.path.dirname(__file__), "icons/sequence.png"), op_code=SEQUENCE, section_name="Task 1")
         self.addMyItem("Fallback", icon=os.path.join(os.path.dirname(__file__), "icons/fallback.png"), op_code=FALLBACK, section_name="Task 1")
         self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Task 1")

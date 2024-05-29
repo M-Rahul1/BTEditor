@@ -306,7 +306,8 @@ class CalculatorWindow(NodeEditorWindow):
             content_widget.setStyleSheet("background-color: default;")
         root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
         self.root=root_node.get_pytrees()
-        self.bt_tree = pt.trees.BehaviourTree(self.root) 
+        self.bt_tree = pt.trees.BehaviourTree(self.root)
+         
                 
     def onFileSaveAs(self):
         """Handle File Save As operation"""

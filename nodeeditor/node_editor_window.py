@@ -211,51 +211,7 @@ class NodeEditorWindow(QMainWindow):
             else: self.setTitle()
             return True
         
-    def onBuild(self):
-        current_node_editor = self.getCurrentNodeEditorWidget()
-        self.node_list = current_node_editor.scene.nodes[:]
-        for node in self.node_list:
-            content_widget = node.grNode.content
-            content_widget.setStyleSheet("background-color: lightgrey;")
-        root_node = self.getCurrentNodeEditorWidget().scene.nodes[0]        
-        self.root=root_node.get_pytrees()
-        self.bt_tree = pt.trees.BehaviourTree(self.root)  
-        #print(self.bt_tree)   
-    def onRunOnce(self):
-        self.bt_tree.root.tick_once()
-        for node in self.node_list:
-            current_node_editor = self.getCurrentNodeEditorWidget()
-            self.node_list = current_node_editor.scene.nodes[:] 
-            content_widget = node.grNode.content
-            if node.py_trees_object.status.value == 'SUCCESS':
-                content_widget.setStyleSheet("background-color: green;")
-            elif node.py_trees_object.status.value == 'RUNNING':
-                content_widget.setStyleSheet("background-color: orange;")
-            elif node.py_trees_object.status.value == 'FAILURE':
-                content_widget.setStyleSheet("background-color: red;")
-            else:
-                content_widget.setStyleSheet("background-color: black;")
-
-    def onRun(self):
-        for _ in range(200):
-            self.onRunOnce()
-            #time.sleep(0.3)
-            
-    def onFileSaveAs(self):
-        """Handle File Save As operation"""
-        current_nodeeditor = self.getCurrentNodeEditorWidget()
-        if current_nodeeditor is not None:
-            fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file', self.getFileDialogDirectory(), self.getFileDialogFilter())
-            if fname == '': return False
-
-            self.onBeforeSaveAs(current_nodeeditor, fname)
-            current_nodeeditor.fileSave(fname)
-            self.statusBar().showMessage("Successfully saved as %s" % current_nodeeditor.filename, 5000)
-
-            # support for MDI app
-            if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
-            else: self.setTitle()
-            return True
+    
 
     def onBeforeSaveAs(self, current_nodeeditor: 'NodeEditorWidget', filename: str):
         """

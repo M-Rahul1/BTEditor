@@ -1,4 +1,4 @@
-import os
+"""import os
 import py_trees as pt
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -82,4 +82,4 @@ class Root(CalcNode, pt.composites.Sequence):
     def terminate(self, new_status: Status) -> None:
         return super().terminate(new_status)
     
- 
+ """
