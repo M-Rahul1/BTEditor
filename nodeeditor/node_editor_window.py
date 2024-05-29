@@ -55,7 +55,7 @@ class NodeEditorWindow(QMainWindow):
         self.statusBar().showMessage("")
         self.status_mouse_pos = QLabel("")
         self.statusBar().addPermanentWidget(self.status_mouse_pos)
-        self.nodeeditor.view.scenePosChanged.connect(self.onScenePosChanged)
+        #self.nodeeditor.view.scenePosChanged.connect(self.onScenePosChanged)
 
     def createActions(self):
         """Create basic `File` and `Edit` actions"""

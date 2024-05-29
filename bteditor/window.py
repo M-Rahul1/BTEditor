@@ -84,6 +84,8 @@ class CalculatorWindow(NodeEditorWindow):
         self.windowMapper.mapped[QWidget].connect(self.setActiveSubWindow)
 
         self.createNodesDock()
+        
+        self.createSimulationDock()
 
         self.createActions()
         self.createMenus()
@@ -486,6 +488,11 @@ class CalculatorWindow(NodeEditorWindow):
         toolbar_nodes.triggered.connect(self.onWindowNodesToolbar)
         toolbar_nodes.setChecked(self.nodesDock.isVisible())
 
+        toolbar_simulation = self.windowMenu.addAction("Simulation Dock")
+        toolbar_simulation.setCheckable(True)
+        toolbar_simulation.triggered.connect(self.toggleSimulation)
+        toolbar_simulation.setChecked(self.simulationDock.isVisible())
+        
         self.windowMenu.addSeparator()
 
         self.windowMenu.addAction(self.actClose)
@@ -530,10 +537,23 @@ class CalculatorWindow(NodeEditorWindow):
         self.nodesDock.setFloating(False)
 
         self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
-        
+                
+    def toggleSimulation(self):
+        if self.simulationDock.isVisible():
+            self.simulationDock.hide()
+        else:
+            self.simulationDock.show()
+            
+    def createSimulationDock(self):
+        self.simulationDock = QDockWidget("Simulation")
+        self.simulationDock.setFloating(False)
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock)
+        self.simulationDock.setMinimumWidth(self.width() // 3)  
+        self.simulationDock.hide()  
 
-    def createStatusBar(self):
-        self.statusBar().showMessage("Ready")
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.simulationDock.setMinimumWidth(self.width() // 3)  
 
     def createMdiChild(self, child_widget=None):
         nodeeditor = child_widget if child_widget is not None else CalculatorSubWindow()
