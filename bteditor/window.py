@@ -42,6 +42,7 @@ class CalculatorWindow(NodeEditorWindow):
         super().__init__()        
         self.status_bar = self.statusBar()   
         self.timer = QTimer()    
+        self.bt_tree = None
         
     def initUI(self):
         self.name_company = 'ABB'
@@ -272,7 +273,7 @@ class CalculatorWindow(NodeEditorWindow):
     
     def onRunOnce(self):
         # Check if the tree is built, if not, build it
-        if not hasattr(self, 'bt_tree'):
+        if self.bt_tree is None:
             self.onBuild()
             
         self.bt_tree.root.tick_once()
@@ -396,6 +397,7 @@ class CalculatorWindow(NodeEditorWindow):
 
 
     def onFileOpen(self):
+        self.bt_tree = None
         fnames, filter = QFileDialog.getOpenFileNames(self, 'Open graph from file', self.getFileDialogDirectory(), self.getFileDialogFilter())
 
         try:
