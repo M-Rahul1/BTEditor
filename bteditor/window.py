@@ -65,6 +65,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.tickimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/tick.png'))
         self.pauseimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/pause.png'))
         self.resetimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/reset.png'))
+        self.simuimg= QIcon(os.path.join(os.path.dirname(__file__), 'data/icons/simulate.png'))
         if DEBUG:
             print("Registered nodes:")
             pp(CALC_NODES)
@@ -141,7 +142,8 @@ class CalculatorWindow(NodeEditorWindow):
         self.toolbar.addAction(self.actRunOnce1)
         self.toolbar.addAction(self.actRun1)
         self.toolbar.addAction(self.actPause1)
-        self.toolbar.addAction(self.actReset1)        
+        self.toolbar.addAction(self.actReset1) 
+        self.toolbar.addAction(self.actSimulate)       
         
     def createActions(self):
         super().createActions()
@@ -155,6 +157,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.actRun1 = QAction(self.runimg, "Tick Until Result", self, triggered=self.onRun)
         self.actPause1 = QAction(self.pauseimg, "Pause", self, triggered=self.onPause)
         self.actReset1 = QAction(self.resetimg, "Reset", self, triggered=self.onReset)
+        self.actSimulate = QAction(self.simuimg,"Simulate", self, triggered=self.toggleSimulation)
         self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)

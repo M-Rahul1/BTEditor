@@ -6,6 +6,7 @@ from nodeeditor.node_graphics_node import QDMGraphicsNode
 from nodeeditor.node_content_widget import QDMNodeContentWidget
 from nodeeditor.node_socket import *
 from nodeeditor.utils import dumpException, pp
+from typing import List
 
 DEBUG = False
 
@@ -399,8 +400,7 @@ class Node(Serializable):
 
 
     # traversing nodes functions
-
-    def getChildrenNodes(self) -> 'List[Node]':
+    def getChildrenNodes(self) -> List['Node']:
         """
         Retreive all first-level children connected to this `Node` `Outputs`
 

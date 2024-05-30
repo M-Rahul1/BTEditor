@@ -37,6 +37,14 @@ class CalcGraphicsNode(QDMGraphicsNode):
             QRectF(offset, 0, 24.0, 24.0)
         )
 
+def sort_nodes_by_pos_x(nodes):
+    """
+    Sorts the given list of nodes by their pos_x value.
+
+    :param nodes: List of nodes to be sorted.
+    :return: Sorted list of nodes.
+    """
+    return sorted(nodes, key=lambda node: node.pos.x())
 
 class CalcContent(QDMNodeContentWidget):
     def initUI(self):
@@ -110,6 +118,7 @@ class CalcNode(Node):
             return None
             
 
+
     def getChildrenNodes(self):
         children_nodes = []
         for output_socket in self.outputs:
@@ -117,7 +126,10 @@ class CalcNode(Node):
                 other_node = edge.getOtherSocket(output_socket).node
                 children_nodes.append(other_node)
                 #print(children_nodes)
+        #sort chilren nodes according to their pos_x
+        children_nodes = sort_nodes_by_pos_x(children_nodes)
         return children_nodes
+    
     def initSettings(self):
         super().initSettings()
         self.input_socket_position = TOP_CENTER
