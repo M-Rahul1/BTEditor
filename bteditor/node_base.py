@@ -181,7 +181,7 @@ class CalcNode(Node):
 
 
     def onInputChanged(self, socket=None):
-        print("%s::__onInputChanged" % self.__class__.__name__)
+        print("%s:: InputChanged" % self.__class__.__name__)
         self.markDirty()
         self.eval()
 

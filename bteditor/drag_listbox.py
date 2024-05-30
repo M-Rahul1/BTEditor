@@ -11,76 +11,69 @@ class QDMDragListbox(QListWidget):
         super().__init__(parent)
         self.sections = {}
         self.section_states = {}
+        self.dropdown_icon = QIcon(QPixmap(os.path.join(os.path.dirname(__file__), "data/icons/dropdown.png")))
+        self.sortup_icon = QIcon(QPixmap(os.path.join(os.path.dirname(__file__), "data/icons/sortup.png")))
         self.initUI()
 
     def initUI(self):
         self.setIconSize(QSize(32, 32))
         self.setSelectionMode(QAbstractItemView.SingleSelection)
         self.setDragEnabled(True)
+        self.itemSelectionChanged.connect(self.update_icons)
         self.addMyItems()
 
+    def create_spacer_item(self, height):
+        spacer_item = QListWidgetItem("")
+        spacer_item.setSizeHint(QSize(0, height))
+        spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
+        return spacer_item
+
     def addMyItems(self):
-        
-        spacer_item = QListWidgetItem("")
-        spacer_item.setSizeHint(QSize(0, 5))  # Adjust the height as needed
-        spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
-        self.addItem(spacer_item)
-        
-        #self.addMyItem("Root", icon=os.path.join(os.path.dirname(__file__), "icons/root.png"), op_code=ROOT, section_name="Task 1")
-        self.addMyItem("Sequence", icon=os.path.join(os.path.dirname(__file__), "icons/sequence.png"), op_code=SEQUENCE, section_name="Task 1")
-        self.addMyItem("Fallback", icon=os.path.join(os.path.dirname(__file__), "icons/fallback.png"), op_code=FALLBACK, section_name="Task 1")
-        self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Task 1")
-        
-        spacer_item = QListWidgetItem("")
-        spacer_item.setSizeHint(QSize(0, 20))  # Adjust the height as needed
-        spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
-        self.addItem(spacer_item)
-        
-        self.add_section("Task 1")
-        
-        spacer_item = QListWidgetItem("")
-        spacer_item.setSizeHint(QSize(0, 10))  # Adjust the height as needed
-        spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
-        self.addItem(spacer_item)
-        
-        self.addMyItem("CUBE2_DELIVERED?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_DELIVERED, section_name="Task 1")
-        self.addMyItem("Cube2_in_hand?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_IN_HAND, section_name="Task 1")
-        self.addMyItem("Robot_at_cube2?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_CUBE2, section_name="Task 1")
-        self.addMyItem("Move_to_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_CUBE2, section_name="Task 1")
-        self.addMyItem("Pick_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_CUBE2, section_name="Task 1")
+        # Add spacers
+        self.addItem(self.create_spacer_item(10))
 
-        self.add_section("Task 2")
-        
-        spacer_item = QListWidgetItem("")
-        spacer_item.setSizeHint(QSize(0, 10))  # Adjust the height as needed
-        spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
-        self.addItem(spacer_item)
-        
-        self.addMyItem("Robot_at_delivery?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_DELIVERY, section_name="Task 2")
-        self.addMyItem("Move_to_delivery!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_DELIVERY, section_name="Task 2")
-        self.addMyItem("Place_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PLACE_CUBE2, section_name="Task 2")
+        # Add Control section
+        self.add_section("Control")
+        self.addMyItem("Sequence", icon=os.path.join(os.path.dirname(__file__), "icons/sequence.png"), op_code=SEQUENCE, section_name="Control")
+        self.addMyItem("Fallback", icon=os.path.join(os.path.dirname(__file__), "icons/fallback.png"), op_code=FALLBACK, section_name="Control")
+        self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Control")
 
-    def add_section(self, section_name):
-        if self.sections:
-            # Add a spacer item for vertical spacing
-            spacer_item = QListWidgetItem("")
-            spacer_item.setSizeHint(QSize(0, 20))  # Adjust the height as needed
-            spacer_item.setFlags(spacer_item.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsEnabled)
-            self.addItem(spacer_item)
+        # Add larger spacer
+        self.addItem(self.create_spacer_item(20))
 
+        # Add Action section
+        self.add_section("Action")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("CUBE2_DELIVERED?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_DELIVERED, section_name="Action")
+        self.addMyItem("Cube2_in_hand?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CUBE2_IN_HAND, section_name="Action")
+        self.addMyItem("Robot_at_cube2?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_CUBE2, section_name="Action")
+        self.addMyItem("Move_to_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_CUBE2, section_name="Action")
+        self.addMyItem("Pick_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_CUBE2, section_name="Action")
+
+        self.addItem(self.create_spacer_item(20))
+        # Add Condition section
+        self.add_section("Condition")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Robot_at_delivery?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_DELIVERY, section_name="Condition")
+        self.addMyItem("Move_to_delivery!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_DELIVERY, section_name="Condition")
+        self.addMyItem("Place_cube2!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PLACE_CUBE2, section_name="Condition")
+    
+    def add_section(self, section_name):        
         section_header = QListWidgetItem(section_name)
+        section_header.setFont(QFont("Arial", 13, QFont.Bold))
         section_header.setFlags(section_header.flags() & ~Qt.ItemIsSelectable & ~Qt.ItemIsDragEnabled)
-        section_header.setBackground(QBrush(Qt.lightGray))
-        section_header.setSizeHint(QSize(section_header.sizeHint().width(), 30))  # Adjust the height as needed
+        section_header.setBackground(QBrush(Qt.darkGray))
+        section_header.setSizeHint(QSize(section_header.sizeHint().width(), 50))  # Adjust the height as needed
+        section_header.setIcon(self.dropdown_icon)
         self.addItem(section_header)
         self.sections[section_name] = section_header
         self.section_states[section_name] = True  # Initially expanded
-
+        
     def addMyItem(self, name, icon=None, op_code=0, section_name=None):
         item = QListWidgetItem(name, self)
         pixmap = QPixmap(icon if icon is not None else ".")
         item.setIcon(QIcon(pixmap))
-        item.setSizeHint(QSize(32, 32))
+        item.setSizeHint(QSize(40, 40))
         item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled)
         item.setData(Qt.UserRole, pixmap)
         item.setData(Qt.UserRole + 1, op_code)
@@ -99,6 +92,13 @@ class QDMDragListbox(QListWidget):
             section_name = item.text()
             self.toggle_section(section_name)
         super().mousePressEvent(event)
+
+    def update_icons(self):
+        for section_name, section_header in self.sections.items():
+            if section_header.isSelected():
+                section_header.setIcon(self.sortup_icon)
+            else:
+                section_header.setIcon(self.dropdown_icon)
 
     def toggle_section(self, section_name):
         state = self.section_states[section_name]

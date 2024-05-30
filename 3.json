@@ -1,0 +1,89 @@
+{
+    "id": "5e161b39-1b65-4d86-9fe1-d1a31de85e71",
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": "5e992535-a477-4ef8-9b5f-1b580b534895",
+            "title": "Sequence",
+            "pos_x": 233.0,
+            "pos_y": -251.0,
+            "inputs": [
+                {
+                    "id": 1362233113584,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1362225113536,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": "eb18b5fd-0beb-435b-acae-238864d4104e",
+            "title": "Move_to_delivery!",
+            "pos_x": 200.0,
+            "pos_y": -21.0,
+            "inputs": [
+                {
+                    "id": 1362225767840,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 11
+        },
+        {
+            "id": "83a9c7a0-a48d-4c71-94a0-8ee2a956730e",
+            "title": "Place_cube2!",
+            "pos_x": 432.0,
+            "pos_y": -3.0,
+            "inputs": [
+                {
+                    "id": 1362233187152,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 12
+        }
+    ],
+    "edges": [
+        {
+            "id": 1362233186912,
+            "edge_type": 2,
+            "start": 1362225113536,
+            "end": 1362233187152
+        },
+        {
+            "id": 1362233186816,
+            "edge_type": 2,
+            "start": 1362225113536,
+            "end": 1362225767840
+        }
+    ]
+}

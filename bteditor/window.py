@@ -257,15 +257,16 @@ class CalculatorWindow(NodeEditorWindow):
     
     def update_node_colors(self):
     
-        for node in self.node_list:
+         for index, node in enumerate(self.node_list):
             connected_nodes = self.get_connected_nodes(node)
             if node not in connected_nodes:
                 continue
             
             content_widget = node.grNode.content           
             status = node.py_trees_object.status.value
+            node_number = index + 1
             #logging.info(f'Node {node.op_title}: Status {status}')
-            print(f'Node {node.op_title}: Status {status}')
+            print(f'Node {node_number} ({node.op_title}) : Status {status}')
             self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
@@ -275,7 +276,7 @@ class CalculatorWindow(NodeEditorWindow):
                 content_widget.setStyleSheet("background-color: red;")
             else:
                 content_widget.setStyleSheet("background-color: black;")
-    
+
     def onRunOnce(self):
         # Check if the tree is built, if not, build it
         if self.bt_tree is None:
