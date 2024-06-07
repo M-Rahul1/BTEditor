@@ -11,6 +11,7 @@ from nodeeditor.node_editor_window import NodeEditorWindow
 from nodeeditor.node_editor_widget import NodeEditorWidget
 from bteditor.sub_window import CalculatorSubWindow
 from bteditor.drag_listbox import QDMDragListbox
+from bteditor.draw_world import CoffeeWorldUI
 from nodeeditor.node_graphics_node import QDMGraphicsNode
 from nodeeditor.node_graphics_edge import QDMGraphicsEdge
 from nodeeditor.utils import dumpException, pp
@@ -549,15 +550,16 @@ class CalculatorWindow(NodeEditorWindow):
             self.simulationDock.show()
             
     def createSimulationDock(self):
+        self.simulationWidget = CoffeeWorldUI()
+        
         self.simulationDock = QDockWidget("Simulation")
         self.simulationDock.setFloating(False)
-        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock)
-        self.simulationDock.setMinimumWidth(self.width() // 3)  
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
+        #initially hide 
         self.simulationDock.hide()  
 
     def resizeEvent(self, event):
-        super().resizeEvent(event)
-        self.simulationDock.setMinimumWidth(self.width() // 3)  
+        super().resizeEvent(event)         
 
     def createMdiChild(self, child_widget=None):
         nodeeditor = child_widget if child_widget is not None else CalculatorSubWindow()
