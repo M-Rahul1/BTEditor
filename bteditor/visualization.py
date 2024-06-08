@@ -1,73 +1,89 @@
-import json
-import matplotlib.pyplot as plt
-import numpy as np
-import time
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QGraphicsTextItem
+from PyQt5.QtCore import Qt, QTimer, QRectF
+from PyQt5.QtGui import QBrush, QColor, QPen
 
-class Node:
-    def __init__(self, node_data):
-        self.id = node_data["id"]
-        self.title = node_data["title"]
-        self.pos_x = node_data["pos_x"]
-        self.pos_y = node_data["pos_y"]
+class Cup(QGraphicsRectItem):
+    def __init__(self, x: float, y: float, width: float, height: float, color: QColor, label: str):
+        super().__init__(x, y, width, height)
+        self.setBrush(QBrush(color))
+        self.setPen(QPen(Qt.black, 2))  # Set a black pen with width 2
 
-    def __str__(self):
-        return f"{self.title} (ID: {self.id})"
+        self.label = QGraphicsTextItem(label, self)
+        self.label.setDefaultTextColor(Qt.black)
+        self.label.setPos(x, y - 20)
 
+        self.content = QGraphicsRectItem(x, y, width, 0, self)
+        self.content.setBrush(QBrush(color))
+        
+        self.content_level = 0
 
-class Edge:
-    def __init__(self, edge_data):
-        self.start = edge_data["start"]
-        self.end = edge_data["end"]
+    def set_content_level(self, level: float):
+        self.content_level = level
+        self.content.setRect(self.rect().x(), self.rect().y() + self.rect().height() - level, self.rect().width(), level)
 
-    def __str__(self):
-        return f"Edge: {self.start} -> {self.end}"
+    def transfer_content(self, amount: float) -> float:
+        new_level = max(0, self.content_level - amount)
+        transferred_amount = self.content_level - new_level
+        self.set_content_level(new_level)
+        return transferred_amount
 
+class SimulationScene(QGraphicsScene):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setSceneRect(0, 0, 600, 400)
+        self.big_cup = Cup(250, 50, 100, 150, QColor(255, 255, 255), "Big Cup")
+        self.addItem(self.big_cup)
 
-def load_data_from_json(json_file):
-    with open(json_file, "r") as file:
-        data = json.load(file)
-    nodes = [Node(node_data) for node_data in data["nodes"]]
-    edges = [Edge(edge_data) for edge_data in data["edges"]]
-    return nodes, edges
+        self.sugar_cup = Cup(100, 250, 50, 100, QColor(255, 255, 255), "Sugar")
+        self.sugar_cup.set_content_level(100)
+        self.addItem(self.sugar_cup)
 
+        self.milk_cup = Cup(250, 250, 50, 100, QColor(192, 192, 192), "Milk")
+        self.milk_cup.set_content_level(100)
+        self.addItem(self.milk_cup)
 
-def visualize(nodes, edges):
-    fig, ax = plt.subplots()
+        self.coffee_cup = Cup(400, 250, 50, 100, QColor(139, 69, 19), "Coffee")
+        self.coffee_cup.set_content_level(100)
+        self.addItem(self.coffee_cup)
 
-    # Plot nodes
-    for i, node in enumerate(nodes):
-        node_plot = ax.plot(node.pos_x, node.pos_y, marker="o", markersize=10, color="blue")[0]
-        ax.text(node.pos_x, node.pos_y, node.title, fontsize=12, ha="center", va="bottom")
-        plt.draw()
-        plt.pause(2)  # Delay for 2 seconds
-        node_plot.set_color("yellow")  # Change color to yellow while running
-        plt.draw()
-        plt.pause(2)  # Delay for 2 seconds
-        node_plot.set_color("green")  # Change color to green after node is processed
-        plt.draw()
+        self.cups = {"sugar": self.sugar_cup, "milk": self.milk_cup, "coffee": self.coffee_cup}
+        self.current_action = None
 
-    # Plot edges
-    for i, edge in enumerate(edges):
-        start_node = next((node for node in nodes if node.id == edge.start), None)
-        end_node = next((node for node in nodes if node.id == edge.end), None)
-        if start_node and end_node:
-            edge_plot = ax.plot([start_node.pos_x, end_node.pos_x], [start_node.pos_y, end_node.pos_y], color="blue")[0]
-            plt.draw()
-            plt.pause(2)  # Delay for 2 seconds
-            edge_plot.set_color("yellow")  # Change color to yellow while running
-            plt.draw()
-            plt.pause(2)  # Delay for 2 seconds
-            edge_plot.set_color("green")  # Change color to green after edge is processed
-            plt.draw()
+    def execute_action(self, action: str):
+        if action in self.cups:
+            self.current_action = action
+            QTimer.singleShot(50, self.transfer_step)
 
-    ax.set_xlabel("X")
-    ax.set_ylabel("Y")
-    ax.set_title("Graph Visualization")
-    ax.grid(True)
-    plt.show()
+    def transfer_step(self):
+        if self.current_action:
+            cup = self.cups[self.current_action]
+            amount = cup.transfer_content(5)
+            self.big_cup.set_content_level(self.big_cup.content_level + amount)
 
+            if cup.content_level > 0:
+                QTimer.singleShot(50, self.transfer_step)
+            else:
+                self.current_action = None
+
+class SimulationWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Behavior Tree Simulation")
+        self.setGeometry(100, 100, 600, 400)
+
+        self.view = QGraphicsView()
+        self.scene = SimulationScene()
+        self.view.setScene(self.scene)
+        self.setCentralWidget(self.view)
+
+        # Simulating the behavior tree actions
+        QTimer.singleShot(1000, lambda: self.scene.execute_action("sugar"))
+        QTimer.singleShot(3000, lambda: self.scene.execute_action("milk"))
+        QTimer.singleShot(5000, lambda: self.scene.execute_action("coffee"))
 
 if __name__ == "__main__":
-    json_file = "example.json"
-    nodes, edges = load_data_from_json(json_file)
-    visualize(nodes, edges)
+    app = QApplication(sys.argv)
+    window = SimulationWindow()
+    window.show()
+    sys.exit(app.exec_())

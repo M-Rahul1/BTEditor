@@ -5,6 +5,8 @@ from PyQt5.QtCore import *
 import time
 import json
 import py_trees as pt
+import pygame
+import math
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
@@ -25,7 +27,6 @@ Edge.registerEdgeValidator(edge_validator_debug)
 Edge.registerEdgeValidator(edge_cannot_connect_two_outputs_or_two_inputs)
 Edge.registerEdgeValidator(edge_cannot_connect_input_and_output_of_same_node)
 
-
 # images for the dark skin
 import bteditor.qss.nodeeditor_dark_resources
 import logging
@@ -33,9 +34,82 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
-
 DEBUG = False
 
+class PygameSimulation(QThread):
+    def __init__(self):
+        super().__init__()
+        self.running = False
+        self.current_action = None
+
+    def run(self):
+        pygame.init()
+        WIDTH, HEIGHT = 1000, 800
+        WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+        pygame.display.set_caption("Coffee Simulation")
+
+        WHITE = (255, 255, 255)
+        GREY = (192, 192, 192)
+        BROWN = (139, 69, 19)
+
+        class Cup:
+            def __init__(self, x, y, width, height, color, label):
+                self.rect = pygame.Rect(x, y, width, height)
+                self.color = color
+                self.label = label
+                self.level = height
+
+            def draw(self, win):
+                pygame.draw.rect(win, self.color, self.rect)
+                font = pygame.font.SysFont("comicsans", 16)
+                label_surface = font.render(self.label, True, WHITE)
+                win.blit(label_surface, (self.rect.x, self.rect.y - 20))
+
+            def transfer_content(self, amount):
+                new_level = max(0, self.level - amount)
+                transferred_amount = self.level - new_level
+                self.level = new_level
+                self.rect.height = new_level
+                return transferred_amount
+
+        run = True
+        clock = pygame.time.Clock()
+
+        big_cup = Cup(300, 250, 50, 300, WHITE, "Big Cup")
+        sugar_cup = Cup(100, 650, 50, 100, WHITE, "Sugar")
+        milk_cup = Cup(300, 650, 50, 100, GREY, "Milk")
+        coffee_cup = Cup(500, 650, 50, 100, BROWN, "Coffee")
+
+        cups = {"sugar": sugar_cup, "milk": milk_cup, "coffee": coffee_cup}
+
+        while run:
+            if not self.running:
+                pygame.quit()
+                break
+            clock.tick(60)
+            WIN.fill((0, 0, 0))
+
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    run = False
+
+            for cup in cups.values():
+                cup.draw(WIN)
+            big_cup.draw(WIN)
+
+            if self.current_action:
+                cup = cups[self.current_action]
+                amount = cup.transfer_content(1)
+                big_cup.rect.height += amount
+                if cup.level <= 0:
+                    self.current_action = None
+
+            pygame.display.update()
+
+        pygame.quit()
+
+    def stop(self):
+        self.running = False
 
 class CalculatorWindow(NodeEditorWindow):
 
@@ -44,6 +118,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.status_bar = self.statusBar()   
         self.timer = QTimer()    
         self.bt_tree = None
+        self.simulation_thread = PygameSimulation()
         
     def initUI(self):
         self.name_company = 'ABB'
@@ -173,7 +248,6 @@ class CalculatorWindow(NodeEditorWindow):
     
     def changeColor(self, color):
         """Change color of the edge from string hex value '#00ff00'"""
-        # print("^Called change color to:", color.red(), color.green(), color.blue(), "on edge:", self.edge)
         self._color = QColor(color) if type(color) == str else color
         self._pen = QPen(self._color)
         self._pen.setWidthF(3.0)
@@ -236,7 +310,6 @@ class CalculatorWindow(NodeEditorWindow):
             if root_node:
                 self.root = root_node.get_pytrees()
                 self.bt_tree = pt.trees.BehaviourTree(self.root)
-                #print(self.bt_tree)
     
     def printConnections(self):
         current_node_editor = self.getCurrentNodeEditorWidget()
@@ -266,11 +339,15 @@ class CalculatorWindow(NodeEditorWindow):
             content_widget = node.grNode.content           
             status = node.py_trees_object.status.value
             node_number = index + 1
-            #logging.info(f'Node {node.op_title}: Status {status}')
             print(f'Node {node_number} ({node.op_title}) : Status {status}')
             self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
+                if node.op_title in ["sequence", "milk", "coffee"]:
+                    if not self.simulation_thread.running:
+                        self.simulation_thread.running = True
+                        self.simulation_thread.start()
+                    self.simulation_thread.current_action = node.op_title
             elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")
             elif status == 'FAILURE':
@@ -279,7 +356,6 @@ class CalculatorWindow(NodeEditorWindow):
                 content_widget.setStyleSheet("background-color: black;")
 
     def onRunOnce(self):
-        # Check if the tree is built, if not, build it
         if self.bt_tree is None:
             self.onBuild()
             
@@ -318,7 +394,6 @@ class CalculatorWindow(NodeEditorWindow):
          
                 
     def onFileSaveAs(self):
-        """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()
         if current_nodeeditor is not None:
             fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file', self.getFileDialogDirectory(), self.getFileDialogFilter())
@@ -328,49 +403,38 @@ class CalculatorWindow(NodeEditorWindow):
             current_nodeeditor.fileSave(fname)
             self.statusBar().showMessage("Successfully saved as %s" % current_nodeeditor.filename, 5000)
 
-            # support for MDI app
             if hasattr(current_nodeeditor, "setTitle"): current_nodeeditor.setTitle()
             else: self.setTitle()
             return True
 
     def onBeforeSaveAs(self, current_nodeeditor: 'NodeEditorWidget', filename: str):
-        """
-        Event triggered after choosing filename and before actual fileSave(). We are passing current_nodeeditor because
-        we will loose focus after asking with QFileDialog and therefore getCurrentNodeEditorWidget will return None
-        """
         pass
 
     def onEditUndo(self):
-        """Handle Edit Undo operation"""
         if self.getCurrentNodeEditorWidget():
             self.getCurrentNodeEditorWidget().scene.history.undo()
 
     def onEditRedo(self):
-        """Handle Edit Redo operation"""
         if self.getCurrentNodeEditorWidget():
             self.getCurrentNodeEditorWidget().scene.history.redo()
 
     def onEditDelete(self):
-        """Handle Delete Selected operation"""
         if self.getCurrentNodeEditorWidget():
             self.getCurrentNodeEditorWidget().scene.getView().deleteSelected()
 
     def onEditCut(self):
-        """Handle Edit Cut to clipboard operation"""
         if self.getCurrentNodeEditorWidget():
             data = self.getCurrentNodeEditorWidget().scene.clipboard.serializeSelected(delete=True)
             str_data = json.dumps(data, indent=4)
             QApplication.instance().clipboard().setText(str_data)
 
     def onEditCopy(self):
-        """Handle Edit Copy to clipboard operation"""
         if self.getCurrentNodeEditorWidget():
             data = self.getCurrentNodeEditorWidget().scene.clipboard.serializeSelected(delete=False)
             str_data = json.dumps(data, indent=4)
             QApplication.instance().clipboard().setText(str_data)
 
     def onEditPaste(self):
-        """Handle Edit Paste from clipboard operation"""
         if self.getCurrentNodeEditorWidget():
             raw_data = QApplication.instance().clipboard().text()
 
@@ -380,16 +444,13 @@ class CalculatorWindow(NodeEditorWindow):
                 print("Pasting of not valid json data!", e)
                 return
 
-            # check if the json data are correct
             if 'nodes' not in data:
                 print("JSON does not contain any nodes!")
                 return
 
             return self.getCurrentNodeEditorWidget().scene.clipboard.deserializeFromClipboard(data)
 
-
     def getCurrentNodeEditorWidget(self):
-        """ we're returning NodeEditorWidget here... """
         activeSubWindow = self.mdiArea.activeSubWindow()
         if activeSubWindow:
             return activeSubWindow.widget()
@@ -402,7 +463,6 @@ class CalculatorWindow(NodeEditorWindow):
             subwnd.show()
         except Exception as e: dumpException(e)
 
-
     def onFileOpen(self):
         self.bt_tree = None
         fnames, filter = QFileDialog.getOpenFileNames(self, 'Open graph from file', self.getFileDialogDirectory(), self.getFileDialogFilter())
@@ -414,7 +474,6 @@ class CalculatorWindow(NodeEditorWindow):
                     if existing:
                         self.mdiArea.setActiveSubWindow(existing)
                     else:
-                        # we need to create new subWindow and open the file
                         nodeeditor = CalculatorSubWindow()
                         if nodeeditor.fileLoad(fname):
                             self.statusBar().showMessage("File %s loaded" % fname, 5000)
@@ -425,12 +484,9 @@ class CalculatorWindow(NodeEditorWindow):
                             nodeeditor.close()
         except Exception as e: dumpException(e)
 
-
     def about(self):
         QMessageBox.about(self, "About BT NodeEditor","Mail me for help")
 
-
-        
     def createMenus(self):
         super().createMenus()
 
@@ -449,9 +505,7 @@ class CalculatorWindow(NodeEditorWindow):
         spacer.setSeparator(True)
         self.menuBar().addAction(spacer)
         
-
     def updateMenus(self):
-        # print("update Menus")
         active = self.getCurrentNodeEditorWidget()
         hasMdiChild = (active is not None)
 
@@ -469,7 +523,6 @@ class CalculatorWindow(NodeEditorWindow):
 
     def updateEditMenu(self):
         try:
-            # print("update Edit Menu")
             active = self.getCurrentNodeEditorWidget()
             hasMdiChild = (active is not None)
 
@@ -482,8 +535,6 @@ class CalculatorWindow(NodeEditorWindow):
             self.actUndo.setEnabled(hasMdiChild and active.canUndo())
             self.actRedo.setEnabled(hasMdiChild and active.canRedo())
         except Exception as e: dumpException(e)
-
-
 
     def updateWindowMenu(self):
         self.windowMenu.clear()
@@ -531,8 +582,6 @@ class CalculatorWindow(NodeEditorWindow):
             self.nodesDock.hide()
         else:
             self.nodesDock.show()
-    
-    
 
     def createNodesDock(self):
         self.nodesListWidget = QDMDragListbox()
@@ -542,12 +591,15 @@ class CalculatorWindow(NodeEditorWindow):
         self.nodesDock.setFloating(False)
 
         self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
-                
+
     def toggleSimulation(self):
         if self.simulationDock.isVisible():
             self.simulationDock.hide()
+            self.simulation_thread.stop()
         else:
             self.simulationDock.show()
+            self.simulation_thread.running = True
+            self.simulation_thread.start()
             
     def createSimulationDock(self):
         self.simulationWidget = CoffeeWorldUI()
@@ -555,7 +607,6 @@ class CalculatorWindow(NodeEditorWindow):
         self.simulationDock = QDockWidget("Simulation")
         self.simulationDock.setFloating(False)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
-        #initially hide 
         self.simulationDock.hide()  
 
     def resizeEvent(self, event):
@@ -565,8 +616,6 @@ class CalculatorWindow(NodeEditorWindow):
         nodeeditor = child_widget if child_widget is not None else CalculatorSubWindow()
         subwnd = self.mdiArea.addSubWindow(nodeeditor)
         subwnd.setWindowIcon(self.empty_icon)
-        # nodeeditor.scene.addItemSelectedListener(self.updateEditMenu)
-        # nodeeditor.scene.addItemsDeselectedListener(self.updateEditMenu)
         nodeeditor.scene.history.addHistoryModifiedListener(self.updateEditMenu)
         nodeeditor.addCloseEventListener(self.onSubWndClose)
         return subwnd
@@ -580,13 +629,11 @@ class CalculatorWindow(NodeEditorWindow):
         else:
             event.ignore()
 
-
     def findMdiChild(self, filename):
         for window in self.mdiArea.subWindowList():
             if window.widget().filename == filename:
                 return window
         return None
-
 
     def setActiveSubWindow(self, window):
         if window:
