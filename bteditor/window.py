@@ -6,7 +6,7 @@ import time
 import json
 import py_trees as pt
 import pygame
-import math
+import threading
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
@@ -36,7 +36,8 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 DEBUG = False
 
-class PygameSimulation(QThread):
+
+class PygameSimulation(threading.Thread):
     def __init__(self):
         super().__init__()
         self.running = False
@@ -62,7 +63,7 @@ class PygameSimulation(QThread):
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
                 font = pygame.font.SysFont("comicsans", 16)
-                label_surface = font.render(self.label, True, WHITE)
+                label_surface = font.render(self.label, True, (0, 0, 0))
                 win.blit(label_surface, (self.rect.x, self.rect.y - 20))
 
             def transfer_content(self, amount):
@@ -70,15 +71,20 @@ class PygameSimulation(QThread):
                 transferred_amount = self.level - new_level
                 self.level = new_level
                 self.rect.height = new_level
+                self.rect.y += amount
                 return transferred_amount
 
         run = True
         clock = pygame.time.Clock()
 
-        big_cup = Cup(300, 250, 50, 300, WHITE, "Big Cup")
+        big_cup = Cup(300, 250, 100, 300, WHITE, "Big Cup")
         sugar_cup = Cup(100, 650, 50, 100, WHITE, "Sugar")
         milk_cup = Cup(300, 650, 50, 100, GREY, "Milk")
         coffee_cup = Cup(500, 650, 50, 100, BROWN, "Coffee")
+
+        sugar_cup.level = 100
+        milk_cup.level = 100
+        coffee_cup.level = 100
 
         cups = {"sugar": sugar_cup, "milk": milk_cup, "coffee": coffee_cup}
 
@@ -86,6 +92,7 @@ class PygameSimulation(QThread):
             if not self.running:
                 pygame.quit()
                 break
+
             clock.tick(60)
             WIN.fill((0, 0, 0))
 
@@ -108,8 +115,17 @@ class PygameSimulation(QThread):
 
         pygame.quit()
 
-    def stop(self):
+    def start_simulation(self):
+        self.running = True
+        self.start()
+
+    def stop_simulation(self):
         self.running = False
+        self.join()
+
+    def execute_action(self, action: str):
+        if action in ["sugar", "milk", "coffee"]:
+            self.current_action = action
 
 class CalculatorWindow(NodeEditorWindow):
 
@@ -119,7 +135,26 @@ class CalculatorWindow(NodeEditorWindow):
         self.timer = QTimer()    
         self.bt_tree = None
         self.simulation_thread = PygameSimulation()
-        
+    
+    def toggleSimulation(self):
+        if self.simulationDock.isVisible():
+            self.simulationDock.hide()
+            if self.simulation_thread:
+                self.simulation_thread.stop_simulation()
+        else:
+            self.simulationDock.show()
+            self.simulation_thread = PygameSimulation()  # Create a new instance
+            self.simulation_thread.start_simulation()
+             # Execute some actions when toggled
+            self.simulation_thread.execute_action("sugar")
+            pygame.time.wait(2000)  # Wait for 2 seconds
+
+            self.simulation_thread.execute_action("milk")
+            pygame.time.wait(2000)  # Wait for 2 seconds
+
+            self.simulation_thread.execute_action("coffee")
+            pygame.time.wait(2000)  # Wait for 2 seconds
+                
     def initUI(self):
         self.name_company = 'ABB'
         self.name_product = 'NodeEditor'
@@ -591,15 +626,6 @@ class CalculatorWindow(NodeEditorWindow):
         self.nodesDock.setFloating(False)
 
         self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
-
-    def toggleSimulation(self):
-        if self.simulationDock.isVisible():
-            self.simulationDock.hide()
-            self.simulation_thread.stop()
-        else:
-            self.simulationDock.show()
-            self.simulation_thread.running = True
-            self.simulation_thread.start()
             
     def createSimulationDock(self):
         self.simulationWidget = CoffeeWorldUI()

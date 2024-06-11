@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsView, QGraphicsScene, QGraphicsRectItem, QGraphicsTextItem
-from PyQt5.QtCore import Qt, QTimer, QRectF
+from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 from PyQt5.QtGui import QBrush, QColor, QPen
 
 class Cup(QGraphicsRectItem):
@@ -28,6 +28,24 @@ class Cup(QGraphicsRectItem):
         self.set_content_level(new_level)
         return transferred_amount
 
+class TransferWorker(QThread):
+    update_level = pyqtSignal(float)
+    
+    def __init__(self, cup, amount_per_step, parent=None):
+        super().__init__(parent)
+        self.cup = cup
+        self.amount_per_step = amount_per_step
+        self.running = True
+
+    def run(self):
+        while self.running and self.cup.content_level > 0:
+            transferred_amount = self.cup.transfer_content(self.amount_per_step)
+            self.update_level.emit(transferred_amount)
+            self.msleep(50)  # Sleep for 50 ms
+
+    def stop(self):
+        self.running = False
+
 class SimulationScene(QGraphicsScene):
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -48,23 +66,21 @@ class SimulationScene(QGraphicsScene):
         self.addItem(self.coffee_cup)
 
         self.cups = {"sugar": self.sugar_cup, "milk": self.milk_cup, "coffee": self.coffee_cup}
-        self.current_action = None
+        self.current_worker = None
 
     def execute_action(self, action: str):
         if action in self.cups:
-            self.current_action = action
-            QTimer.singleShot(50, self.transfer_step)
+            cup = self.cups[action]
+            self.current_worker = TransferWorker(cup, 5)
+            self.current_worker.update_level.connect(self.update_big_cup)
+            self.current_worker.finished.connect(self.cleanup_worker)
+            self.current_worker.start()
 
-    def transfer_step(self):
-        if self.current_action:
-            cup = self.cups[self.current_action]
-            amount = cup.transfer_content(5)
-            self.big_cup.set_content_level(self.big_cup.content_level + amount)
+    def update_big_cup(self, amount: float):
+        self.big_cup.set_content_level(self.big_cup.content_level + amount)
 
-            if cup.content_level > 0:
-                QTimer.singleShot(50, self.transfer_step)
-            else:
-                self.current_action = None
+    def cleanup_worker(self):
+        self.current_worker = None
 
 class SimulationWindow(QMainWindow):
     def __init__(self):
