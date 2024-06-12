@@ -7,7 +7,7 @@ import py_trees as pt
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit("Success/Fail", self)
+        self.edit = QLineEdit(self.node.op_title, self)
         self.edit.setAlignment(Qt.AlignLeft)
         self.edit.setObjectName(self.node.content_label_objname)
 
