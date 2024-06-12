@@ -63,7 +63,7 @@ class PygameSimulation(threading.Thread):
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
                 font = pygame.font.SysFont("comicsans", 16)
-                label_surface = font.render(self.label, True, (0, 0, 0))
+                label_surface = font.render(self.label, True, WHITE)
                 win.blit(label_surface, (self.rect.x, self.rect.y - 20))
 
             def transfer_content(self, amount):
@@ -77,7 +77,7 @@ class PygameSimulation(threading.Thread):
         run = True
         clock = pygame.time.Clock()
 
-        big_cup = Cup(300, 250, 100, 300, WHITE, "Big Cup")
+        empty_cup = Cup(300, 250, 100, 150, WHITE, "Empty Cup")
         sugar_cup = Cup(100, 650, 50, 100, WHITE, "Sugar")
         milk_cup = Cup(300, 650, 50, 100, GREY, "Milk")
         coffee_cup = Cup(500, 650, 50, 100, BROWN, "Coffee")
@@ -102,12 +102,12 @@ class PygameSimulation(threading.Thread):
 
             for cup in cups.values():
                 cup.draw(WIN)
-            big_cup.draw(WIN)
+            empty_cup.draw(WIN)
 
             if self.current_action:
                 cup = cups[self.current_action]
                 amount = cup.transfer_content(1)
-                big_cup.rect.height += amount
+                empty_cup.rect.height -= amount
                 if cup.level <= 0:
                     self.current_action = None
 
@@ -138,23 +138,49 @@ class CalculatorWindow(NodeEditorWindow):
     
     def toggleSimulation(self):
         if self.simulationDock.isVisible():
-            self.simulationDock.hide()
+            #self.simulationDock.hide()
             if self.simulation_thread:
                 self.simulation_thread.stop_simulation()
         else:
-            self.simulationDock.show()
+            #self.simulationDock.show()
             self.simulation_thread = PygameSimulation()  # Create a new instance
+            self.simulation_thread.start_simulation()
             self.simulation_thread.start_simulation()
              # Execute some actions when toggled
             self.simulation_thread.execute_action("sugar")
             pygame.time.wait(2000)  # Wait for 2 seconds
-
-            self.simulation_thread.execute_action("milk")
+            self.simulation_thread.start_simulation()            
+             # Execute some actions when toggled
+            self.simulation_thread.execute_action("sugar")
             pygame.time.wait(2000)  # Wait for 2 seconds
-
-            self.simulation_thread.execute_action("coffee")
-            pygame.time.wait(2000)  # Wait for 2 seconds
-                
+    
+    def update_node_colors(self):
+    
+         for index, node in enumerate(self.node_list):
+            connected_nodes = self.get_connected_nodes(node)
+            if node not in connected_nodes:
+                continue
+            
+            content_widget = node.grNode.content           
+            status = node.py_trees_object.status.value
+            node_number = index + 1
+            print(f'Node {node_number} ({node.op_title}) : Status {status}')
+            self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
+            if status == 'SUCCESS':
+                content_widget.setStyleSheet("background-color: green;")
+                if node.op_title == "Add_coffee!":
+                    self.simulation_thread.execute_action("coffee")
+                elif node.op_title == "Add_milk!":
+                    self.simulation_thread.execute_action("milk")
+                elif node.op_title == "Add_sugar!":
+                    self.simulation_thread.execute_action("sugar")
+            elif status == 'RUNNING':
+                content_widget.setStyleSheet("background-color: orange;")
+            elif status == 'FAILURE':
+                content_widget.setStyleSheet("background-color: red;")
+            else:
+                content_widget.setStyleSheet("background-color: black;")
+                            
     def initUI(self):
         self.name_company = 'ABB'
         self.name_product = 'NodeEditor'
@@ -364,13 +390,27 @@ class CalculatorWindow(NodeEditorWindow):
                         connected_node = edge.end_socket.node
                         print(f"Node '{node.title}' is connected to Node '{connected_node.title}' (output)")
     
-    def update_node_colors(self):
-    
-         for index, node in enumerate(self.node_list):
-            connected_nodes = self.get_connected_nodes(node)
-            if node not in connected_nodes:
-                continue
             
+            
+            content_widget = node.grNode.content           
+            status = node.py_trees_object.status.value
+            node_number = index + 1
+            print(f'Node {node_number} ({node.op_title}) : Status {status}')
+            self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
+            if status == 'SUCCESS':
+                content_widget.setStyleSheet("background-color: green;")
+                if node.op_title in ["sequence", "milk", "coffee"]:
+                    if not self.simulation_thread.running:
+                        self.simulation_thread.running = True
+                        self.simulation_thread.start()
+                    self.simulation_thread.current_action = node.op_title
+            elif status == 'RUNNING':
+                content_widget.setStyleSheet("background-color: orange;")
+            elif status == 'FAILURE':
+                content_widget.setStyleSheet("background-color: red;")
+            else:
+                content_widget.setStyleSheet("background-color: black;")
+    
             content_widget = node.grNode.content           
             status = node.py_trees_object.status.value
             node_number = index + 1

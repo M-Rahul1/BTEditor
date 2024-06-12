@@ -27,16 +27,16 @@ class CalcInputContent(QDMNodeContentWidget):
             dumpException(e)
         return res
 
-@register_node(CUBE2_DELIVERED)
-class Cube2_delivered(CalcNode,pt.behaviour.Behaviour):
+@register_node(IS_COFFEE_READY)
+class Is_coffee_ready_(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
-    op_code = CUBE2_DELIVERED
-    op_title = "Cube2_delivered?"
+    op_code = IS_COFFEE_READY
+    op_title = "Is_coffee_ready?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Cube2_delivered?")
+        pt.behaviour.Behaviour.__init__(self, name="Is_coffee_ready?")
         self.eval()
 
     def update(self) -> pt.common.Status:
@@ -62,52 +62,7 @@ class Cube2_delivered(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Cube2_delivered_(pt.behaviour.Behaviour):   
-    
-
-    def initialise(self) -> None:
-        return super().initialise()
-    
-    def update(self) -> pt.common.Status.FAILURE:
-        return pt.common.Status.FAILURE
-
-@register_node(CUBE2_IN_HAND)
-class Cube2_in_hand(CalcNode,pt.behaviour.Behaviour):
-    
-    icon = "icons/action.png"
-    op_code = CUBE2_IN_HAND
-    op_title = "Cube2_in_hand?"
-    content_label_objname = "action_node"
-
-    def __init__(self, scene):
-        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Cube2_in_hand?")
-        self.eval()
-    
-    def update(self) -> pt.common.Status:
-        return super().update()
-    
-    def initInnerClasses(self):
-        self.content = CalcInputContent(self)
-        self.grNode = CalcGraphicsNode(self)
-    
-    def evalImplementation(self):
-        u_value = self.content.edit.text()
-        s_value = u_value
-        self.value = s_value
-        self.markDirty(False)
-        self.markInvalid(False)   
-
-        self.markDescendantsInvalid(False)
-        self.markDescendantsDirty()
-
-        self.grNode.setToolTip("")
-
-        self.evalChildren()
-
-        return self.value
-
-class Cube2_in_hand_(pt.behaviour.Behaviour):   
+class Is_coffee_ready_(pt.behaviour.Behaviour):   
     
 
     def initialise(self) -> None:
@@ -116,16 +71,16 @@ class Cube2_in_hand_(pt.behaviour.Behaviour):
     def update(self) -> pt.common.Status.FAILURE:
         return pt.common.Status.FAILURE
     
-@register_node(ROBOT_AT_CUBE2)
-class Robot_at_cube2(CalcNode,pt.behaviour.Behaviour):
+@register_node(HAS_COFFEE)
+class Has_coffee_(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
-    op_code = ROBOT_AT_CUBE2
-    op_title = "Robot_at_cube2?"
+    op_code = HAS_COFFEE
+    op_title = "Has_coffee?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Robot_at_cube2?")
+        pt.behaviour.Behaviour.__init__(self, name="Has_coffee?")
         self.eval()
 
     def update(self) -> pt.common.Status:
@@ -151,23 +106,112 @@ class Robot_at_cube2(CalcNode,pt.behaviour.Behaviour):
 
         return self.value
 
-class Robot_at_cube2_(pt.behaviour.Behaviour): 
+class Has_coffee_(pt.behaviour.Behaviour):   
+    
+
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+
+@register_node(HAS_MILK)
+class Has_milk(CalcNode,pt.behaviour.Behaviour):
+    
+    icon = "icons/action.png"
+    op_code = HAS_MILK
+    op_title = "Has_milk?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Has_milk?")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Has_milk_(pt.behaviour.Behaviour):   
+    
+
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(HAS_SUGAR)
+class Has_sugar(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = HAS_SUGAR
+    op_title = "Has_sugar?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Has_sugar?")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Has_sugar_(pt.behaviour.Behaviour): 
     def initialise(self) -> None:
         return super().initialise()
     
     def update(self) -> pt.common.Status.FAILURE:
         return pt.common.Status.FAILURE  
     
-@register_node(MOVE_TO_CUBE2)
-class Move_to_cube2(CalcNode,pt.behaviours.TickCounter):
+@register_node(ADD_COFFEE)
+class Add_coffee(CalcNode,pt.behaviours.TickCounter):
     icon = "icons/action.png"
-    op_code = MOVE_TO_CUBE2
-    op_title = "Move_to_cube2!"
+    op_code = ADD_COFFEE
+    op_title = "Add_coffee!"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Move_to_cube2!", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Add_coffee!", duration=10, completion_status=pt.common.Status.SUCCESS)
         self.eval()
 
     def update(self) -> pt.common.Status:
@@ -192,7 +236,7 @@ class Move_to_cube2(CalcNode,pt.behaviours.TickCounter):
         self.evalChildren()
 
         return self.value
-class Move_to_cube2_(pt.behaviours.TickCounter):   
+class Add_coffee_(pt.behaviours.TickCounter):   
 
     def update(self) -> pt.common.Status:
         self.counter += 1
@@ -203,17 +247,17 @@ class Move_to_cube2_(pt.behaviours.TickCounter):
     def initialise(self) -> None:
         pass
     
-@register_node(PICK_CUBE2)
-class Pick_cube2(CalcNode,pt.behaviours.TickCounter):
+@register_node(ADD_MILK)
+class Add_milk(CalcNode,pt.behaviours.TickCounter):
     
     icon = "icons/action.png"
-    op_code = PICK_CUBE2
-    op_title = "Pick_cube2!"
+    op_code = ADD_MILK
+    op_title = "Add_milk!"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Pick_cube2!", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Add_milk!", duration=10, completion_status=pt.common.Status.SUCCESS)
         self.eval()
     
     def update(self) -> pt.common.Status:
@@ -239,7 +283,7 @@ class Pick_cube2(CalcNode,pt.behaviours.TickCounter):
 
         return self.value
 
-class Pick_cube2_(pt.behaviours.TickCounter):   
+class Add_milk_(pt.behaviours.TickCounter):   
 
     def update(self) -> pt.common.Status:
         self.counter += 1
@@ -250,61 +294,17 @@ class Pick_cube2_(pt.behaviours.TickCounter):
     def initialise(self) -> None:
         pass
 
-@register_node(ROBOT_AT_DELIVERY)
-class Robot_at_delivery(CalcNode,pt.behaviour.Behaviour):
+@register_node(ADD_SUGAR)
+class Add_sugar(CalcNode,pt.behaviours.TickCounter):
     
     icon = "icons/action.png"
-    op_code = ROBOT_AT_DELIVERY
-    op_title = "Robot_at_delivery?"
+    op_code = ADD_SUGAR
+    op_title = "Add_sugar!"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviour.Behaviour.__init__(self, name="Robot_at_delivery?")
-        self.eval()
-    
-    def update(self) -> pt.common.Status:
-        return super().update()
-    
-    def initInnerClasses(self):
-        self.content = CalcInputContent(self)
-        self.grNode = CalcGraphicsNode(self)
-    
-    def evalImplementation(self):
-        u_value = self.content.edit.text()
-        s_value = u_value
-        self.value = s_value
-        self.markDirty(False)
-        self.markInvalid(False)   
-
-        self.markDescendantsInvalid(False)
-        self.markDescendantsDirty()
-
-        self.grNode.setToolTip("")
-
-        self.evalChildren()
-
-        return self.value
-
-class Robot_at_delivery_(pt.behaviour.Behaviour):   
-
-    def initialise(self) -> None:
-        return super().initialise()
-    
-    def update(self) -> pt.common.Status.FAILURE:
-        return pt.common.Status.FAILURE
-
-@register_node(MOVE_TO_DELIVERY)
-class Move_to_delivery(CalcNode,pt.behaviours.TickCounter):
-    
-    icon = "icons/action.png"
-    op_code = MOVE_TO_DELIVERY
-    op_title = "Move_to_delivery!"
-    content_label_objname = "action_node"
-
-    def __init__(self, scene):
-        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Move_to_delivery!", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Add_sugar!", duration=10, completion_status=pt.common.Status.SUCCESS)
         self.eval()
     
     def initInnerClasses(self):
@@ -327,7 +327,7 @@ class Move_to_delivery(CalcNode,pt.behaviours.TickCounter):
 
         return self.value
 
-class Move_to_delivery_(pt.behaviours.TickCounter):   
+class Add_sugar_(pt.behaviours.TickCounter):   
     
     def update(self) -> pt.common.Status:
         self.counter += 1
@@ -338,46 +338,3 @@ class Move_to_delivery_(pt.behaviours.TickCounter):
     def initialise(self) -> None:
         pass
         
-@register_node(PLACE_CUBE2)
-class Place_cube2(CalcNode,pt.behaviours.TickCounter):
-    
-    icon = "icons/action.png"
-    op_code = PLACE_CUBE2
-    op_title = "Place_cube2!"
-    content_label_objname = "action_node"
-
-    def __init__(self, scene):
-        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Place_cube2!", duration=10, completion_status=pt.common.Status.SUCCESS)
-        self.eval()
-    
-    def initInnerClasses(self):
-        self.content = CalcInputContent(self)
-        self.grNode = CalcGraphicsNode(self)
-    
-    def evalImplementation(self):
-        u_value = self.content.edit.text()
-        s_value = u_value
-        self.value = s_value
-        self.markDirty(False)
-        self.markInvalid(False)   
-
-        self.markDescendantsInvalid(False)
-        self.markDescendantsDirty()
-
-        self.grNode.setToolTip("")
-
-        self.evalChildren()
-
-        return self.value
-
-class Place_cube2_(pt.behaviours.TickCounter):   
-    
-    def update(self) -> pt.common.Status:
-        self.counter += 1
-        if self.counter <= self.duration:
-            return pt.common.Status.RUNNING
-        else:
-            return self.completion_status
-    def initialise(self) -> None:
-        pass

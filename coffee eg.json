@@ -1,0 +1,269 @@
+{
+    "id": "ed572b6b-9df8-4466-b71b-c2959b685749",
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": 2157789901168,
+            "title": "Fallback",
+            "pos_x": -157.0,
+            "pos_y": -187.0,
+            "inputs": [
+                {
+                    "id": 2157789974496,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2157789974544,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "b7b7b303-940b-4c4a-960c-042b06fc9022",
+            "title": "Is_coffee_ready?",
+            "pos_x": -342.0,
+            "pos_y": -15.0,
+            "inputs": [
+                {
+                    "id": 2157789975744,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 4
+        },
+        {
+            "id": "c7ee494c-f9ac-4e33-9c38-84ef49551849",
+            "title": "Sequence",
+            "pos_x": -10.0,
+            "pos_y": -12.0,
+            "inputs": [
+                {
+                    "id": 2157789975936,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2157789975984,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": 2157781547488,
+            "title": "Fallback",
+            "pos_x": -59.0,
+            "pos_y": 111.0,
+            "inputs": [
+                {
+                    "id": 2157789978960,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2157789979152,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "567"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "31118b8c-2556-416c-a00f-85948c1e47a8",
+            "title": "Has_coffee?",
+            "pos_x": -204.68749999999994,
+            "pos_y": 267.18749999999994,
+            "inputs": [
+                {
+                    "id": 2157790216320,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 5
+        },
+        {
+            "id": "00b43403-4dd9-4578-9752-87ebf9688777",
+            "title": "Add_coffee!",
+            "pos_x": 50.0,
+            "pos_y": 339.06249999999994,
+            "inputs": [
+                {
+                    "id": 2157790216272,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 8
+        },
+        {
+            "id": 2157789986496,
+            "title": "Fallback",
+            "pos_x": 184.37499999999994,
+            "pos_y": 109.37499999999999,
+            "inputs": [
+                {
+                    "id": 2157790216368,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2157790216608,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "410f2882-35e7-40f9-b5af-322e2e2dc728",
+            "title": "Has_milk?",
+            "pos_x": 167.1875,
+            "pos_y": 239.06249999999997,
+            "inputs": [
+                {
+                    "id": 2157790216800,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 6
+        },
+        {
+            "id": "8ca3538d-f403-4a21-81d6-dad1f166853c",
+            "title": "Add_milk!",
+            "pos_x": 418.74999999999994,
+            "pos_y": 324.99999999999994,
+            "inputs": [
+                {
+                    "id": 2157790217088,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Success/Fail"
+            },
+            "op_code": 9
+        }
+    ],
+    "edges": [
+        {
+            "id": 2157789975504,
+            "edge_type": 2,
+            "start": 2157789974544,
+            "end": 2157789975744
+        },
+        {
+            "id": 2157789927216,
+            "edge_type": 2,
+            "start": 2157789974544,
+            "end": 2157789975936
+        },
+        {
+            "id": 2157784386160,
+            "edge_type": 2,
+            "start": 2157789975984,
+            "end": 2157789978960
+        },
+        {
+            "id": 2157789986256,
+            "edge_type": 2,
+            "start": 2157789979152,
+            "end": 2157790216320
+        },
+        {
+            "id": 2157786941440,
+            "edge_type": 2,
+            "start": 2157789979152,
+            "end": 2157790216272
+        },
+        {
+            "id": 2157789986352,
+            "edge_type": 2,
+            "start": 2157789975984,
+            "end": 2157790216368
+        },
+        {
+            "id": 2157784050256,
+            "edge_type": 2,
+            "start": 2157790216608,
+            "end": 2157790216800
+        },
+        {
+            "id": 2157790216512,
+            "edge_type": 2,
+            "start": 2157790216608,
+            "end": 2157790217088
+        }
+    ]
+}

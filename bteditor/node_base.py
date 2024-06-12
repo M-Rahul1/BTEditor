@@ -95,22 +95,20 @@ class CalcNode(Node):
                 return pt.composites.Selector(name=self.op_title, memory=False, children=[])
             elif self.op_title == "Parallel":
                 return pt.composites.Parallel(name=self.op_title, policy="", children=[])
-            elif self.op_title == "Cube2_delivered?":
-                return action.Cube2_delivered_(name=self.op_title)
-            elif self.op_title == "Cube2_in_hand?":
-                return action.Cube2_in_hand_(name=self.op_title)
-            elif self.op_title == "Robot_at_cube2?":
-                return action.Robot_at_cube2_(name=self.op_title)
-            elif self.op_title == "Move_to_cube2!":
-                return action.Move_to_cube2_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
-            elif self.op_title == "Pick_cube2!":
-                return action.Pick_cube2_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
-            elif self.op_title == "Robot_at_delivery?":
-                return action.Robot_at_delivery_(name=self.op_title)
-            elif self.op_title == "Move_to_delivery!":
-                return action.Move_to_delivery_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
-            elif self.op_title == "Place_cube2!":
-                return action.Place_cube2_(name=self.op_title , duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Is_coffee_ready?":
+                return action.Is_coffee_ready_(name=self.op_title)
+            elif self.op_title == "Has_coffee?":
+                return action.Has_coffee_(name=self.op_title)
+            elif self.op_title == "Has_milk?":
+                return action.Has_milk_(name=self.op_title)
+            elif self.op_title == "Has_sugar?":
+                return action.Has_sugar_(name=self.op_title)
+            elif self.op_title == "Add_coffee!":
+                return action.Add_coffee_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Add_milk!":
+                return action.Add_milk_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Add_sugar!":
+                return action.Add_sugar_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             else :
                 print("Invalid node")                    
         except Exception as e:
@@ -177,8 +175,6 @@ class CalcNode(Node):
             self.markInvalid()
             self.grNode.setToolTip(str(e))
             dumpException(e)
-
-
 
     def onInputChanged(self, socket=None):
         print("%s:: InputChanged" % self.__class__.__name__)
