@@ -56,7 +56,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Add_sugar!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_SUGAR, section_name="Action")
         self.addMyItem("Add_coffee!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_COFFEE, section_name="Action")
         self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")       
-    
+        
     def add_section(self, section_name):        
         section_header = QListWidgetItem(section_name)
         section_header.setFont(QFont("Arial", 13, QFont.Bold))
