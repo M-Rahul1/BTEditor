@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QGraphicsView, QGraphicsS
 from PyQt5.QtCore import Qt, QThread, pyqtSignal, QTimer
 from PyQt5.QtGui import QBrush, QColor, QPen
 
+#Just a visualization test file
 class Cup(QGraphicsRectItem):
     def __init__(self, x: float, y: float, width: float, height: float, color: QColor, label: str):
         super().__init__(x, y, width, height)

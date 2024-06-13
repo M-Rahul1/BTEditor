@@ -13,7 +13,6 @@ from nodeeditor.node_editor_window import NodeEditorWindow
 from nodeeditor.node_editor_widget import NodeEditorWidget
 from bteditor.sub_window import CalculatorSubWindow
 from bteditor.drag_listbox import QDMDragListbox
-from bteditor.draw_world import CoffeeWorldUI
 from nodeeditor.node_graphics_node import QDMGraphicsNode
 from nodeeditor.node_graphics_edge import QDMGraphicsEdge
 from nodeeditor.utils import dumpException, pp
@@ -174,6 +173,7 @@ class CalculatorWindow(NodeEditorWindow):
                     self.simulation_thread.execute_action("milk")
                 elif node.op_title == "Add_sugar!":
                     self.simulation_thread.execute_action("sugar")
+                    pygame.time.wait(120)
             elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")
             elif status == 'FAILURE':
@@ -627,9 +627,7 @@ class CalculatorWindow(NodeEditorWindow):
 
         self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
             
-    def createSimulationDock(self):
-        self.simulationWidget = CoffeeWorldUI()
-        
+    def createSimulationDock(self):       
         self.simulationDock = QDockWidget("Simulation")
         self.simulationDock.setFloating(False)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
