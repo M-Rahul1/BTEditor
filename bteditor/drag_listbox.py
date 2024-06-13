@@ -37,25 +37,42 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Sequence", icon=os.path.join(os.path.dirname(__file__), "icons/sequence.png"), op_code=SEQUENCE, section_name="Control")
         self.addMyItem("Fallback", icon=os.path.join(os.path.dirname(__file__), "icons/fallback.png"), op_code=FALLBACK, section_name="Control")
         self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Control")
-
         self.addItem(self.create_spacer_item(20))
-        # Add Condition section
+        
+        # Add ai car Condition section
+        self.add_section("Condition")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("No_traffic_light?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_TRAFFIC_LIGHT, section_name="Condition")
+        self.addMyItem("Light_is_red?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=LIGHT_IS_RED, section_name="Condition")
+        self.addMyItem("Light_is_green?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=LIGHT_IS_GREEN, section_name="Condition")
+        self.addMyItem("Light_is_yellow?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=LIGHT_IS_YELLOW, section_name="Condition")
+        self.addMyItem("Within_lane?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=WITHIN_LANE, section_name="Condition")
+        self.addItem(self.create_spacer_item(20))
+        
+        # Add Action section
+        self.add_section("Action")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Stop", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=STOP, section_name="Action")
+        self.addMyItem("Proceed", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PROCEED, section_name="Action")
+        self.addMyItem("Caution", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CAUTION, section_name="Action")
+        self.addMyItem("Move_into_lane", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_INTO_LANE, section_name="Action")
+        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")
+        
+        """# Add coffee Condition section
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Is_coffee_ready?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=IS_COFFEE_READY, section_name="Condition")
         self.addMyItem("Has_coffee?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_COFFEE, section_name="Condition")
         self.addMyItem("Has_milk?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_MILK, section_name="Condition")
         self.addMyItem("Has_sugar?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_SUGAR, section_name="Condition")
-        
-        # Add larger spacer
         self.addItem(self.create_spacer_item(20))
-
+             
         # Add Action section
         self.add_section("Action")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Add_sugar!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_SUGAR, section_name="Action")
         self.addMyItem("Add_coffee!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_COFFEE, section_name="Action")
-        self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")       
+        self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")   """    
         
     def add_section(self, section_name):        
         section_header = QListWidgetItem(section_name)

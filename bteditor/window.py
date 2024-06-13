@@ -18,6 +18,8 @@ from nodeeditor.node_graphics_edge import QDMGraphicsEdge
 from nodeeditor.utils import dumpException, pp
 from bteditor.conf import *
 from bteditor.output_log import OutputDock
+#from bteditor.simu_coffee import PygameSimulation
+#from bteditor.simu_ai_car import PygameSimulation
 
 # Enabling edge validators
 from nodeeditor.node_edge import Edge
@@ -35,7 +37,6 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 DEBUG = False
 
-
 class PygameSimulation(threading.Thread):
     def __init__(self):
         super().__init__()
@@ -46,55 +47,68 @@ class PygameSimulation(threading.Thread):
         pygame.init()
         WIDTH, HEIGHT = 1000, 800
         WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Coffee Simulation")
+        pygame.display.set_caption("Autonomous Driving Car Simulation")
 
         WHITE = (255, 255, 255)
-        GREY = (192, 192, 192)
-        BROWN = (139, 69, 19)
+        RED = (255, 0, 0)
+        GREEN = (0, 255, 0)
+        YELLOW = (255, 255, 0)
         BLACK = (0, 0, 0)
+        GREY = (192, 192, 192)
 
-        class Cup:
-            def __init__(self, x, y, width, height, color, label):
-                self.rect = pygame.Rect(x, y, width, height)
-                self.color = color
-                self.label = label
-                self.level = height
-                self.layers = [(color, height)]
+        class TrafficLight:
+            def __init__(self, x, y):
+                self.rect = pygame.Rect(x, y, 60, 180)
+                self.color = RED
+                self.timer = 0
+
+            def update(self):
+                self.timer += 1
+                if self.timer > 300:  # Change light every 5 seconds (assuming 60 FPS)
+                    if self.color == RED:
+                        self.color = GREEN
+                    elif self.color == GREEN:
+                        self.color = YELLOW
+                    elif self.color == YELLOW:
+                        self.color = RED
+                    self.timer = 0
 
             def draw(self, win):
-                y_offset = self.rect.y + self.rect.height
-                for color, height in self.layers:
-                    y_offset -= height
-                    pygame.draw.rect(win, color, (self.rect.x, y_offset, self.rect.width, height))
-                font = pygame.font.SysFont("comicsans", 16)
-                label_surface = font.render(self.label, True, WHITE)
-                win.blit(label_surface, (self.rect.x- 120, self.rect.y ))
+                pygame.draw.rect(win, BLACK, self.rect)
+                if self.color == RED:
+                    pygame.draw.circle(win, RED, (self.rect.x + 30, self.rect.y + 30), 20)
+                elif self.color == YELLOW:
+                    pygame.draw.circle(win, YELLOW, (self.rect.x + 30, self.rect.y + 90), 20)
+                elif self.color == GREEN:
+                    pygame.draw.circle(win, GREEN, (self.rect.x + 30, self.rect.y + 150), 20)
 
-            def transfer_content(self, amount, color):
-                new_level = max(0, self.level - amount)
-                transferred_amount = self.level - new_level
-                self.level = new_level
-                self.rect.height = new_level
-                self.rect.y += amount
-                return transferred_amount, color
+        class Car:
+            def __init__(self, x, y):
+                self.rect = pygame.Rect(x, y, 50, 100)
+                self.color = BLACK
+                self.speed = 5
+                self.lane = 1  # 1 means within lane, 0 means out of lane
 
-            def add_layer(self, amount, color):
-                self.layers.append((color, amount))
+            def move(self):
+                if self.lane == 1:
+                    self.rect.y -= self.speed
+                elif self.lane == 0:
+                    self.rect.x += self.speed // 2
+                    if self.rect.x >= 475:
+                        self.rect.x = 475
+                        self.lane = 1
+
+            def draw(self, win):
+                pygame.draw.rect(win, self.color, self.rect)
+
+            def go_off_lane(self):
+                self.lane = 0
 
         run = True
         clock = pygame.time.Clock()
 
-        empty_cup = Cup(500, 350, 100, 0, WHITE, "Empty Cup")
-        sugar_cup = Cup(300, 650, 50, 100, WHITE, "Sugar")
-        milk_cup = Cup(500, 650, 50, 100, GREY, "Milk")
-        coffee_cup = Cup(700, 650, 50, 100, BROWN, "Coffee")
-
-        sugar_cup.level = 100
-        milk_cup.level = 100
-        coffee_cup.level = 100
-
-        cups = {"sugar": sugar_cup, "milk": milk_cup, "coffee": coffee_cup}
-        colors = {"sugar": WHITE, "milk": GREY, "coffee": BROWN}
+        traffic_light = TrafficLight(470, 100)
+        car = Car(475, 600)
 
         while run:
             if not self.running:
@@ -102,24 +116,36 @@ class PygameSimulation(threading.Thread):
                 break
 
             clock.tick(60)
-            WIN.fill((100, 100, 100))
+            WIN.fill(WHITE)
+            pygame.draw.rect(WIN, GREY, (300, 0, 400, HEIGHT))  # Draw road
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
 
-            for cup in cups.values():
-                cup.draw(WIN)
-            empty_cup.draw(WIN)
+            traffic_light.update()
+            traffic_light.draw(WIN)
+            car.draw(WIN)
 
-            if self.current_action:
-                cup = cups[self.current_action]
-                amount, color = cup.transfer_content(1, colors[self.current_action])
-                if amount > 0:
-                    empty_cup.add_layer(amount, color)
-                if cup.level <= 0:
-                    self.current_action = None
+            if self.current_action == "stop":
+                car.speed = 0
+            elif self.current_action == "proceed":
+                car.speed = 5
+            elif self.current_action == "caution":
+                car.speed = 2
+            elif self.current_action == "move_into_lane":
+                car.go_off_lane()
+            elif self.current_action == "keep_driving":
+                car.speed = 5
 
+            if traffic_light.color == RED and car.rect.y < traffic_light.rect.y + 180:
+                self.current_action = "stop"
+            elif traffic_light.color == GREEN:
+                self.current_action = "proceed"
+            elif traffic_light.color == YELLOW:
+                self.current_action = "caution"
+
+            car.move()
             pygame.display.update()
 
         pygame.quit()
@@ -133,7 +159,7 @@ class PygameSimulation(threading.Thread):
         self.join()
 
     def execute_action(self, action: str):
-        if action in ["sugar", "milk", "coffee"]:
+        if action in ["stop", "proceed", "caution", "move_into_lane", "keep_driving"]:
             self.current_action = action
 
 class CalculatorWindow(NodeEditorWindow):
@@ -153,6 +179,12 @@ class CalculatorWindow(NodeEditorWindow):
             self.simulationDock.show()
             self.simulation_thread = PygameSimulation()  # Create a new instance
             self.simulation_thread.start_simulation()
+            
+    def createSimulationDock(self):       
+        self.simulationDock = QDockWidget("Simulation")
+        self.simulationDock.setFloating(False)
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
+        self.simulationDock.hide() 
 
     def update_node_colors(self):
         for index, node in enumerate(self.node_list):
@@ -167,13 +199,24 @@ class CalculatorWindow(NodeEditorWindow):
             self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
-                if node.op_title == "Add_coffee!":
+                if node.op_title == "Stop":
+                    self.simulation_thread.execute_action("stop")
+                elif node.op_title == "Proceed":
+                    self.simulation_thread.execute_action("proceed")
+                elif node.op_title == "Caution":
+                    self.simulation_thread.execute_action("caution")
+                elif node.op_title == "Move_into_lane":
+                    self.simulation_thread.execute_action("move_into_lane")
+                elif node.op_title == "Keep_driving":
+                    self.simulation_thread.execute_action("keep_driving")
+                    
+                """if node.op_title == "Add_coffee!":
                     self.simulation_thread.execute_action("coffee")
                 elif node.op_title == "Add_milk!":
                     self.simulation_thread.execute_action("milk")
                 elif node.op_title == "Add_sugar!":
                     self.simulation_thread.execute_action("sugar")
-                    pygame.time.wait(120)
+                    pygame.time.wait(120)"""
             elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")
             elif status == 'FAILURE':
@@ -398,7 +441,6 @@ class CalculatorWindow(NodeEditorWindow):
         current_node_editor = self.getCurrentNodeEditorWidget()
         self.node_list = current_node_editor.scene.nodes[:] 
         self.update_node_colors()
-        
         root_status = self.bt_tree.root.status
         self.iterations = 0
         self.max_iterations = 50
@@ -625,13 +667,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.nodesDock.setWidget(self.nodesListWidget)
         self.nodesDock.setFloating(False)
 
-        self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
-            
-    def createSimulationDock(self):       
-        self.simulationDock = QDockWidget("Simulation")
-        self.simulationDock.setFloating(False)
-        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
-        self.simulationDock.hide()  
+        self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock) 
 
     def resizeEvent(self, event):
         super().resizeEvent(event)         

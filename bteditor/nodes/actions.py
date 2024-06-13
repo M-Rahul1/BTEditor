@@ -27,6 +27,436 @@ class CalcInputContent(QDMNodeContentWidget):
             dumpException(e)
         return res
 
+@register_node(NO_TRAFFIC_LIGHT)
+class No_traffic_light_(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = NO_TRAFFIC_LIGHT
+    op_title = "No_traffic_light?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="No_traffic_light?")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class No_traffic_light_(pt.behaviour.Behaviour):   
+    
+
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+ 
+@register_node(LIGHT_IS_RED)
+class Light_is_red_(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = LIGHT_IS_RED
+    op_title = "Light_is_red?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Light_is_red?")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Light_is_red_(pt.behaviour.Behaviour):        
+    
+        def initialise(self) -> None:
+            return super().initialise()
+        
+        def update(self) -> pt.common.Status.FAILURE:
+            return pt.common.Status.FAILURE
+        
+@register_node(LIGHT_IS_GREEN)
+class Light_is_green_(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = LIGHT_IS_GREEN
+    op_title = "Light_is_green?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Light_is_green?")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Light_is_green_(pt.behaviour.Behaviour):  
+    
+        def initialise(self) -> None:
+            return super().initialise()
+        
+        def update(self) -> pt.common.Status.FAILURE:
+            return pt.common.Status.FAILURE
+    
+@register_node(LIGHT_IS_YELLOW)
+class Light_is_yellow_(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = LIGHT_IS_YELLOW
+    op_title = "Light_is_yellow?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Light_is_yellow?")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Light_is_yellow_(pt.behaviour.Behaviour):
+        
+            def initialise(self) -> None:
+                return super().initialise()
+            
+            def update(self) -> pt.common.Status.FAILURE:
+                return pt.common.Status.FAILURE
+            
+@register_node(WITHIN_LANE)
+class Within_lane_(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = WITHIN_LANE
+    op_title = "Within_lane?"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Within_lane?")
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Within_lane_(pt.behaviour.Behaviour):            
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE      
+    
+@register_node(STOP)
+class Stop_(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = STOP
+    op_title = "Stop"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Stop", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value   
+
+class Stop_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+          
+@register_node(PROCEED)
+class Proceed_(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = PROCEED
+    op_title = "Proceed"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Proceed", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Proceed_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+        
+@register_node(CAUTION)
+class Caution_(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = CAUTION
+    op_title = "Caution"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Caution", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Caution_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+        
+@register_node(MOVE_INTO_LANE)
+class Move_into_lane_(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = MOVE_INTO_LANE
+    op_title = "Move_into_lane"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Move_into_lane", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Move_into_lane_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+        
+@register_node(KEEP_DRIVING)
+class Keep_driving_(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = KEEP_DRIVING
+    op_title = "Keep_driving"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Keep_driving", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Keep_driving_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+                
 @register_node(IS_COFFEE_READY)
 class Is_coffee_ready_(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
@@ -244,8 +674,7 @@ class Add_coffee_(pt.behaviours.TickCounter):
             return pt.common.Status.RUNNING
         else:
             return self.completion_status
-    def initialise(self) -> None:
-        pass
+    
     
 @register_node(ADD_MILK)
 class Add_milk(CalcNode,pt.behaviours.TickCounter):
@@ -291,8 +720,7 @@ class Add_milk_(pt.behaviours.TickCounter):
             return pt.common.Status.RUNNING
         else:
             return self.completion_status
-    def initialise(self) -> None:
-        pass
+    
 
 @register_node(ADD_SUGAR)
 class Add_sugar(CalcNode,pt.behaviours.TickCounter):
@@ -335,6 +763,5 @@ class Add_sugar_(pt.behaviours.TickCounter):
             return pt.common.Status.RUNNING
         else:
             return self.completion_status
-    def initialise(self) -> None:
-        pass
+    
         
