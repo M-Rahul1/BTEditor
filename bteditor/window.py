@@ -59,19 +59,8 @@ class PygameSimulation(threading.Thread):
         class TrafficLight:
             def __init__(self, x, y):
                 self.rect = pygame.Rect(x, y, 60, 180)
-                self.color = RED
+                self.color = YELLOW
                 self.timer = 0
-
-            def update(self):
-                self.timer += 1
-                if self.timer > 300:  # Change light every 5 seconds (assuming 60 FPS)
-                    if self.color == RED:
-                        self.color = GREEN
-                    elif self.color == GREEN:
-                        self.color = YELLOW
-                    elif self.color == YELLOW:
-                        self.color = RED
-                    self.timer = 0
 
             def draw(self, win):
                 pygame.draw.rect(win, BLACK, self.rect)
@@ -82,11 +71,14 @@ class PygameSimulation(threading.Thread):
                 elif self.color == GREEN:
                     pygame.draw.circle(win, GREEN, (self.rect.x + 30, self.rect.y + 150), 20)
 
+            def change_color(self, color):
+                self.color = color
+                
         class Car:
             def __init__(self, x, y):
                 self.rect = pygame.Rect(x, y, 50, 100)
                 self.color = BLACK
-                self.speed = 5
+                self.speed = 2
                 self.lane = 1  # 1 means within lane, 0 means out of lane
 
             def move(self):
@@ -101,13 +93,10 @@ class PygameSimulation(threading.Thread):
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
 
-            def go_off_lane(self):
-                self.lane = 0
-
         run = True
         clock = pygame.time.Clock()
 
-        traffic_light = TrafficLight(470, 100)
+        traffic_light = TrafficLight(700, 100)
         car = Car(475, 600)
 
         while run:
@@ -123,20 +112,25 @@ class PygameSimulation(threading.Thread):
                 if event.type == pygame.QUIT:
                     run = False
 
-            traffic_light.update()
+            
             traffic_light.draw(WIN)
             car.draw(WIN)
+            
+            if self.current_action == "red":
+                traffic_light.change_color(RED)
+            elif self.current_action == "green":
+                traffic_light.change_color(GREEN)
 
             if self.current_action == "stop":
                 car.speed = 0
             elif self.current_action == "proceed":
-                car.speed = 5
-            elif self.current_action == "caution":
                 car.speed = 2
+            elif self.current_action == "caution":
+                car.speed = 1
             elif self.current_action == "move_into_lane":
                 car.go_off_lane()
             elif self.current_action == "keep_driving":
-                car.speed = 5
+                car.speed = 2
 
             if traffic_light.color == RED and car.rect.y < traffic_light.rect.y + 180:
                 self.current_action = "stop"
@@ -159,7 +153,7 @@ class PygameSimulation(threading.Thread):
         self.join()
 
     def execute_action(self, action: str):
-        if action in ["stop", "proceed", "caution", "move_into_lane", "keep_driving"]:
+        if action in ["red", "green"]:
             self.current_action = action
 
 class CalculatorWindow(NodeEditorWindow):
@@ -199,24 +193,18 @@ class CalculatorWindow(NodeEditorWindow):
             self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
-                if node.op_title == "Stop":
-                    self.simulation_thread.execute_action("stop")
-                elif node.op_title == "Proceed":
-                    self.simulation_thread.execute_action("proceed")
-                elif node.op_title == "Caution":
-                    self.simulation_thread.execute_action("caution")
-                elif node.op_title == "Move_into_lane":
-                    self.simulation_thread.execute_action("move_into_lane")
-                elif node.op_title == "Keep_driving":
-                    self.simulation_thread.execute_action("keep_driving")
+                if node.op_title == "Light_is_red?":
+                    self.simulation_thread.execute_action("red")
+                elif node.op_title == "Light_is_green?":
+                    self.simulation_thread.execute_action("green")
                     
-                """if node.op_title == "Add_coffee!":
+                elif node.op_title == "Add_coffee!":
                     self.simulation_thread.execute_action("coffee")
                 elif node.op_title == "Add_milk!":
                     self.simulation_thread.execute_action("milk")
                 elif node.op_title == "Add_sugar!":
                     self.simulation_thread.execute_action("sugar")
-                    pygame.time.wait(120)"""
+                    pygame.time.wait(120)
             elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")
             elif status == 'FAILURE':
@@ -445,13 +433,13 @@ class CalculatorWindow(NodeEditorWindow):
         self.iterations = 0
         self.max_iterations = 50
         self.iterations += 1
-        if self.iterations >= self.max_iterations or root_status != pt.common.Status.RUNNING:
+        if self.iterations >= self.max_iterations:
             self.stopRun()
 
     def onRun(self):
         self.timer.timeout.connect(self.onRunOnce) 
 
-        self.timer.start(200)  # Timer calls onRunOnce every 200 milliseconds
+        self.timer.start(500)  # Timer calls onRunOnce every 200 milliseconds
 
     def stopRun(self):
         self.timer.stop()

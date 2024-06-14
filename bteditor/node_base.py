@@ -98,11 +98,12 @@ class CalcNode(Node):
             elif self.op_title == "No_traffic_light?":
                 return action.No_traffic_light_(name=self.op_title)
             elif self.op_title == "Light_is_red?":
-                return action.Light_is_red_(name=self.op_title)
+                #if completion_status=pt.common.Status.SUCCESS change to failure and vice versa
+                return action.Light_is_red_(name=self.op_title, duration=5, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Light_is_green?":
-                return action.Light_is_green_(name=self.op_title)
+                return action.Light_is_green_(name=self.op_title, duration=5, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Light_is_yellow?":
-                return action.Light_is_yellow_(name=self.op_title)
+                return action.Light_is_yellow_(name=self.op_title, duration=5, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Within_lane?":
                 return action.Within_lane_(name=self.op_title)
             elif self.op_title == "Stop":

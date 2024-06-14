@@ -1,0 +1,183 @@
+{
+    "id": "adda4d06-55e7-4d70-9a97-f00b9fd0b37a",
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": 1595941152544,
+            "title": "Fallback",
+            "pos_x": 15.0,
+            "pos_y": -213.0,
+            "inputs": [
+                {
+                    "id": 1595941152784,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1595941152832,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "88bbdbb0-0328-425e-9eff-08bd8329d0d9",
+            "title": "No_traffic_light?",
+            "pos_x": -135.0,
+            "pos_y": -51.0,
+            "inputs": [
+                {
+                    "id": 1595680027664,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "No_traffic_light?"
+            },
+            "op_code": 14
+        },
+        {
+            "id": "f78ce92f-cea5-4eb2-8215-95cecba65c99",
+            "title": "Sequence",
+            "pos_x": 123.0,
+            "pos_y": -53.0,
+            "inputs": [
+                {
+                    "id": 1595941226448,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1595941226496,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": 1595941229424,
+            "title": "Fallback",
+            "pos_x": 133.0,
+            "pos_y": 76.0,
+            "inputs": [
+                {
+                    "id": 1595941235856,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 1595941235952,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 1
+        },
+        {
+            "id": "9dd55d1b-7ff2-4d93-9483-799f69f51250",
+            "title": "Light_is_red?",
+            "pos_x": 27.0,
+            "pos_y": 204.0,
+            "inputs": [
+                {
+                    "id": 1595941236192,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Light_is_red?"
+            },
+            "op_code": 15
+        },
+        {
+            "id": "8497c4a5-189a-4107-91ce-729e271a8d03",
+            "title": "Stop",
+            "pos_x": 260.0,
+            "pos_y": 200.0,
+            "inputs": [
+                {
+                    "id": 1595941236480,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Stop"
+            },
+            "op_code": 18
+        }
+    ],
+    "edges": [
+        {
+            "id": 1595941226160,
+            "edge_type": 2,
+            "start": 1595941152832,
+            "end": 1595680027664
+        },
+        {
+            "id": 1595941229472,
+            "edge_type": 2,
+            "start": 1595941152832,
+            "end": 1595941226448
+        },
+        {
+            "id": 1595941226064,
+            "edge_type": 2,
+            "start": 1595941226496,
+            "end": 1595941235856
+        },
+        {
+            "id": 1595941235904,
+            "edge_type": 2,
+            "start": 1595941235952,
+            "end": 1595941236192
+        },
+        {
+            "id": 1595941236336,
+            "edge_type": 2,
+            "start": 1595941235952,
+            "end": 1595941236480
+        }
+    ]
+}
