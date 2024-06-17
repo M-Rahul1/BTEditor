@@ -39,7 +39,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Control")
         self.addItem(self.create_spacer_item(20))
         
-        # Add ai car Condition section
+        """# Add ai car Condition section
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("No_traffic_light?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_TRAFFIC_LIGHT, section_name="Condition")
@@ -56,7 +56,24 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Proceed", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PROCEED, section_name="Action")
         self.addMyItem("Caution", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CAUTION, section_name="Action")
         self.addMyItem("Move_into_lane", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_INTO_LANE, section_name="Action")
-        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")
+        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")"""
+        
+        # Add healthCare Condition section
+        self.add_section("Condition")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("No_emergency?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_EMERGENCY, section_name="Condition")
+        self.addMyItem("Medicine_with_patient?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MEDICINE_WITH_PATIENT, section_name="Condition")
+        self.addMyItem("Robot_at_medicine?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_MEDICINE, section_name="Condition")
+        self.addMyItem("Robot_at_patient?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ROBOT_AT_PATIENT, section_name="Condition")        
+        self.addItem(self.create_spacer_item(20))
+        
+        self.add_section("Action")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Move_to_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_PATIENT, section_name="Action")
+        self.addMyItem("Assist_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ASSIST_PATIENT, section_name="Action")
+        self.addMyItem("Move_to_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_MEDICINE, section_name="Action")
+        self.addMyItem("Pick_up_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_UP_MEDICINE, section_name="Action")
+        self.addMyItem("Deliver_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=DELIVER_MEDICINE, section_name="Action")
         
         """# Add coffee Condition section
         self.add_section("Condition")

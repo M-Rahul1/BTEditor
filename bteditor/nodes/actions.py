@@ -791,7 +791,7 @@ class Add_sugar_(pt.behaviours.TickCounter):
 class No_emergency(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
     op_code = NO_EMERGENCY
-    op_title = "No_emergency"
+    op_title = "No_emergency?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
@@ -826,14 +826,14 @@ class No_emergency_(pt.behaviour.Behaviour):
     def initialise(self) -> None:
         return super().initialise()
     
-    def update(self) -> pt.common.Status.SUCCESS:
-        return pt.common.Status.SUCCESS
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
     
 @register_node(MEDICINE_WITH_PATIENT)
 class Medicine_with_patient(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
     op_code = MEDICINE_WITH_PATIENT
-    op_title = "Medicine_with_patient"
+    op_title = "Medicine_with_patient?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
@@ -875,7 +875,7 @@ class Medicine_with_patient_(pt.behaviour.Behaviour):
 class Robot_at_medicine(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
     op_code = ROBOT_AT_MEDICINE
-    op_title = "Robot_at_medicine"
+    op_title = "Robot_at_medicine?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):
@@ -917,7 +917,7 @@ class Robot_at_medicine_(pt.behaviour.Behaviour):
 class Robot_at_patient(CalcNode,pt.behaviour.Behaviour):
     icon = "icons/action.png"
     op_code = ROBOT_AT_PATIENT
-    op_title = "Robot_at_patient"
+    op_title = "Robot_at_patient?"
     content_label_objname = "action_node"
 
     def __init__(self, scene):

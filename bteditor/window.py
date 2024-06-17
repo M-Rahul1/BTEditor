@@ -43,6 +43,7 @@ class PygameSimulation(threading.Thread):
         self.running = False
         self.current_task = None
         self.patients = []
+        self.current_patient_index = 0  # Track the index of the current patient
 
     def run(self):
         pygame.init()
@@ -58,11 +59,11 @@ class PygameSimulation(threading.Thread):
         GREY = (192, 192, 192)
 
         class Robot:
-            def __init__(self, x, y):
+            def __init__(self, x, y, label):
                 self.rect = pygame.Rect(x, y, 50, 50)
                 self.color = BLUE
                 self.speed = 5
-                self.task = None
+                self.label = label
 
             def move_to(self, x, y):
                 if self.rect.x < x:
@@ -76,32 +77,55 @@ class PygameSimulation(threading.Thread):
 
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
+                font = pygame.font.SysFont(None, 24)
+                text = font.render(self.label, True, BLACK)
+                win.blit(text, (self.rect.x, self.rect.y - 25))
 
         class Patient:
-            def __init__(self, x, y):
+            def __init__(self, x, y, label):
                 self.rect = pygame.Rect(x, y, 50, 50)
                 self.color = GREEN
                 self.needs_help = False
+                self.label = label
 
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
-                if self.needs_help:
-                    pygame.draw.circle(win, RED, (self.rect.x + 25, self.rect.y + 25), 10)
+                font = pygame.font.SysFont(None, 24)
+                text = font.render(self.label, True, BLACK)
+                win.blit(text, (self.rect.x, self.rect.y - 25))
 
         class Medicine:
-            def __init__(self, x, y):
+            def __init__(self, x, y, label):
                 self.rect = pygame.Rect(x, y, 30, 30)
                 self.color = BLACK
+                self.label = label
 
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
+                font = pygame.font.SysFont(None, 24)
+                text = font.render(self.label, True, BLACK)
+                win.blit(text, (self.rect.x, self.rect.y - 25))
 
+        def draw_patient_needs_help(win, patients):
+            for patient in patients:
+                if patient.needs_help:
+                    pygame.draw.circle(win, RED, (patient.rect.x + 25, patient.rect.y + 25), 10)
+        #add medicine block to patients only after attending to them
+        def draw_medicine(win, patients):
+            pygame.draw.rect(win, BLACK, (patient.rect.x + 25, patient.rect.y + 25, 10, 10))
+                
         run = True
         clock = pygame.time.Clock()
 
-        robot = Robot(100, 100)
-        patients = [Patient(300, 300), Patient(600, 300), Patient(450, 600)]
-        medicine = Medicine(800, 100)
+        robot = Robot(100, 100, "Robot")
+        patients = [
+            Patient(300, 300, "Patient 1"),
+            Patient(600, 300, "Patient 2"),
+            Patient(450, 600, "Patient 3")
+        ]
+        medicine = Medicine(800, 100, "Medicine")
+
+        self.patients = patients
 
         while run:
             if not self.running:
@@ -121,23 +145,35 @@ class PygameSimulation(threading.Thread):
             for patient in patients:
                 patient.draw(WIN)
 
-            if self.current_task == "deliver_medicine":
+            
+            if self.current_task == "needs_help":
+                draw_patient_needs_help(WIN, patients)
+                
+            elif self.current_task == "to_medicine":
                 robot.move_to(medicine.rect.x, medicine.rect.y)
-                if robot.rect.colliderect(medicine.rect):
-                    self.current_task = "deliver_to_patient"
+            
             elif self.current_task == "deliver_to_patient":
-                robot.move_to(patients[0].rect.x, patients[0].rect.y)
-                if robot.rect.colliderect(patients[0].rect):
-                    self.current_task = None
+                if robot.rect.colliderect(medicine.rect):
+                    self.current_task = "deliver_medicine"
+                    self.current_patient_index = 0  # Start with the first patient
+            
+            elif self.current_task == "deliver_medicine":
+                if self.current_patient_index < len(patients):
+                    patient = patients[self.current_patient_index]
+                    robot.move_to(patient.rect.x, patient.rect.y)
+                    if robot.rect.colliderect(patient.rect):
+                        self.current_patient_index += 1  # Move to the next patient
+                    draw_medicine(WIN, patients)
+                else:
+                    self.current_task = None  # Delivery complete
 
-            if not self.current_task and any(patient.needs_help for patient in patients):
-                self.current_task = "attend_patient"
-                for patient in patients:
-                    if patient.needs_help:
-                        robot.move_to(patient.rect.x, patient.rect.y)
-                        if robot.rect.colliderect(patient.rect):
-                            patient.needs_help = False
-                            self.current_task = None
+            elif self.current_task == "attend_patient":
+                patient = patients[2]  # Focus only on Patient 3
+                if patient.needs_help:
+                    robot.move_to(patient.rect.x, patient.rect.y)
+                    if robot.rect.colliderect(patient.rect):
+                        patient.needs_help = False
+                        self.current_task = None
 
             pygame.display.update()
 
@@ -152,8 +188,15 @@ class PygameSimulation(threading.Thread):
         self.join()
 
     def execute_action(self, action: str):
-        if action in ["deliver_medicine", "attend_patient"]:
+        if action in ["to_medicine", "deliver_to_patient"]:
+            self.patients[2].needs_help = False
             self.current_task = action
+        elif action == "attend_patient":
+            self.current_task = action
+        elif action == "needs_help":
+            self.current_task = action
+            self.patients[2].needs_help = True
+
 
 class CalculatorWindow(NodeEditorWindow):
     def __init__(self):
@@ -172,12 +215,12 @@ class CalculatorWindow(NodeEditorWindow):
             self.simulationDock.show()
             self.simulation_thread = PygameSimulation()  # Create a new instance
             self.simulation_thread.start_simulation()
-            
+
     def createSimulationDock(self):       
         self.simulationDock = QDockWidget("Simulation")
         self.simulationDock.setFloating(False)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
-        self.simulationDock.hide() 
+        self.simulationDock.hide()
 
     def update_node_colors(self):
         for index, node in enumerate(self.node_list):
@@ -196,12 +239,12 @@ class CalculatorWindow(NodeEditorWindow):
                     self.simulation_thread.execute_action("red")
                 elif node.op_title == "Light_is_green?":
                     self.simulation_thread.execute_action("green")
-                    
-                elif node.op_title == "Move_to_patient":
+                elif node.op_title == "Assist_patient":
                     self.simulation_thread.execute_action("attend_patient")
-                elif node.op_title == "Deliver_medicine":
-                    self.simulation_thread.execute_action("deliver_medicine")
-                    
+                elif node.op_title == "Move_to_medicine":
+                    self.simulation_thread.execute_action("to_medicine")
+                elif node.op_title == "Move_to_patient":
+                    self.simulation_thread.execute_action("deliver_to_patient")
                 elif node.op_title == "Add_coffee!":
                     self.simulation_thread.execute_action("coffee")
                 elif node.op_title == "Add_milk!":
@@ -213,6 +256,8 @@ class CalculatorWindow(NodeEditorWindow):
                 content_widget.setStyleSheet("background-color: orange;")
             elif status == 'FAILURE':
                 content_widget.setStyleSheet("background-color: red;")
+                if node.op_title == "No_emergency?":
+                    self.simulation_thread.execute_action("needs_help") 
             else:
                 content_widget.setStyleSheet("background-color: black;")
                             
@@ -437,7 +482,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.iterations = 0
         self.max_iterations = 50
         self.iterations += 1
-        if self.iterations >= self.max_iterations:
+        if self.iterations >= self.max_iterations or root_status != pt.common.Status.RUNNING:
             self.stopRun()
 
     def onRun(self):

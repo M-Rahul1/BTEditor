@@ -140,14 +140,14 @@ class CalcNode(Node):
                 return action.Robot_at_medicine_(name=self.op_title)
             elif self.op_title == "Robot_at_patient?":
                 return action.Robot_at_patient_(name=self.op_title)
-            elif self.op_title == "Move_to_patient":
-                return action.Move_to_patient_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Assist_patient":
                 return action.Assist_patient_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Move_to_medicine":
                 return action.Move_to_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Pick_up_medicine":
                 return action.Pick_up_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Move_to_patient":
+                return action.Move_to_patient_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Deliver_medicine":
                 return action.Deliver_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             else :
