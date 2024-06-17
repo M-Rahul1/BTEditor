@@ -787,3 +787,400 @@ class Add_sugar_(pt.behaviours.TickCounter):
     def initialise(self) -> None:
         pass
         
+@register_node(NO_EMERGENCY)
+class No_emergency(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = NO_EMERGENCY
+    op_title = "No_emergency"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="No_emergency")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class No_emergency_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.SUCCESS:
+        return pt.common.Status.SUCCESS
+    
+@register_node(MEDICINE_WITH_PATIENT)
+class Medicine_with_patient(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = MEDICINE_WITH_PATIENT
+    op_title = "Medicine_with_patient"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Medicine_with_patient")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Medicine_with_patient_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(ROBOT_AT_MEDICINE)
+class Robot_at_medicine(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = ROBOT_AT_MEDICINE
+    op_title = "Robot_at_medicine"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Robot_at_medicine")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Robot_at_medicine_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(ROBOT_AT_PATIENT)
+class Robot_at_patient(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = ROBOT_AT_PATIENT
+    op_title = "Robot_at_patient"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Robot_at_patient")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Robot_at_patient_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(MOVE_TO_PATIENT)
+class Move_to_patient(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = MOVE_TO_PATIENT
+    op_title = "Move_to_patient"
+    content_label_objname = "action_node"
+
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Move_to_patient", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Move_to_patient_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(ASSIST_PATIENT)
+class Assist_patient(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = ASSIST_PATIENT
+    op_title = "Assist_patient"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Assist_patient", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Assist_patient_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(MOVE_TO_MEDICINE)
+class Move_to_medicine(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = MOVE_TO_MEDICINE
+    op_title = "Move_to_medicine"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Move_to_medicine", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Move_to_medicine_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(PICK_UP_MEDICINE)
+class Pick_up_medicine(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = PICK_UP_MEDICINE
+    op_title = "Pick_up_medicine"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Pick_up_medicine", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Pick_up_medicine_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(DELIVER_MEDICINE)
+class Deliver_medicine(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = DELIVER_MEDICINE
+    op_title = "Deliver_medicine"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Deliver_medicine", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Deliver_medicine_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass   

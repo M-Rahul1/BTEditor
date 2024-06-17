@@ -131,6 +131,25 @@ class CalcNode(Node):
                 return action.Add_milk_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Add_sugar!":
                 return action.Add_sugar_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            
+            elif self.op_title == "No_emergency?":
+                return action.No_emergency_(name=self.op_title)
+            elif self.op_title == "Medicine_with_patient?":
+                return action.Medicine_with_patient_(name=self.op_title)
+            elif self.op_title == "Robot_at_medicine?":
+                return action.Robot_at_medicine_(name=self.op_title)
+            elif self.op_title == "Robot_at_patient?":
+                return action.Robot_at_patient_(name=self.op_title)
+            elif self.op_title == "Move_to_patient":
+                return action.Move_to_patient_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Assist_patient":
+                return action.Assist_patient_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Move_to_medicine":
+                return action.Move_to_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Pick_up_medicine":
+                return action.Pick_up_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Deliver_medicine":
+                return action.Deliver_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             else :
                 print("Invalid node")                    
         except Exception as e:

@@ -41,54 +41,57 @@ class PygameSimulation(threading.Thread):
     def __init__(self):
         super().__init__()
         self.running = False
-        self.current_action = None
+        self.current_task = None
+        self.patients = []
 
     def run(self):
         pygame.init()
         WIDTH, HEIGHT = 1000, 800
         WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Autonomous Driving Car Simulation")
+        pygame.display.set_caption("Healthcare System Simulation")
 
         WHITE = (255, 255, 255)
         RED = (255, 0, 0)
         GREEN = (0, 255, 0)
-        YELLOW = (255, 255, 0)
+        BLUE = (0, 0, 255)
         BLACK = (0, 0, 0)
         GREY = (192, 192, 192)
 
-        class TrafficLight:
+        class Robot:
             def __init__(self, x, y):
-                self.rect = pygame.Rect(x, y, 60, 180)
-                self.color = YELLOW
-                self.timer = 0
+                self.rect = pygame.Rect(x, y, 50, 50)
+                self.color = BLUE
+                self.speed = 5
+                self.task = None
+
+            def move_to(self, x, y):
+                if self.rect.x < x:
+                    self.rect.x += self.speed
+                elif self.rect.x > x:
+                    self.rect.x -= self.speed
+                if self.rect.y < y:
+                    self.rect.y += self.speed
+                elif self.rect.y > y:
+                    self.rect.y -= self.speed
 
             def draw(self, win):
-                pygame.draw.rect(win, BLACK, self.rect)
-                if self.color == RED:
-                    pygame.draw.circle(win, RED, (self.rect.x + 30, self.rect.y + 30), 20)
-                elif self.color == YELLOW:
-                    pygame.draw.circle(win, YELLOW, (self.rect.x + 30, self.rect.y + 90), 20)
-                elif self.color == GREEN:
-                    pygame.draw.circle(win, GREEN, (self.rect.x + 30, self.rect.y + 150), 20)
+                pygame.draw.rect(win, self.color, self.rect)
 
-            def change_color(self, color):
-                self.color = color
-                
-        class Car:
+        class Patient:
             def __init__(self, x, y):
-                self.rect = pygame.Rect(x, y, 50, 100)
-                self.color = BLACK
-                self.speed = 2
-                self.lane = 1  # 1 means within lane, 0 means out of lane
+                self.rect = pygame.Rect(x, y, 50, 50)
+                self.color = GREEN
+                self.needs_help = False
 
-            def move(self):
-                if self.lane == 1:
-                    self.rect.y -= self.speed
-                elif self.lane == 0:
-                    self.rect.x += self.speed // 2
-                    if self.rect.x >= 475:
-                        self.rect.x = 475
-                        self.lane = 1
+            def draw(self, win):
+                pygame.draw.rect(win, self.color, self.rect)
+                if self.needs_help:
+                    pygame.draw.circle(win, RED, (self.rect.x + 25, self.rect.y + 25), 10)
+
+        class Medicine:
+            def __init__(self, x, y):
+                self.rect = pygame.Rect(x, y, 30, 30)
+                self.color = BLACK
 
             def draw(self, win):
                 pygame.draw.rect(win, self.color, self.rect)
@@ -96,8 +99,9 @@ class PygameSimulation(threading.Thread):
         run = True
         clock = pygame.time.Clock()
 
-        traffic_light = TrafficLight(700, 100)
-        car = Car(475, 600)
+        robot = Robot(100, 100)
+        patients = [Patient(300, 300), Patient(600, 300), Patient(450, 600)]
+        medicine = Medicine(800, 100)
 
         while run:
             if not self.running:
@@ -106,40 +110,35 @@ class PygameSimulation(threading.Thread):
 
             clock.tick(60)
             WIN.fill(WHITE)
-            pygame.draw.rect(WIN, GREY, (300, 0, 400, HEIGHT))  # Draw road
+            pygame.draw.rect(WIN, GREY, (0, 0, WIDTH, HEIGHT))  # Draw floor
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
 
-            
-            traffic_light.draw(WIN)
-            car.draw(WIN)
-            
-            if self.current_action == "red":
-                traffic_light.change_color(RED)
-            elif self.current_action == "green":
-                traffic_light.change_color(GREEN)
+            robot.draw(WIN)
+            medicine.draw(WIN)
+            for patient in patients:
+                patient.draw(WIN)
 
-            if self.current_action == "stop":
-                car.speed = 0
-            elif self.current_action == "proceed":
-                car.speed = 2
-            elif self.current_action == "caution":
-                car.speed = 1
-            elif self.current_action == "move_into_lane":
-                car.go_off_lane()
-            elif self.current_action == "keep_driving":
-                car.speed = 2
+            if self.current_task == "deliver_medicine":
+                robot.move_to(medicine.rect.x, medicine.rect.y)
+                if robot.rect.colliderect(medicine.rect):
+                    self.current_task = "deliver_to_patient"
+            elif self.current_task == "deliver_to_patient":
+                robot.move_to(patients[0].rect.x, patients[0].rect.y)
+                if robot.rect.colliderect(patients[0].rect):
+                    self.current_task = None
 
-            if traffic_light.color == RED and car.rect.y < traffic_light.rect.y + 180:
-                self.current_action = "stop"
-            elif traffic_light.color == GREEN:
-                self.current_action = "proceed"
-            elif traffic_light.color == YELLOW:
-                self.current_action = "caution"
+            if not self.current_task and any(patient.needs_help for patient in patients):
+                self.current_task = "attend_patient"
+                for patient in patients:
+                    if patient.needs_help:
+                        robot.move_to(patient.rect.x, patient.rect.y)
+                        if robot.rect.colliderect(patient.rect):
+                            patient.needs_help = False
+                            self.current_task = None
 
-            car.move()
             pygame.display.update()
 
         pygame.quit()
@@ -153,8 +152,8 @@ class PygameSimulation(threading.Thread):
         self.join()
 
     def execute_action(self, action: str):
-        if action in ["red", "green"]:
-            self.current_action = action
+        if action in ["deliver_medicine", "attend_patient"]:
+            self.current_task = action
 
 class CalculatorWindow(NodeEditorWindow):
     def __init__(self):
@@ -197,6 +196,11 @@ class CalculatorWindow(NodeEditorWindow):
                     self.simulation_thread.execute_action("red")
                 elif node.op_title == "Light_is_green?":
                     self.simulation_thread.execute_action("green")
+                    
+                elif node.op_title == "Move_to_patient":
+                    self.simulation_thread.execute_action("attend_patient")
+                elif node.op_title == "Deliver_medicine":
+                    self.simulation_thread.execute_action("deliver_medicine")
                     
                 elif node.op_title == "Add_coffee!":
                     self.simulation_thread.execute_action("coffee")
