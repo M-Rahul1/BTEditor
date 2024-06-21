@@ -1,0 +1,141 @@
+{
+    "id": "810d4b5c-1ddb-426c-9da2-9bca6438ede3",
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": "1fdd75e3-7361-4b74-b0d1-852d1a105374",
+            "title": "Sequence",
+            "pos_x": -54.0,
+            "pos_y": -202.0,
+            "inputs": [
+                {
+                    "id": 3010678381776,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 3010690873168,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": "e8471caa-4711-4c00-9163-bbae0ab041ab",
+            "title": "Power_critical_system",
+            "pos_x": -182.0,
+            "pos_y": -47.0,
+            "inputs": [
+                {
+                    "id": 3010677745872,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Power_critical_system"
+            },
+            "op_code": 25
+        },
+        {
+            "id": "45080713-7601-4d77-bf47-b9ff8bfa27c2",
+            "title": "Store_excess_energy",
+            "pos_x": -12.0,
+            "pos_y": -28.0,
+            "inputs": [
+                {
+                    "id": 3010690932624,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Store_excess_energy"
+            },
+            "op_code": 28
+        },
+        {
+            "id": "026a14dd-6236-44fc-a1f1-2623b14011c2",
+            "title": "Power_non_critical_system",
+            "pos_x": 165.0,
+            "pos_y": -38.0,
+            "inputs": [
+                {
+                    "id": 3010245396112,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Power_non_critical_system"
+            },
+            "op_code": 30
+        },
+        {
+            "id": "500d32d4-88d8-4cdb-bff3-1f36f1d98027",
+            "title": "Use_stored_energy",
+            "pos_x": 307.0,
+            "pos_y": -58.0,
+            "inputs": [
+                {
+                    "id": 3010675438992,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Use_stored_energy"
+            },
+            "op_code": 32
+        }
+    ],
+    "edges": [
+        {
+            "id": 3010691014416,
+            "edge_type": 2,
+            "start": 3010690873168,
+            "end": 3010677745872
+        },
+        {
+            "id": 3010691020752,
+            "edge_type": 2,
+            "start": 3010690873168,
+            "end": 3010690932624
+        },
+        {
+            "id": 3010691089168,
+            "edge_type": 2,
+            "start": 3010690873168,
+            "end": 3010245396112
+        },
+        {
+            "id": 3010691093392,
+            "edge_type": 2,
+            "start": 3010690873168,
+            "end": 3010675438992
+        }
+    ]
+}

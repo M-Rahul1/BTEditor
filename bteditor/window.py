@@ -41,91 +41,63 @@ class PygameSimulation(threading.Thread):
     def __init__(self):
         super().__init__()
         self.running = False
+        self.energy_storage = 100
+        self.energy_usage = 0
+        self.renewable_energy = 0
         self.current_task = None
-        self.patients = []
-        self.current_patient_index = 0  # Track the index of the current patient
+        self.systems = []
+        self.line_colors = {
+            'critical': (0, 0, 0),
+            'non_critical': (0, 0, 0),
+            'renewable': (0, 0, 0),
+            'stored': (0, 0, 0)
+        }
 
     def run(self):
         pygame.init()
         WIDTH, HEIGHT = 1000, 800
         WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Healthcare System Simulation")
+        pygame.display.set_caption("Smart Hospital Energy Management Simulation")
+
+        # Load images
+        background_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        hospital_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        critical_system_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        hvac_system_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        lighting_system_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        renewable_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
 
         WHITE = (255, 255, 255)
         RED = (255, 0, 0)
         GREEN = (0, 255, 0)
-        BLUE = (0, 0, 255)
         BLACK = (0, 0, 0)
         GREY = (192, 192, 192)
 
-        class Robot:
-            def __init__(self, x, y, label):
-                self.rect = pygame.Rect(x, y, 50, 50)
-                self.color = BLUE
-                self.speed = 5
+        class System:
+            def __init__(self, x, y, label, energy_consumption, image):
+                self.rect = pygame.Rect(x, y, 100, 100)
                 self.label = label
-
-            def move_to(self, x, y):
-                if self.rect.x < x:
-                    self.rect.x += self.speed
-                elif self.rect.x > x:
-                    self.rect.x -= self.speed
-                if self.rect.y < y:
-                    self.rect.y += self.speed
-                elif self.rect.y > y:
-                    self.rect.y -= self.speed
+                self.energy_consumption = energy_consumption
+                self.is_powered = False
+                self.image = image
 
             def draw(self, win):
-                pygame.draw.rect(win, self.color, self.rect)
+                win.blit(self.image, (self.rect.x, self.rect.y))
+                color = GREEN if self.is_powered else RED
+                pygame.draw.rect(win, color, self.rect, 2)
                 font = pygame.font.SysFont(None, 24)
                 text = font.render(self.label, True, BLACK)
-                win.blit(text, (self.rect.x, self.rect.y - 25))
+                win.blit(text, (self.rect.x + 5, self.rect.y + 105))
 
-        class Patient:
-            def __init__(self, x, y, label):
-                self.rect = pygame.Rect(x, y, 50, 50)
-                self.color = GREEN
-                self.needs_help = False
-                self.label = label
-
-            def draw(self, win):
-                pygame.draw.rect(win, self.color, self.rect)
-                font = pygame.font.SysFont(None, 24)
-                text = font.render(self.label, True, BLACK)
-                win.blit(text, (self.rect.x, self.rect.y - 25))
-
-        class Medicine:
-            def __init__(self, x, y, label):
-                self.rect = pygame.Rect(x, y, 30, 30)
-                self.color = BLACK
-                self.label = label
-
-            def draw(self, win):
-                pygame.draw.rect(win, self.color, self.rect)
-                font = pygame.font.SysFont(None, 24)
-                text = font.render(self.label, True, BLACK)
-                win.blit(text, (self.rect.x, self.rect.y - 25))
-
-        def draw_patient_needs_help(win, patients):
-            for patient in patients:
-                if patient.needs_help:
-                    pygame.draw.circle(win, RED, (patient.rect.x + 25, patient.rect.y + 25), 10)
-        #add medicine block to patients only after attending to them
-        def draw_medicine(win, patients):
-            pygame.draw.rect(win, BLACK, (patient.rect.x + 25, patient.rect.y + 25, 10, 10))
-                
         run = True
         clock = pygame.time.Clock()
 
-        robot = Robot(100, 100, "Robot")
-        patients = [
-            Patient(300, 300, "Patient 1"),
-            Patient(600, 300, "Patient 2"),
-            Patient(450, 600, "Patient 3")
-        ]
-        medicine = Medicine(800, 100, "Medicine")
-
-        self.patients = patients
+        hospital_system = System(400, 400, "Hospital", 0, hospital_img)
+        critical_system = System(100, 100, "Critical System", 3, critical_system_img)
+        hvac_system = System(300, 100, "HVAC System", 3, hvac_system_img)
+        lighting_system = System(500, 100, "Lighting System", 3, lighting_system_img)
+        renewable_system = System(800, 100, "Renewable", 0, renewable_img)
+        self.systems = [hospital_system, critical_system, hvac_system, lighting_system, renewable_system]
 
         while run:
             if not self.running:
@@ -134,50 +106,74 @@ class PygameSimulation(threading.Thread):
 
             clock.tick(60)
             WIN.fill(WHITE)
-            pygame.draw.rect(WIN, GREY, (0, 0, WIDTH, HEIGHT))  # Draw floor
+            WIN.blit(background_img, (0, 0))  # Draw background
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
 
-            robot.draw(WIN)
-            medicine.draw(WIN)
-            for patient in patients:
-                patient.draw(WIN)
+            for system in self.systems:
+                system.draw(WIN)
 
-            
-            if self.current_task == "needs_help":
-                draw_patient_needs_help(WIN, patients)
-                
-            elif self.current_task == "to_medicine":
-                robot.move_to(medicine.rect.x, medicine.rect.y)
-            
-            elif self.current_task == "deliver_to_patient":
-                if robot.rect.colliderect(medicine.rect):
-                    self.current_task = "deliver_medicine"
-                    self.current_patient_index = 0  # Start with the first patient
-            
-            elif self.current_task == "deliver_medicine":
-                if self.current_patient_index < len(patients):
-                    patient = patients[self.current_patient_index]
-                    robot.move_to(patient.rect.x, patient.rect.y)
-                    if robot.rect.colliderect(patient.rect):
-                        self.current_patient_index += 1  # Move to the next patient
-                    draw_medicine(WIN, patients)
-                else:
-                    self.current_task = None  # Delivery complete
+            # Draw connecting lines
+            self.draw_line(WIN, hospital_system, critical_system, 'critical')
+            self.draw_line(WIN, hospital_system, hvac_system, 'non_critical')
+            self.draw_line(WIN, hospital_system, lighting_system, 'non_critical')
+            self.draw_line(WIN, renewable_system, hospital_system, 'renewable')
 
-            elif self.current_task == "attend_patient":
-                patient = patients[2]  # Focus only on Patient 3
-                if patient.needs_help:
-                    robot.move_to(patient.rect.x, patient.rect.y)
-                    if robot.rect.colliderect(patient.rect):
-                        patient.needs_help = False
-                        self.current_task = None
+            # Display energy storage level
+            font = pygame.font.SysFont(None, 48)
+            energy_text = font.render(f'Energy Storage: {self.energy_storage}%', True, BLACK)
+            WIN.blit(energy_text, (650, 50))
+
+            # Update the behavior tree
+            if hasattr(self, 'bt_tree'):
+                self.bt_tree.tick()
 
             pygame.display.update()
 
         pygame.quit()
+
+    def draw_line(self, win, system1, system2, line_type):
+        pygame.draw.line(win, self.line_colors[line_type], 
+                         (system1.rect.centerx, system1.rect.centery), 
+                         (system2.rect.centerx, system2.rect.centery), 5)
+
+    def execute_action(self, action: str):
+        if action == "power_critical_system":
+            self.power_critical_system()
+            self.line_colors['critical'] = (0, 255, 0)  # Green color to indicate power flow
+        elif action == "power_non_critical_system":
+            self.power_non_critical_system()
+            self.line_colors['non_critical'] = (0, 255, 0)  # Green color to indicate power flow
+        elif action == "store_excess_energy":
+            self.store_excess_energy()
+            self.line_colors['renewable'] = (0, 255, 0)  # Green color to indicate energy storage
+        elif action == "use_stored_energy":
+            self.use_stored_energy()
+            self.line_colors['stored'] = (0, 255, 0)  # Green color to indicate energy usage
+
+    def power_critical_system(self):
+        if self.energy_storage > self.systems[1].energy_consumption:
+            self.systems[1].is_powered = True
+            self.energy_storage -= self.systems[1].energy_consumption
+
+    def power_non_critical_system(self):
+        for system in self.systems[2:4]:
+            if not system.is_powered and self.energy_storage > system.energy_consumption:
+                system.is_powered = True
+                self.energy_storage -= system.energy_consumption
+
+    def store_excess_energy(self):
+        self.energy_storage += self.renewable_energy
+        self.renewable_energy = 4
+        self.energy_storage = min(self.energy_storage, 100)
+
+    def use_stored_energy(self):
+        for system in self.systems:
+            if not system.is_powered and self.energy_storage > system.energy_consumption:
+                system.is_powered = True
+                self.energy_storage -= system.energy_consumption
 
     def start_simulation(self):
         self.running = True
@@ -186,16 +182,6 @@ class PygameSimulation(threading.Thread):
     def stop_simulation(self):
         self.running = False
         self.join()
-
-    def execute_action(self, action: str):
-        if action in ["to_medicine", "deliver_to_patient"]:
-            self.patients[2].needs_help = False
-            self.current_task = action
-        elif action == "attend_patient":
-            self.current_task = action
-        elif action == "needs_help":
-            self.current_task = action
-            self.patients[2].needs_help = True
 
 
 class CalculatorWindow(NodeEditorWindow):
@@ -245,6 +231,7 @@ class CalculatorWindow(NodeEditorWindow):
                     self.simulation_thread.execute_action("to_medicine")
                 elif node.op_title == "Move_to_patient":
                     self.simulation_thread.execute_action("deliver_to_patient")
+                    pygame.time.wait(120)
                 elif node.op_title == "Add_coffee!":
                     self.simulation_thread.execute_action("coffee")
                 elif node.op_title == "Add_milk!":
@@ -252,6 +239,16 @@ class CalculatorWindow(NodeEditorWindow):
                 elif node.op_title == "Add_sugar!":
                     self.simulation_thread.execute_action("sugar")
                     pygame.time.wait(120)
+                elif node.op_title == "Power_critical_system":
+                    self.simulation_thread.execute_action("power_critical_system")
+                elif node.op_title == "Store_excess_energy":
+                    self.simulation_thread.execute_action("store_excess_energy")
+                elif node.op_title == "Power_non_critical_system":
+                    self.simulation_thread.execute_action("power_non_critical_system")
+                elif node.op_title == "Use_stored_energy":
+                    self.simulation_thread.execute_action("use_stored_energy")
+                    pygame.time.wait(120)
+                
             elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")
             elif status == 'FAILURE':

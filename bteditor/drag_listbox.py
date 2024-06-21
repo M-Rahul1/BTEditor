@@ -58,7 +58,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Move_into_lane", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_INTO_LANE, section_name="Action")
         self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")"""
         
-        # Add healthCare Condition section
+        """# Add healthCare Condition section
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("No_emergency?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_EMERGENCY, section_name="Condition")
@@ -69,11 +69,29 @@ class QDMDragListbox(QListWidget):
         
         self.add_section("Action")
         self.addItem(self.create_spacer_item(10))
-        self.addMyItem("Move_to_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_PATIENT, section_name="Action")
         self.addMyItem("Assist_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ASSIST_PATIENT, section_name="Action")
         self.addMyItem("Move_to_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_MEDICINE, section_name="Action")
         self.addMyItem("Pick_up_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_UP_MEDICINE, section_name="Action")
-        self.addMyItem("Deliver_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=DELIVER_MEDICINE, section_name="Action")
+        self.addMyItem("Move_to_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_PATIENT, section_name="Action")
+        self.addMyItem("Deliver_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=DELIVER_MEDICINE, section_name="Action")"""
+        
+        # Add Energy Management for Hospital 
+        self.add_section("Condition")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Critical_system_power?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CRITICAL_SYSTEM_POWER, section_name="Condition")
+        self.addMyItem("No_excess_renewable_energy?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_EXCESS_RENEWABLE_ENERGY, section_name="Condition")
+        self.addMyItem("Non_critical_system_power?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NON_CRITICAL_SYSTEM_POWER, section_name="Condition")
+        self.addMyItem("No_stored_energy_available?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_STORED_ENERGY_AVAILABLE, section_name="Condition")
+        self.addItem(self.create_spacer_item(20))
+        
+        self.add_section("Action")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Power_critical_system", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=POWER_CRITICAL_SYSTEM, section_name="Action")
+        self.addMyItem("Notify_admin", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NOTIFY_ADMIN, section_name="Action")
+        self.addMyItem("Store_excess_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=STORE_EXCESS_ENERGY, section_name="Action")
+        self.addMyItem("Power_non_critical_system", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=POWER_NON_CRITICAL_SYSTEM, section_name="Action")
+        self.addMyItem("Use_stored_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=USE_STORED_ENERGY, section_name="Action")
+        
         
         """# Add coffee Condition section
         self.add_section("Condition")

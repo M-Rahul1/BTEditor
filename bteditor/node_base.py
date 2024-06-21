@@ -150,6 +150,28 @@ class CalcNode(Node):
                 return action.Move_to_patient_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Deliver_medicine":
                 return action.Deliver_medicine_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            
+            elif self.op_title == "Critical_system_power?":
+                return action.Critical_system_power_(name=self.op_title)
+            elif self.op_title == "No_excess_renewable_energy?":
+                return action.No_excess_renewable_energy_(name=self.op_title)
+            elif self.op_title == "Non_critical_system_power?":
+                return action.Non_critical_system_power_(name=self.op_title)
+            elif self.op_title == "No_stored_energy_available?":
+                return action.No_stored_energy_available_(name=self.op_title)
+            elif self.op_title == "Power_critical_system":
+                return action.Power_critical_system_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Notify_admin": 
+                return action.Notify_admin_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Store_excess_energy":
+                return action.Store_excess_energy_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Power_non_critical_system":
+                return action.Power_non_critical_system_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            elif self.op_title == "Use_stored_energy":
+                return action.Use_stored_energy_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+            
+            
+                
             else :
                 print("Invalid node")                    
         except Exception as e:

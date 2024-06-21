@@ -1184,3 +1184,401 @@ class Deliver_medicine_(pt.behaviours.TickCounter):
     
     def initialise(self) -> None:
         pass   
+
+@register_node(CRITICAL_SYSTEM_POWER)
+class Critical_system_power(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = CRITICAL_SYSTEM_POWER
+    op_title = "Critical_system_power?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Critical_system_power")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Critical_system_power_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(POWER_CRITICAL_SYSTEM)
+class Power_critical_system(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = POWER_CRITICAL_SYSTEM
+    op_title = "Power_critical_system"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Power_critical_system", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Power_critical_system_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(NOTIFY_ADMIN)
+class Notify_admin(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = NOTIFY_ADMIN
+    op_title = "Notify_admin"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Notify_admin", duration=5, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Notify_admin_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(NO_EXCESS_RENEWABLE_ENERGY)
+class No_excess_renewable_energy(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = NO_EXCESS_RENEWABLE_ENERGY
+    op_title = "No_excess_renewable_energy?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="No_excess_renewable_energy")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class No_excess_renewable_energy_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(STORE_EXCESS_ENERGY)
+class Store_excess_energy(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = STORE_EXCESS_ENERGY
+    op_title = "Store_excess_energy"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Store_excess_energy", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Store_excess_energy_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(NON_CRITICAL_SYSTEM_POWER)
+class Non_critical_system_power(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = NON_CRITICAL_SYSTEM_POWER
+    op_title = "Non_critical_system_power?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Non_critical_system_power")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Non_critical_system_power_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+
+@register_node(POWER_NON_CRITICAL_SYSTEM)
+class Power_non_critical_system(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = POWER_NON_CRITICAL_SYSTEM
+    op_title = "Power_non_critical_system"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Power_non_critical_system", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Power_non_critical_system_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(NO_STORED_ENERGY_AVAILABLE)
+class No_stored_energy_available(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = NO_STORED_ENERGY_AVAILABLE
+    op_title = "No_stored_energy_available?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="No_stored_energy_available")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class No_stored_energy_available_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(USE_STORED_ENERGY)
+class Use_stored_energy(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = USE_STORED_ENERGY
+    op_title = "Use_stored_energy"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Use_stored_energy", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Use_stored_energy_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass

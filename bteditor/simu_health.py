@@ -1,3 +1,5 @@
+import pygame
+import threading
 class PygameSimulation(threading.Thread):
     def __init__(self):
         super().__init__()
