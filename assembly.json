@@ -1,0 +1,141 @@
+{
+    "id": "4a7de67d-eb65-4755-9099-b395c28cbf57",
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
+        {
+            "id": "cd6c8242-40c2-4491-9caa-318b880fccd4",
+            "title": "Sequence",
+            "pos_x": -127.0,
+            "pos_y": -205.0,
+            "inputs": [
+                {
+                    "id": 2350876543888,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2351300533968,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Condition"
+            },
+            "op_code": 2
+        },
+        {
+            "id": "3922da97-b140-49b4-9802-d0eac58c89e4",
+            "title": "Pick_parts",
+            "pos_x": -353.0,
+            "pos_y": 3.0,
+            "inputs": [
+                {
+                    "id": 2350913388112,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Pick_parts"
+            },
+            "op_code": 43
+        },
+        {
+            "id": "aedade97-1174-446b-a316-b6c63482435c",
+            "title": "Place_parts_in_assembly",
+            "pos_x": -186.0,
+            "pos_y": -27.0,
+            "inputs": [
+                {
+                    "id": 2351300653328,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Place_parts_in_assembly"
+            },
+            "op_code": 44
+        },
+        {
+            "id": "e7b548f8-d396-4305-b3b6-b6f9a39d2d9e",
+            "title": "Assemble_product",
+            "pos_x": -79.0,
+            "pos_y": -34.0,
+            "inputs": [
+                {
+                    "id": 2350920620752,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Assemble_product"
+            },
+            "op_code": 46
+        },
+        {
+            "id": "07559635-34e2-4f23-bc44-3fe6106ee06d",
+            "title": "Store_product",
+            "pos_x": 68.0,
+            "pos_y": -43.0,
+            "inputs": [
+                {
+                    "id": 2351300644496,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Store_product"
+            },
+            "op_code": 48
+        }
+    ],
+    "edges": [
+        {
+            "id": 2351305604880,
+            "edge_type": 2,
+            "start": 2351300533968,
+            "end": 2350913388112
+        },
+        {
+            "id": 2351305677712,
+            "edge_type": 2,
+            "start": 2351300533968,
+            "end": 2351300653328
+        },
+        {
+            "id": 2351305681168,
+            "edge_type": 2,
+            "start": 2351300533968,
+            "end": 2350920620752
+        },
+        {
+            "id": 2351305676176,
+            "edge_type": 2,
+            "start": 2351300533968,
+            "end": 2351300644496
+        }
+    ]
+}

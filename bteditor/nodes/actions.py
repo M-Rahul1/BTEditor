@@ -1582,3 +1582,313 @@ class Use_stored_energy_(pt.behaviours.TickCounter):
     
     def initialise(self) -> None:
         pass
+    
+@register_node(PARTS_IN_ASSEMBLY)
+class Parts_in_assembly(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = PARTS_IN_ASSEMBLY
+    op_title = "Parts_in_assembly?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Parts_in_assembly")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Parts_in_assembly_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(PICK_PARTS)
+class Pick_parts(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = PICK_PARTS
+    op_title = "Pick_parts"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Pick_parts", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+
+class Pick_parts_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(PLACE_PARTS_IN_ASSEMBLY)
+class Place_parts_in_assembly(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = PLACE_PARTS_IN_ASSEMBLY
+    op_title = "Place_parts_in_assembly"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Place_parts_in_assembly", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Place_parts_in_assembly_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(PRODUCT_ASSSEMBLED)
+class Product_assembled(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = PRODUCT_ASSSEMBLED
+    op_title = "Product_assembled?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Product_assembled")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Product_assembled_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(ASSEMBLE_PRODUCT)
+class Assemble_product(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = ASSEMBLE_PRODUCT
+    op_title = "Assemble_product"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Assemble_product", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Assemble_product_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass
+    
+@register_node(PRODUCTS_STORED)
+class Products_stored(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = PRODUCTS_STORED
+    op_title = "Products_stored?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Products_stored")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Products_stored_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    
+@register_node(STORE_PRODUCT)
+class Store_product(CalcNode,pt.behaviours.TickCounter):
+    icon = "icons/action.png"
+    op_code = STORE_PRODUCT
+    op_title = "Store_product"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviours.TickCounter.__init__(self, name="Store_product", duration=10, completion_status=pt.common.Status.SUCCESS)
+        self.eval()
+        
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+        
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Store_product_(pt.behaviours.TickCounter):
+    def update(self) -> pt.common.Status:
+        self.counter += 1
+        if self.counter <= self.duration:
+            return pt.common.Status.RUNNING
+        else:
+            return self.completion_status
+    
+    def initialise(self) -> None:
+        pass

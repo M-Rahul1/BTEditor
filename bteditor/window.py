@@ -7,6 +7,7 @@ import json
 import py_trees as pt
 import pygame
 import threading
+import math
 
 from nodeeditor.utils import loadStylesheets
 from nodeeditor.node_editor_window import NodeEditorWindow
@@ -41,63 +42,59 @@ class PygameSimulation(threading.Thread):
     def __init__(self):
         super().__init__()
         self.running = False
-        self.energy_storage = 100
-        self.energy_usage = 0
-        self.renewable_energy = 0
+        self.parts = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9", "part10"]
+        self.assembled_product = None
+        self.storage = []
         self.current_task = None
-        self.systems = []
-        self.line_colors = {
-            'critical': (0, 0, 0),
-            'non_critical': (0, 0, 0),
-            'renewable': (0, 0, 0),
-            'stored': (0, 0, 0)
-        }
+        self.robot_pos = [500, 750]
+        self.robot_carrying = None
 
     def run(self):
         pygame.init()
         WIDTH, HEIGHT = 1000, 800
         WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Smart Hospital Energy Management Simulation")
-
-        # Load images
-        background_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
-        hospital_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
-        critical_system_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
-        hvac_system_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
-        lighting_system_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
-        renewable_img = pygame.image.load(os.path.join(os.path.dirname(__file__), 'icons/play.png'))
+        pygame.display.set_caption("Assembly Robot Simulation")
 
         WHITE = (255, 255, 255)
         RED = (255, 0, 0)
         GREEN = (0, 255, 0)
+        BLUE = (0, 0, 255)
         BLACK = (0, 0, 0)
         GREY = (192, 192, 192)
-
-        class System:
-            def __init__(self, x, y, label, energy_consumption, image):
-                self.rect = pygame.Rect(x, y, 100, 100)
-                self.label = label
-                self.energy_consumption = energy_consumption
-                self.is_powered = False
-                self.image = image
-
-            def draw(self, win):
-                win.blit(self.image, (self.rect.x, self.rect.y))
-                color = GREEN if self.is_powered else RED
-                pygame.draw.rect(win, color, self.rect, 2)
-                font = pygame.font.SysFont(None, 24)
-                text = font.render(self.label, True, BLACK)
-                win.blit(text, (self.rect.x + 5, self.rect.y + 105))
 
         run = True
         clock = pygame.time.Clock()
 
-        hospital_system = System(400, 400, "Hospital", 0, hospital_img)
-        critical_system = System(100, 100, "Critical System", 3, critical_system_img)
-        hvac_system = System(300, 100, "HVAC System", 3, hvac_system_img)
-        lighting_system = System(500, 100, "Lighting System", 3, lighting_system_img)
-        renewable_system = System(800, 100, "Renewable", 0, renewable_img)
-        self.systems = [hospital_system, critical_system, hvac_system, lighting_system, renewable_system]
+        class Station:
+            def __init__(self, x, y, label, color):
+                self.rect = pygame.Rect(x, y, 150, 350)
+                self.label = label
+                self.color = color
+                self.content = []
+
+            def draw(self, win):
+                pygame.draw.rect(win, self.color, self.rect)
+                font = pygame.font.SysFont(None, 24)
+                text = font.render(self.label, True, BLACK)
+                win.blit(text, (self.rect.x + 5, self.rect.y + 5))
+                for i, part in enumerate(self.content):
+                    if part == "product":
+                        part_rect = pygame.Rect(self.rect.x + 10, self.rect.y + 40, 50, 50)
+                    else:
+                        part_rect = pygame.Rect(self.rect.x + 10, self.rect.y + 40 + i * 30, 20, 20)
+                    pygame.draw.rect(win, BLACK, part_rect)
+
+        parts_station = Station(100, 100, "Parts Station", RED)
+        assembly_station = Station(400, 100, "Assembly Station", GREEN)
+        storage_station = Station(700, 100, "Storage Station", BLUE)
+
+        self.stations = {
+            "parts_station": parts_station,
+            "assembly_station": assembly_station,
+            "storage_station": storage_station
+        }
+
+        self.stations["parts_station"].content = self.parts.copy()
 
         while run:
             if not self.running:
@@ -106,74 +103,98 @@ class PygameSimulation(threading.Thread):
 
             clock.tick(60)
             WIN.fill(WHITE)
-            WIN.blit(background_img, (0, 0))  # Draw background
+            pygame.draw.rect(WIN, GREY, (0, 0, WIDTH, HEIGHT))  # Draw floor
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
 
-            for system in self.systems:
-                system.draw(WIN)
+            # Draw stations
+            parts_station.draw(WIN)
+            assembly_station.draw(WIN)
+            storage_station.draw(WIN)
 
-            # Draw connecting lines
-            self.draw_line(WIN, hospital_system, critical_system, 'critical')
-            self.draw_line(WIN, hospital_system, hvac_system, 'non_critical')
-            self.draw_line(WIN, hospital_system, lighting_system, 'non_critical')
-            self.draw_line(WIN, renewable_system, hospital_system, 'renewable')
+            # Draw robot
+            pygame.draw.polygon(WIN, BLACK, self.hexagon_points(self.robot_pos))
 
-            # Display energy storage level
-            font = pygame.font.SysFont(None, 48)
-            energy_text = font.render(f'Energy Storage: {self.energy_storage}%', True, BLACK)
-            WIN.blit(energy_text, (650, 50))
-
-            # Update the behavior tree
-            if hasattr(self, 'bt_tree'):
-                self.bt_tree.tick()
+            # Draw robot carrying part or product
+            if self.robot_carrying:
+                if self.robot_carrying == "product":
+                    part_rect = pygame.Rect(self.robot_pos[0] - 25, self.robot_pos[1] - 25, 50, 50)
+                else:
+                    part_rect = pygame.Rect(self.robot_pos[0] - 10, self.robot_pos[1] - 10, 20, 20)
+                pygame.draw.rect(WIN, BLACK, part_rect)
 
             pygame.display.update()
 
         pygame.quit()
 
-    def draw_line(self, win, system1, system2, line_type):
-        pygame.draw.line(win, self.line_colors[line_type], 
-                         (system1.rect.centerx, system1.rect.centery), 
-                         (system2.rect.centerx, system2.rect.centery), 5)
+    def hexagon_points(self, pos):
+        x, y = pos
+        size = 40
+        points = [
+            (x + size * math.cos(math.radians(angle)), y + size * math.sin(math.radians(angle)))
+            for angle in range(0, 360, 60)
+        ]
+        return points
+
+    def execute_sequence(self):
+        for _ in range(len(self.parts)):
+            self.execute_action("pick_part")
+            self.execute_action("place_part_in_assembly")
+            self.execute_action("assemble_product")
+            self.execute_action("store_product")
+
+    def move_robot(self, target_station_key):
+        target_station = self.stations[target_station_key].rect
+        target_pos = [target_station.x + target_station.width // 2, target_station.y + target_station.height // 2]
+
+        while self.robot_pos != target_pos:
+            time.sleep(0.01)
+            if self.robot_pos[0] < target_pos[0]:
+                self.robot_pos[0] += 5
+            elif self.robot_pos[0] > target_pos[0]:
+                self.robot_pos[0] -= 5
+
+            if self.robot_pos[1] < target_pos[1]:
+                self.robot_pos[1] += 5
+            elif self.robot_pos[1] > target_pos[1]:
+                self.robot_pos[1] -= 5
 
     def execute_action(self, action: str):
-        if action == "power_critical_system":
-            self.power_critical_system()
-            self.line_colors['critical'] = (0, 255, 0)  # Green color to indicate power flow
-        elif action == "power_non_critical_system":
-            self.power_non_critical_system()
-            self.line_colors['non_critical'] = (0, 255, 0)  # Green color to indicate power flow
-        elif action == "store_excess_energy":
-            self.store_excess_energy()
-            self.line_colors['renewable'] = (0, 255, 0)  # Green color to indicate energy storage
-        elif action == "use_stored_energy":
-            self.use_stored_energy()
-            self.line_colors['stored'] = (0, 255, 0)  # Green color to indicate energy usage
+        if action == "pick_part":
+            self.move_robot("parts_station")
+            self.pick_part()
+        elif action == "place_part_in_assembly":
+            self.move_robot("assembly_station")
+            self.place_part_in_assembly()
+        elif action == "assemble_product":
+            self.assemble_product()
+        elif action == "store_product":
+            self.move_robot("storage_station")
+            self.store_product()
 
-    def power_critical_system(self):
-        if self.energy_storage > self.systems[1].energy_consumption:
-            self.systems[1].is_powered = True
-            self.energy_storage -= self.systems[1].energy_consumption
+    def pick_part(self):
+        if self.parts:
+            part = self.parts.pop(0)
+            self.robot_carrying = part
+            self.stations["parts_station"].content.remove(part)
 
-    def power_non_critical_system(self):
-        for system in self.systems[2:4]:
-            if not system.is_powered and self.energy_storage > system.energy_consumption:
-                system.is_powered = True
-                self.energy_storage -= system.energy_consumption
+    def place_part_in_assembly(self):
+        if self.robot_carrying:
+            self.stations["assembly_station"].content.append(self.robot_carrying)
+            
+    def assemble_product(self):
+        if len(self.stations["assembly_station"].content) >= 4:
+            for _ in range(2):
+                self.stations["assembly_station"].content.pop(0) 
 
-    def store_excess_energy(self):
-        self.energy_storage += self.renewable_energy
-        self.renewable_energy = 4
-        self.energy_storage = min(self.energy_storage, 100)
-
-    def use_stored_energy(self):
-        for system in self.systems:
-            if not system.is_powered and self.energy_storage > system.energy_consumption:
-                system.is_powered = True
-                self.energy_storage -= system.energy_consumption
+    def store_product(self):
+        if self.robot_carrying:
+            self.stations["assembly_station"].content.pop(0)
+            self.stations["storage_station"].content.append(self.robot_carrying)
+        #no more action to be taken
+        self.robot_carrying = None
 
     def start_simulation(self):
         self.running = True
@@ -248,6 +269,14 @@ class CalculatorWindow(NodeEditorWindow):
                 elif node.op_title == "Use_stored_energy":
                     self.simulation_thread.execute_action("use_stored_energy")
                     pygame.time.wait(120)
+                elif node.op_title == "Pick_parts":
+                    self.simulation_thread.execute_action("pick_part")
+                elif node.op_title == "Place_parts_in_assembly":
+                    self.simulation_thread.execute_action("place_part_in_assembly")
+                elif node.op_title == "Assemble_product":
+                    self.simulation_thread.execute_action("assemble_product")                
+                elif node.op_title == "Store_product":
+                    self.simulation_thread.execute_action("store_product")
                 
             elif status == 'RUNNING':
                 content_widget.setStyleSheet("background-color: orange;")

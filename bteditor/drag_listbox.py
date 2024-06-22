@@ -39,6 +39,22 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Control")
         self.addItem(self.create_spacer_item(20))
         
+        """# Add coffee Condition section
+        self.add_section("Condition")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Is_coffee_ready?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=IS_COFFEE_READY, section_name="Condition")
+        self.addMyItem("Has_coffee?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_COFFEE, section_name="Condition")
+        self.addMyItem("Has_milk?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_MILK, section_name="Condition")
+        self.addMyItem("Has_sugar?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_SUGAR, section_name="Condition")
+        self.addItem(self.create_spacer_item(20))
+             
+        # Add Action section
+        self.add_section("Action")
+        self.addItem(self.create_spacer_item(10))
+        self.addMyItem("Add_sugar!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_SUGAR, section_name="Action")
+        self.addMyItem("Add_coffee!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_COFFEE, section_name="Action")
+        self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")   """  
+        
         """# Add ai car Condition section
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
@@ -75,7 +91,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Move_to_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_PATIENT, section_name="Action")
         self.addMyItem("Deliver_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=DELIVER_MEDICINE, section_name="Action")"""
         
-        # Add Energy Management for Hospital 
+        """# Add Energy Management for Hospital 
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Critical_system_power?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CRITICAL_SYSTEM_POWER, section_name="Condition")
@@ -90,24 +106,23 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Notify_admin", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NOTIFY_ADMIN, section_name="Action")
         self.addMyItem("Store_excess_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=STORE_EXCESS_ENERGY, section_name="Action")
         self.addMyItem("Power_non_critical_system", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=POWER_NON_CRITICAL_SYSTEM, section_name="Action")
-        self.addMyItem("Use_stored_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=USE_STORED_ENERGY, section_name="Action")
+        self.addMyItem("Use_stored_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=USE_STORED_ENERGY, section_name="Action")"""
         
-        
-        """# Add coffee Condition section
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
-        self.addMyItem("Is_coffee_ready?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=IS_COFFEE_READY, section_name="Condition")
-        self.addMyItem("Has_coffee?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_COFFEE, section_name="Condition")
-        self.addMyItem("Has_milk?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_MILK, section_name="Condition")
-        self.addMyItem("Has_sugar?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=HAS_SUGAR, section_name="Condition")
+        self.addMyItem("Parts_in_assembly?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_IN_ASSEMBLY, section_name="Condition")
+        self.addMyItem("Product_assembled?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PRODUCT_ASSSEMBLED, section_name="Condition")
+        self.addMyItem("Products_stored?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PRODUCTS_STORED, section_name="Condition")
         self.addItem(self.create_spacer_item(20))
-             
-        # Add Action section
+        
         self.add_section("Action")
         self.addItem(self.create_spacer_item(10))
-        self.addMyItem("Add_sugar!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_SUGAR, section_name="Action")
-        self.addMyItem("Add_coffee!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_COFFEE, section_name="Action")
-        self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")   """    
+        self.addMyItem("Pick_parts", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_PARTS, section_name="Action")
+        self.addMyItem("Place_parts_in_assembly", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PLACE_PARTS_IN_ASSEMBLY, section_name="Action")
+        self.addMyItem("Assemble_product", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ASSEMBLE_PRODUCT, section_name="Action")
+        self.addMyItem("Store_product", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=STORE_PRODUCT, section_name="Action")       
+        
+          
         
     def add_section(self, section_name):        
         section_header = QListWidgetItem(section_name)
