@@ -8,7 +8,7 @@ from nodeeditor.utils import dumpException
 
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.edit = QLineEdit("Condition", self)
+        self.edit = QLineEdit("Desc..", self)
         self.edit.setAlignment(Qt.AlignCenter)
         self.edit.setObjectName(self.node.content_label_objname)
         
