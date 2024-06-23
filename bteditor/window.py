@@ -5,8 +5,6 @@ from PyQt5.QtCore import *
 import time
 import json
 import py_trees as pt
-import pygame
-import threading
 import math
 
 from nodeeditor.utils import loadStylesheets
@@ -38,171 +36,105 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 DEBUG = False
 
-class PygameSimulation(threading.Thread):
+class SimulationDock(QDockWidget):
     def __init__(self):
         super().__init__()
         self.running = False
-        self.parts = ["part1", "part2", "part3", "part4", "part5", "part6", "part7", "part8", "part9", "part10"]
-        self.assembled_product = None
-        self.storage = []
-        self.current_task = None
-        self.robot_pos = [500, 750]
-        self.robot_carrying = None
+        self.current_action = None
+        self.initUI()
 
-    def run(self):
-        pygame.init()
-        WIDTH, HEIGHT = 1000, 800
-        WIN = pygame.display.set_mode((WIDTH, HEIGHT))
-        pygame.display.set_caption("Assembly Robot Simulation")
+    def initUI(self):
+        self.setGeometry(100, 100, 1000, 800)
+        self.setWindowTitle('Coffee Simulation')
 
-        WHITE = (255, 255, 255)
-        RED = (255, 0, 0)
-        GREEN = (0, 255, 0)
-        BLUE = (0, 0, 255)
-        BLACK = (0, 0, 0)
-        GREY = (192, 192, 192)
+        self.graphicsView = QGraphicsView(self)
+        self.graphicsView.setGeometry(0, 0, 1000, 800)
 
-        run = True
-        clock = pygame.time.Clock()
+        self.graphicsScene = QGraphicsScene()
+        self.graphicsView.setScene(self.graphicsScene)
 
-        class Station:
-            def __init__(self, x, y, label, color):
-                self.rect = pygame.Rect(x, y, 150, 350)
-                self.label = label
-                self.color = color
-                self.content = []
+        self.cups = {}
 
-            def draw(self, win):
-                pygame.draw.rect(win, self.color, self.rect)
-                font = pygame.font.SysFont(None, 24)
-                text = font.render(self.label, True, BLACK)
-                win.blit(text, (self.rect.x + 5, self.rect.y + 5))
-                for i, part in enumerate(self.content):
-                    if part == "product":
-                        part_rect = pygame.Rect(self.rect.x + 10, self.rect.y + 40, 50, 50)
-                    else:
-                        part_rect = pygame.Rect(self.rect.x + 10, self.rect.y + 40 + i * 30, 20, 20)
-                    pygame.draw.rect(win, BLACK, part_rect)
+        empty_cup = Cup(500, 350, 100, 0, QColor(255, 255, 255), "Empty Cup")
+        sugar_cup = Cup(300, 650, 50, 100, QColor(255, 255, 255), "Sugar")
+        milk_cup = Cup(500, 650, 50, 100, QColor(192, 192, 192), "Milk")
+        coffee_cup = Cup(700, 650, 50, 100, QColor(139, 69, 19), "Coffee")
 
-        parts_station = Station(100, 100, "Parts Station", RED)
-        assembly_station = Station(400, 100, "Assembly Station", GREEN)
-        storage_station = Station(700, 100, "Storage Station", BLUE)
+        sugar_cup.level = 100
+        milk_cup.level = 100
+        coffee_cup.level = 100
 
-        self.stations = {
-            "parts_station": parts_station,
-            "assembly_station": assembly_station,
-            "storage_station": storage_station
-        }
+        self.cups["sugar"] = sugar_cup
+        self.cups["milk"] = milk_cup
+        self.cups["coffee"] = coffee_cup
 
-        self.stations["parts_station"].content = self.parts.copy()
+        self.drawCups()
 
-        while run:
-            if not self.running:
-                pygame.quit()
-                break
-
-            clock.tick(60)
-            WIN.fill(WHITE)
-            pygame.draw.rect(WIN, GREY, (0, 0, WIDTH, HEIGHT))  # Draw floor
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    run = False
-
-            # Draw stations
-            parts_station.draw(WIN)
-            assembly_station.draw(WIN)
-            storage_station.draw(WIN)
-
-            # Draw robot
-            pygame.draw.polygon(WIN, BLACK, self.hexagon_points(self.robot_pos))
-
-            # Draw robot carrying part or product
-            if self.robot_carrying:
-                if self.robot_carrying == "product":
-                    part_rect = pygame.Rect(self.robot_pos[0] - 25, self.robot_pos[1] - 25, 50, 50)
-                else:
-                    part_rect = pygame.Rect(self.robot_pos[0] - 10, self.robot_pos[1] - 10, 20, 20)
-                pygame.draw.rect(WIN, BLACK, part_rect)
-
-            pygame.display.update()
-
-        pygame.quit()
-
-    def hexagon_points(self, pos):
-        x, y = pos
-        size = 40
-        points = [
-            (x + size * math.cos(math.radians(angle)), y + size * math.sin(math.radians(angle)))
-            for angle in range(0, 360, 60)
-        ]
-        return points
-
-    def execute_sequence(self):
-        for _ in range(len(self.parts)):
-            self.execute_action("pick_part")
-            self.execute_action("place_part_in_assembly")
-            self.execute_action("assemble_product")
-            self.execute_action("store_product")
-
-    def move_robot(self, target_station_key):
-        target_station = self.stations[target_station_key].rect
-        target_pos = [target_station.x + target_station.width // 2, target_station.y + target_station.height // 2]
-
-        while self.robot_pos != target_pos:
-            time.sleep(0.01)
-            if self.robot_pos[0] < target_pos[0]:
-                self.robot_pos[0] += 5
-            elif self.robot_pos[0] > target_pos[0]:
-                self.robot_pos[0] -= 5
-
-            if self.robot_pos[1] < target_pos[1]:
-                self.robot_pos[1] += 5
-            elif self.robot_pos[1] > target_pos[1]:
-                self.robot_pos[1] -= 5
-
-    def execute_action(self, action: str):
-        if action == "pick_part":
-            self.move_robot("parts_station")
-            self.pick_part()
-        elif action == "place_part_in_assembly":
-            self.move_robot("assembly_station")
-            self.place_part_in_assembly()
-        elif action == "assemble_product":
-            self.assemble_product()
-        elif action == "store_product":
-            self.move_robot("storage_station")
-            self.store_product()
-
-    def pick_part(self):
-        if self.parts:
-            part = self.parts.pop(0)
-            self.robot_carrying = part
-            self.stations["parts_station"].content.remove(part)
-
-    def place_part_in_assembly(self):
-        if self.robot_carrying:
-            self.stations["assembly_station"].content.append(self.robot_carrying)
-            
-    def assemble_product(self):
-        if len(self.stations["assembly_station"].content) >= 4:
-            for _ in range(2):
-                self.stations["assembly_station"].content.pop(0) 
-
-    def store_product(self):
-        if self.robot_carrying:
-            self.stations["assembly_station"].content.pop(0)
-            self.stations["storage_station"].content.append(self.robot_carrying)
-        #no more action to be taken
-        self.robot_carrying = None
+    def drawCups(self):
+        for cup in self.cups.values():
+            cup.draw(self.graphicsScene)
 
     def start_simulation(self):
         self.running = True
-        self.start()
+        self.execute_thread = threading.Thread(target=self.run_simulation)
+        self.execute_thread.start()
 
     def stop_simulation(self):
         self.running = False
-        self.join()
+        self.execute_thread.join()
+
+    def run_simulation(self):
+        while self.running:
+            if self.current_action:
+                cup = self.cups[self.current_action]
+                amount, color = cup.transfer_content(1)
+                if amount > 0:
+                    self.cups["empty"].add_layer(amount, color)
+                if cup.level <= 0:
+                    self.current_action = None
+
+            time.sleep(0.01)
+            self.updateSimulation()
+
+    def updateSimulation(self):
+        self.graphicsScene.clear()
+        self.drawCups()
+        QTimer.singleShot(10, self.graphicsView.update)
+
+    def execute_action(self, action: str):
+        if action in ["sugar", "milk", "coffee"]:
+            self.current_action = action
+
+class Cup:
+    def __init__(self, x, y, width, height, color, label):
+        self.rect = QRectF(x, y, width, height)
+        self.color = color
+        self.label = label
+        self.level = height
+        self.layers = [(color, height)]
+
+    def draw(self, scene):
+        y_offset = self.rect.y() + self.rect.height()
+        for color, height in self.layers:
+            y_offset -= height
+            scene.addRect(self.rect.x(), y_offset, self.rect.width(), height, QPen(Qt.black), QBrush(color))
+        font = QFont()
+        font.setPointSize(16)
+        scene.addText(self.label, font).setPos(self.rect.x() - 120, self.rect.y())
+
+    def transfer_content(self, amount):
+        new_level = max(0, self.level - amount)
+        transferred_amount = self.level - new_level
+        self.level = new_level
+        self.rect.setHeight(new_level)
+        self.rect.setY(self.rect.y() + amount)
+        return transferred_amount, self.color
+
+    def add_layer(self, amount, color):
+        self.layers.append((color, amount))
+           
+    
+
 
 
 class CalculatorWindow(NodeEditorWindow):
@@ -210,82 +142,7 @@ class CalculatorWindow(NodeEditorWindow):
         super().__init__()
         self.status_bar = self.statusBar()
         self.timer = QTimer()
-        self.bt_tree = None
-        self.simulation_thread = PygameSimulation()
-
-    def toggleSimulation(self):
-        if self.simulationDock.isVisible():
-            self.simulationDock.hide()
-            if self.simulation_thread:
-                self.simulation_thread.stop_simulation()
-        else:
-            self.simulationDock.show()
-            self.simulation_thread = PygameSimulation()  # Create a new instance
-            self.simulation_thread.start_simulation()
-
-    def createSimulationDock(self):       
-        self.simulationDock = QDockWidget("Simulation")
-        self.simulationDock.setFloating(False)
-        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
-        self.simulationDock.hide()
-
-    def update_node_colors(self):
-        for index, node in enumerate(self.node_list):
-            connected_nodes = self.get_connected_nodes(node)
-            if node not in connected_nodes:
-                continue
-
-            content_widget = node.grNode.content
-            status = node.py_trees_object.status.value
-            node_number = index + 1
-            print(f'Node {node_number} ({node.op_title}) : Status {status}')
-            self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
-            if status == 'SUCCESS':
-                content_widget.setStyleSheet("background-color: green;")
-                if node.op_title == "Light_is_red?":
-                    self.simulation_thread.execute_action("red")
-                elif node.op_title == "Light_is_green?":
-                    self.simulation_thread.execute_action("green")
-                elif node.op_title == "Assist_patient":
-                    self.simulation_thread.execute_action("attend_patient")
-                elif node.op_title == "Move_to_medicine":
-                    self.simulation_thread.execute_action("to_medicine")
-                elif node.op_title == "Move_to_patient":
-                    self.simulation_thread.execute_action("deliver_to_patient")
-                    pygame.time.wait(120)
-                elif node.op_title == "Add_coffee!":
-                    self.simulation_thread.execute_action("coffee")
-                elif node.op_title == "Add_milk!":
-                    self.simulation_thread.execute_action("milk")
-                elif node.op_title == "Add_sugar!":
-                    self.simulation_thread.execute_action("sugar")
-                    pygame.time.wait(120)
-                elif node.op_title == "Power_critical_system":
-                    self.simulation_thread.execute_action("power_critical_system")
-                elif node.op_title == "Store_excess_energy":
-                    self.simulation_thread.execute_action("store_excess_energy")
-                elif node.op_title == "Power_non_critical_system":
-                    self.simulation_thread.execute_action("power_non_critical_system")
-                elif node.op_title == "Use_stored_energy":
-                    self.simulation_thread.execute_action("use_stored_energy")
-                    pygame.time.wait(120)
-                elif node.op_title == "Pick_parts":
-                    self.simulation_thread.execute_action("pick_part")
-                elif node.op_title == "Place_parts_in_assembly":
-                    self.simulation_thread.execute_action("place_part_in_assembly")
-                elif node.op_title == "Assemble_product":
-                    self.simulation_thread.execute_action("assemble_product")                
-                elif node.op_title == "Store_product":
-                    self.simulation_thread.execute_action("store_product")
-                
-            elif status == 'RUNNING':
-                content_widget.setStyleSheet("background-color: orange;")
-            elif status == 'FAILURE':
-                content_widget.setStyleSheet("background-color: red;")
-                if node.op_title == "No_emergency?":
-                    self.simulation_thread.execute_action("needs_help") 
-            else:
-                content_widget.setStyleSheet("background-color: black;")
+        self.bt_tree = None    
                             
     def initUI(self):
         self.name_company = 'ABB'
@@ -313,7 +170,6 @@ class CalculatorWindow(NodeEditorWindow):
             print("Registered nodes:")
             pp(CALC_NODES)
 
-
         self.mdiArea = QMdiArea()
         self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
         self.mdiArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
@@ -328,20 +184,17 @@ class CalculatorWindow(NodeEditorWindow):
         self.windowMapper.mapped[QWidget].connect(self.setActiveSubWindow)
 
         self.createNodesDock()
-        
         self.createSimulationDock()
-
         self.createActions()
         self.createMenus()
         self.createToolBars()
         self.createStatusBar()
         self.updateMenus()
-
         self.readSettings()
 
         self.setWindowTitle("BT NodeEditor")
         self.setWindowIcon(self.icon)
-        
+
         # Creating and adding OutputDock
         self._dockOutput = OutputDock('Output', self)
         self._dockOutput.setObjectName('output')
@@ -351,7 +204,7 @@ class CalculatorWindow(NodeEditorWindow):
         # Redirecting stdout to the output dock
         sys.stdout = self._dockOutput
         self._dockOutput.setStyleSheet("QTextEdit { font-size: 11pt; }")
-
+                
     def closeEvent(self, event):
         self.mdiArea.closeAllSubWindows()
         if self.mdiArea.currentSubWindow():
@@ -362,6 +215,76 @@ class CalculatorWindow(NodeEditorWindow):
             # hacky fix for PyQt 5.14.x
             import sys
             sys.exit(0)
+            
+    def updateSimulation(self):
+        if self.simulationDock and self.simulationDock.isVisible():
+            self.simulationDock.updateSimulation()
+
+    def toggleSimulation(self):
+        if self.simulationDock.isVisible():
+            self.simulationDock.hide()
+        else:
+            self.simulationDock.show()
+
+    def createSimulationDock(self):       
+        self.simulationDock = SimulationDock(self)
+        self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
+        self.simulationDock.hide()
+
+    def update_node_colors(self):
+        for index, node in enumerate(self.node_list):
+            connected_nodes = self.get_connected_nodes(node)
+            if node not in connected_nodes:
+                continue
+
+            content_widget = node.grNode.content
+            status = node.py_trees_object.status.value
+            node_number = index + 1
+            print(f'Node {node_number} ({node.op_title}) : Status {status}')
+            self.status_bar.showMessage(f'Node : {node.op_title}               Status : {status}')
+            if status == 'SUCCESS':
+                content_widget.setStyleSheet("background-color: green;")
+                if node.op_title == "Light_is_red?":
+                    self.simulationDock.execute_action("red")
+                elif node.op_title == "Light_is_green?":
+                    self.simulationDock.execute_action("green")
+                elif node.op_title == "Assist_patient":
+                    self.simulationDock.execute_action("attend_patient")
+                elif node.op_title == "Move_to_medicine":
+                    self.simulationDock.execute_action("to_medicine")
+                elif node.op_title == "Move_to_patient":
+                    self.simulationDock.execute_action("deliver_to_patient")
+                elif node.op_title == "Add_coffee!":
+                    self.simulationDock.execute_action("coffee")
+                elif node.op_title == "Add_milk!":
+                    self.simulationDock.execute_action("milk")
+                elif node.op_title == "Add_sugar!":
+                    self.simulationDock.execute_action("sugar")
+                elif node.op_title == "Power_critical_system":
+                    self.simulationDock.execute_action("power_critical_system")
+                elif node.op_title == "Store_excess_energy":
+                    self.simulationDock.execute_action("store_excess_energy")
+                elif node.op_title == "Power_non_critical_system":
+                    self.simulationDock.execute_action("power_non_critical_system")
+                elif node.op_title == "Use_stored_energy":
+                    self.simulationDock.execute_action("use_stored_energy")
+                elif node.op_title == "Pick_parts":
+                    self.simulationDock.execute_action("pick_part")
+                elif node.op_title == "Place_parts_in_assembly":
+                    self.simulationDock.execute_action("place_part_in_assembly")
+                elif node.op_title == "Assemble_product":
+                    self.simulationDock.execute_action("assemble_product")                
+                elif node.op_title == "Store_product":
+                    self.simulationDock.execute_action("store_product")
+                
+            elif status == 'RUNNING':
+                content_widget.setStyleSheet("background-color: orange;")
+            elif status == 'FAILURE':
+                content_widget.setStyleSheet("background-color: red;")
+                if node.op_title == "No_emergency?":
+                    self.simulationDock.execute_action("needs_help") 
+            else:
+                content_widget.setStyleSheet("background-color: black;")
 
     def createToolBars(self):
         super().createToolBars()
