@@ -1,16 +1,16 @@
 {
-    "id": "4a7de67d-eb65-4755-9099-b395c28cbf57",
+    "id": "ac122c3c-f96e-4849-b947-f5c251dc10a6",
     "scene_width": 64000,
     "scene_height": 64000,
     "nodes": [
         {
-            "id": "cd6c8242-40c2-4491-9caa-318b880fccd4",
+            "id": "c473e487-0a59-45f8-8ef2-87666863641a",
             "title": "Sequence",
-            "pos_x": -127.0,
-            "pos_y": -205.0,
+            "pos_x": 389.0,
+            "pos_y": -443.0,
             "inputs": [
                 {
-                    "id": 2350876543888,
+                    "id": 2860538715968,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -19,7 +19,7 @@
             ],
             "outputs": [
                 {
-                    "id": 2351300533968,
+                    "id": 2860535545728,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -27,18 +27,94 @@
                 }
             ],
             "content": {
-                "value": "Condition"
+                "value": "Desc.."
             },
             "op_code": 2
         },
         {
-            "id": "3922da97-b140-49b4-9802-d0eac58c89e4",
-            "title": "Pick_parts",
-            "pos_x": -353.0,
-            "pos_y": 3.0,
+            "id": 2860538715680,
+            "title": "Fallback",
+            "pos_x": 7.0,
+            "pos_y": -226.0,
             "inputs": [
                 {
-                    "id": 2350913388112,
+                    "id": 2860581600672,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2860581600768,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "aae126bc-49ce-4967-bf66-70fb261b8b9d",
+            "title": "Parts_in_assembly?",
+            "pos_x": -195.0,
+            "pos_y": 23.0,
+            "inputs": [
+                {
+                    "id": 2860581619136,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Parts_in_assembly?"
+            },
+            "op_code": 42
+        },
+        {
+            "id": "a2b29b4d-0b42-48d8-a5c2-42193785050e",
+            "title": "Sequence",
+            "pos_x": 140.0,
+            "pos_y": 13.0,
+            "inputs": [
+                {
+                    "id": 2860581619280,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2860581619616,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "6e28f4a4-9af4-4049-b43e-e51cfc4bad8b",
+            "title": "Pick_parts",
+            "pos_x": 57.0,
+            "pos_y": 237.0,
+            "inputs": [
+                {
+                    "id": 2860581629168,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -52,13 +128,13 @@
             "op_code": 43
         },
         {
-            "id": "aedade97-1174-446b-a316-b6c63482435c",
+            "id": "26a704ce-aac3-457f-8e90-659867004821",
             "title": "Place_parts_in_assembly",
-            "pos_x": -186.0,
-            "pos_y": -27.0,
+            "pos_x": 284.0,
+            "pos_y": 233.0,
             "inputs": [
                 {
-                    "id": 2351300653328,
+                    "id": 2860581629360,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -72,13 +148,61 @@
             "op_code": 44
         },
         {
-            "id": "e7b548f8-d396-4305-b3b6-b6f9a39d2d9e",
-            "title": "Assemble_product",
-            "pos_x": -79.0,
-            "pos_y": -34.0,
+            "id": 2860581600720,
+            "title": "Fallback",
+            "pos_x": 432.0,
+            "pos_y": -245.0,
             "inputs": [
                 {
-                    "id": 2350920620752,
+                    "id": 2860581632096,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2860581628832,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "92eaa3a6-56ef-4857-9566-0af278723c3a",
+            "title": "Product_assembled?",
+            "pos_x": 355.0,
+            "pos_y": 21.0,
+            "inputs": [
+                {
+                    "id": 2860582224720,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Product_assembled?"
+            },
+            "op_code": 45
+        },
+        {
+            "id": "d2764426-9e30-458a-90eb-d36167b04995",
+            "title": "Assemble_product",
+            "pos_x": 581.0,
+            "pos_y": 18.0,
+            "inputs": [
+                {
+                    "id": 2860581620144,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -92,13 +216,61 @@
             "op_code": 46
         },
         {
-            "id": "07559635-34e2-4f23-bc44-3fe6106ee06d",
-            "title": "Store_product",
-            "pos_x": 68.0,
-            "pos_y": -43.0,
+            "id": 2860581601008,
+            "title": "Fallback",
+            "pos_x": 737.0,
+            "pos_y": -253.0,
             "inputs": [
                 {
-                    "id": 2351300644496,
+                    "id": 2860581628304,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2860581628400,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "90e05abf-a844-4c85-a49f-3cb3188a5869",
+            "title": "Products_stored?",
+            "pos_x": 785.0,
+            "pos_y": 24.0,
+            "inputs": [
+                {
+                    "id": 2860581630224,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Products_stored?"
+            },
+            "op_code": 47
+        },
+        {
+            "id": "ea007d37-13ff-40b4-b576-8f5be8c66214",
+            "title": "Store_product",
+            "pos_x": 978.0,
+            "pos_y": 17.0,
+            "inputs": [
+                {
+                    "id": 2860581630176,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -114,28 +286,70 @@
     ],
     "edges": [
         {
-            "id": 2351305604880,
+            "id": 2860581618656,
             "edge_type": 2,
-            "start": 2351300533968,
-            "end": 2350913388112
+            "start": 2860535545728,
+            "end": 2860581600672
         },
         {
-            "id": 2351305677712,
+            "id": 2860581600576,
             "edge_type": 2,
-            "start": 2351300533968,
-            "end": 2351300653328
+            "start": 2860581600768,
+            "end": 2860581619136
         },
         {
-            "id": 2351305681168,
+            "id": 2860581621968,
             "edge_type": 2,
-            "start": 2351300533968,
-            "end": 2350920620752
+            "start": 2860581600768,
+            "end": 2860581619280
         },
         {
-            "id": 2351305676176,
+            "id": 2860581622016,
             "edge_type": 2,
-            "start": 2351300533968,
-            "end": 2351300644496
+            "start": 2860581619616,
+            "end": 2860581629168
+        },
+        {
+            "id": 2860520194944,
+            "edge_type": 2,
+            "start": 2860581619616,
+            "end": 2860581629360
+        },
+        {
+            "id": 2860522503968,
+            "edge_type": 2,
+            "start": 2860535545728,
+            "end": 2860581632096
+        },
+        {
+            "id": 2860581619328,
+            "edge_type": 2,
+            "start": 2860581628832,
+            "end": 2860582224720
+        },
+        {
+            "id": 2860581619904,
+            "edge_type": 2,
+            "start": 2860581628832,
+            "end": 2860581620144
+        },
+        {
+            "id": 2860581620336,
+            "edge_type": 2,
+            "start": 2860535545728,
+            "end": 2860581628304
+        },
+        {
+            "id": 2860537073968,
+            "edge_type": 2,
+            "start": 2860581628400,
+            "end": 2860581630224
+        },
+        {
+            "id": 2860581631568,
+            "edge_type": 2,
+            "start": 2860581628400,
+            "end": 2860581630176
         }
     ]
 }

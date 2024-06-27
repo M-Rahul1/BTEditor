@@ -111,6 +111,7 @@ class QDMDragListbox(QListWidget):
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Parts_in_assembly?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_IN_ASSEMBLY, section_name="Condition")
+        self.addMyItem("Parts_picked?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_PICKED, section_name="Condition")
         self.addMyItem("Product_assembled?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PRODUCT_ASSSEMBLED, section_name="Condition")
         self.addMyItem("Products_stored?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PRODUCTS_STORED, section_name="Condition")
         self.addItem(self.create_spacer_item(20))

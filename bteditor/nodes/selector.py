@@ -38,6 +38,7 @@ class Fallback(CalcNode,pt.composites.Selector):
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[1])
+        pt.composites.Selector.__init__(self, name="Fallback",memory=False, children=[])
         self.eval()
 
     def initInnerClasses(self):

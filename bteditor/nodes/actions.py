@@ -1625,6 +1625,7 @@ class Parts_in_assembly_(pt.behaviour.Behaviour):
     def update(self) -> pt.common.Status.FAILURE:
         return pt.common.Status.FAILURE
     
+
 @register_node(PICK_PARTS)
 class Pick_parts(CalcNode,pt.behaviours.TickCounter):
     icon = "icons/action.png"
@@ -1634,7 +1635,7 @@ class Pick_parts(CalcNode,pt.behaviours.TickCounter):
     
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Pick_parts", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Pick_parts", duration=2, completion_status=pt.common.Status.SUCCESS)
         self.eval()
         
     def update(self) -> pt.common.Status:
@@ -1680,7 +1681,7 @@ class Place_parts_in_assembly(CalcNode,pt.behaviours.TickCounter):
     
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Place_parts_in_assembly", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Place_parts_in_assembly", duration=2, completion_status=pt.common.Status.SUCCESS)
         self.eval()
         
     def update(self) -> pt.common.Status:
@@ -1768,7 +1769,7 @@ class Assemble_product(CalcNode,pt.behaviours.TickCounter):
     
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Assemble_product", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Assemble_product", duration=2, completion_status=pt.common.Status.SUCCESS)
         self.eval()
         
     def update(self) -> pt.common.Status:
@@ -1856,7 +1857,7 @@ class Store_product(CalcNode,pt.behaviours.TickCounter):
     
     def __init__(self, scene):
         CalcNode.__init__(self,scene, inputs=[1], outputs=[])
-        pt.behaviours.TickCounter.__init__(self, name="Store_product", duration=10, completion_status=pt.common.Status.SUCCESS)
+        pt.behaviours.TickCounter.__init__(self, name="Store_product", duration=2, completion_status=pt.common.Status.SUCCESS)
         self.eval()
         
     def update(self) -> pt.common.Status:
@@ -1892,3 +1893,46 @@ class Store_product_(pt.behaviours.TickCounter):
     
     def initialise(self) -> None:
         pass
+    
+@register_node(PARTS_PICKED)
+class Parts_picked(CalcNode,pt.behaviour.Behaviour):
+    icon = "icons/action.png"
+    op_code = PARTS_PICKED
+    op_title = "Parts_picked?"
+    content_label_objname = "action_node"
+    
+    def __init__(self, scene):
+        CalcNode.__init__(self,scene, inputs=[1], outputs=[])
+        pt.behaviour.Behaviour.__init__(self, name="Parts_picked")
+        self.eval()
+    
+    def update(self) -> pt.common.Status:
+        return super().update()
+    
+    def initInnerClasses(self):
+        self.content = CalcInputContent(self)
+        self.grNode = CalcGraphicsNode(self)
+    
+    def evalImplementation(self):
+        u_value = self.content.edit.text()
+        s_value = u_value
+        self.value = s_value
+        self.markDirty(False)
+        self.markInvalid(False)   
+
+        self.markDescendantsInvalid(False)
+        self.markDescendantsDirty()
+
+        self.grNode.setToolTip("")
+
+        self.evalChildren()
+
+        return self.value
+    
+class Parts_picked_(pt.behaviour.Behaviour):
+    def initialise(self) -> None:
+        return super().initialise()
+    
+    def update(self) -> pt.common.Status.FAILURE:
+        return pt.common.Status.FAILURE
+    

@@ -176,14 +176,16 @@ class CalcNode(Node):
                 return action.Product_assembled_(name=self.op_title)
             elif self.op_title == "Products_stored?":
                 return action.Products_stored_(name=self.op_title)
+            elif self.op_title == "Parts_picked?":
+                return action.Parts_picked_(name=self.op_title)                
             elif self.op_title == "Pick_parts":
-                return action.Pick_parts_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+                return action.Pick_parts_(name=self.op_title, duration=6, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Place_parts_in_assembly":
-                return action.Place_parts_in_assembly_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+                return action.Place_parts_in_assembly_(name=self.op_title, duration=6, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Assemble_product":
-                return action.Assemble_product_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+                return action.Assemble_product_(name=self.op_title, duration=6, completion_status=pt.common.Status.SUCCESS)
             elif self.op_title == "Store_product":
-                return action.Store_product_(name=self.op_title, duration=10, completion_status=pt.common.Status.SUCCESS)
+                return action.Store_product_(name=self.op_title, duration=6, completion_status=pt.common.Status.SUCCESS)
             
                 
             else :
