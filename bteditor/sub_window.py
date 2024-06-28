@@ -121,8 +121,8 @@ class CalculatorSubWindow(NodeEditorWidget):
             elif hasattr(item, 'edge'):
                 self.handleEdgeContextMenu(event)
             #elif item is None:
-            else:
-                self.handleNewNodeContextMenu(event)
+            """else:
+                self.handleNewNodeContextMenu(event)"""
 
             return super().contextMenuEvent(event)
         except Exception as e: dumpException(e)
@@ -188,7 +188,7 @@ class CalculatorSubWindow(NodeEditorWidget):
         new_calc_node.grNode.onSelected()
 
 
-    def handleNewNodeContextMenu(self, event):
+"""    def handleNewNodeContextMenu(self, event):
 
         if DEBUG_CONTEXT: print("CONTEXT: EMPTY SPACE")
         context_menu = self.initNodesContextMenu()
@@ -208,4 +208,4 @@ class CalculatorSubWindow(NodeEditorWidget):
                     self.finish_new_node_state(new_calc_node)
 
             else:
-                self.scene.history.storeHistory("Created %s" % new_calc_node.__class__.__name__)
+                self.scene.history.storeHistory("Created %s" % new_calc_node.__class__.__name__)"""
