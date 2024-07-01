@@ -55,7 +55,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Add_coffee!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_COFFEE, section_name="Action")
         self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")   """  
         
-        """# Add ai car Condition section
+        # Add ai car Condition section
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("No_traffic_light?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_TRAFFIC_LIGHT, section_name="Condition")
@@ -72,7 +72,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Proceed", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PROCEED, section_name="Action")
         self.addMyItem("Caution", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CAUTION, section_name="Action")
         self.addMyItem("Move_into_lane", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_INTO_LANE, section_name="Action")
-        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")"""
+        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")
         
         """# Add healthCare Condition section
         self.add_section("Condition")
@@ -108,7 +108,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Power_non_critical_system", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=POWER_NON_CRITICAL_SYSTEM, section_name="Action")
         self.addMyItem("Use_stored_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=USE_STORED_ENERGY, section_name="Action")"""
         
-        self.add_section("Condition")
+        """self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Parts_in_assembly?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_IN_ASSEMBLY, section_name="Condition")
         self.addMyItem("Parts_picked?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_PICKED, section_name="Condition")
@@ -122,7 +122,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Place_parts_in_assembly", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PLACE_PARTS_IN_ASSEMBLY, section_name="Action")
         self.addMyItem("Assemble_product", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ASSEMBLE_PRODUCT, section_name="Action")
         self.addMyItem("Store_product", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=STORE_PRODUCT, section_name="Action")       
-        
+        """
           
         
     def add_section(self, section_name):        
