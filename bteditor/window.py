@@ -18,7 +18,7 @@ from nodeeditor.utils import dumpException, pp
 from bteditor.conf import *
 from bteditor.output_log import OutputDock
 #from bteditor.simu_coffee import PygameSimulation
-#from bteditor.simu_ai_car import PygameSimulation
+from bteditor.simu_ai_car import PygameSimulation
 
 # Enabling edge validators
 from nodeeditor.node_edge import Edge
@@ -36,7 +36,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(message)s')
 
 DEBUG = False
 
-class SimulationDock(QDockWidget):
+"""class SimulationDock(QDockWidget):
     def __init__(self, parent=None):
         super().__init__("Simulation", parent)
         self.initUI()
@@ -231,7 +231,7 @@ class SimulationDock(QDockWidget):
 
     def store_product(self):
         if self.robot_carrying:
-            self.robot_carrying = None
+            self.robot_carrying = None"""
            
     
 
@@ -243,6 +243,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.status_bar = self.statusBar()
         self.timer = QTimer()
         self.bt_tree = None    
+        self.simulation_thread = PygameSimulation()
                             
     def initUI(self):
         self.name_company = 'ABB'
@@ -323,11 +324,16 @@ class CalculatorWindow(NodeEditorWindow):
     def toggleSimulation(self):
         if self.simulationDock.isVisible():
             self.simulationDock.hide()
+            if self.simulation_thread:
+                self.simulation_thread.stop_simulation()
         else:
             self.simulationDock.show()
+            self.simulation_thread = PygameSimulation()  # Create a new instance
+            self.simulation_thread.start_simulation()
 
     def createSimulationDock(self):       
-        self.simulationDock = SimulationDock(self)
+        self.simulationDock = QDockWidget("Simulation")
+        self.simulationDock.setFloating(False)
         self.addDockWidget(Qt.LeftDockWidgetArea, self.simulationDock) 
         self.simulationDock.hide()
 
@@ -345,29 +351,29 @@ class CalculatorWindow(NodeEditorWindow):
             if status == 'SUCCESS':
                 content_widget.setStyleSheet("background-color: green;")
                 if node.op_title == "Light_is_red?":
-                    self.simulationDock.execute_action("red")
+                    self.simulation_thread.execute_action("red")
                 elif node.op_title == "Light_is_green?":
-                    self.simulationDock.execute_action("green")
+                    self.simulation_thread.execute_action("green")
                 elif node.op_title == "Assist_patient":
-                    self.simulationDock.execute_action("attend_patient")
+                    self.simulation_thread.execute_action("attend_patient")
                 elif node.op_title == "Move_to_medicine":
-                    self.simulationDock.execute_action("to_medicine")
+                    self.simulation_thread.execute_action("to_medicine")
                 elif node.op_title == "Move_to_patient":
-                    self.simulationDock.execute_action("deliver_to_patient")
+                    self.simulation_thread.execute_action("deliver_to_patient")
                 elif node.op_title == "Add_coffee!":
-                    self.simulationDock.execute_action("coffee")
+                    self.simulation_thread.execute_action("coffee")
                 elif node.op_title == "Add_milk!":
-                    self.simulationDock.execute_action("milk")
+                    self.simulation_thread.execute_action("milk")
                 elif node.op_title == "Add_sugar!":
-                    self.simulationDock.execute_action("sugar")
+                    self.simulation_thread.execute_action("sugar")
                 elif node.op_title == "Power_critical_system":
-                    self.simulationDock.execute_action("power_critical_system")
+                    self.simulation_thread.execute_action("power_critical_system")
                 elif node.op_title == "Store_excess_energy":
-                    self.simulationDock.execute_action("store_excess_energy")
+                    self.simulation_thread.execute_action("store_excess_energy")
                 elif node.op_title == "Power_non_critical_system":
-                    self.simulationDock.execute_action("power_non_critical_system")
+                    self.simulation_thread.execute_action("power_non_critical_system")
                 elif node.op_title == "Use_stored_energy":
-                    self.simulationDock.execute_action("use_stored_energy")
+                    self.simulation_thread.execute_action("use_stored_energy")
                 elif node.op_title == "Pick_parts":
                     self.simulationDock.execute_action("pick_part")
                 elif node.op_title == "Place_parts_in_assembly":
@@ -382,7 +388,7 @@ class CalculatorWindow(NodeEditorWindow):
             elif status == 'FAILURE':
                 content_widget.setStyleSheet("background-color: red;")
                 if node.op_title == "No_emergency?":
-                    self.simulationDock.execute_action("needs_help") 
+                    self.simulation_thread.execute_action("needs_help") 
             else:
                 content_widget.setStyleSheet("background-color: black;")
 
