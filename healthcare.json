@@ -4,13 +4,13 @@
     "scene_height": 64000,
     "nodes": [
         {
-            "id": "228a484b-8ba6-4be9-a877-a5c54eaac850",
+            "id": "9af0e54b-9162-499c-853d-9eea35fa6285",
             "title": "Sequence",
-            "pos_x": 138.75,
-            "pos_y": -256.75,
+            "pos_x": 224.99999999999997,
+            "pos_y": -346.87499999999994,
             "inputs": [
                 {
-                    "id": 2292353487920,
+                    "id": 2429284752400,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -19,7 +19,7 @@
             ],
             "outputs": [
                 {
-                    "id": 2292353487248,
+                    "id": 2429284752352,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -27,18 +27,18 @@
                 }
             ],
             "content": {
-                "value": "Condition"
+                "value": "Desc.."
             },
             "op_code": 2
         },
         {
-            "id": 2292353758320,
+            "id": "a08ae7a3-5085-441b-9a2a-cba1063bbddf",
             "title": "Fallback",
-            "pos_x": -42.0,
-            "pos_y": -57.0,
+            "pos_x": 6.249999999999999,
+            "pos_y": -137.49999999999997,
             "inputs": [
                 {
-                    "id": 2292353488448,
+                    "id": 2429284752592,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -47,7 +47,7 @@
             ],
             "outputs": [
                 {
-                    "id": 2292353491856,
+                    "id": 2429284752640,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -55,18 +55,46 @@
                 }
             ],
             "content": {
-                "value": "Condition"
+                "value": "Desc.."
             },
             "op_code": 1
         },
         {
-            "id": "a75824bc-414f-4ca0-84fa-e5b29e6ba1b9",
-            "title": "No_emergency?",
-            "pos_x": -148.0,
-            "pos_y": 107.0,
+            "id": "486d4f9f-265a-4ea6-9940-91943a624fc4",
+            "title": "Fallback",
+            "pos_x": 439.06249999999994,
+            "pos_y": -142.18749999999997,
             "inputs": [
                 {
-                    "id": 2292353851152,
+                    "id": 2429284752928,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429284753072,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "22a7b362-326e-40bb-92e2-d6750d030dbf",
+            "title": "No_emergency?",
+            "pos_x": -103.12499999999999,
+            "pos_y": 164.06249999999997,
+            "inputs": [
+                {
+                    "id": 2429284753264,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -80,13 +108,41 @@
             "op_code": 11
         },
         {
-            "id": "1d6b9213-fc85-4241-9eac-488461e84345",
-            "title": "Assist_patient",
-            "pos_x": 38.0,
-            "pos_y": 162.0,
+            "id": "ab1d70f2-7079-45a0-831a-5916c8c5d137",
+            "title": "Sequence",
+            "pos_x": 124.99999999999997,
+            "pos_y": 24.999999999999996,
             "inputs": [
                 {
-                    "id": 2292353851488,
+                    "id": 2429284753552,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429284753744,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "6d0f1ac8-5fd4-450f-b255-d2eee512cf11",
+            "title": "Assist_patient",
+            "pos_x": 90.62499999999999,
+            "pos_y": 181.24999999999997,
+            "inputs": [
+                {
+                    "id": 2429284754800,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -100,89 +156,13 @@
             "op_code": 34
         },
         {
-            "id": 2292353852400,
-            "title": "Fallback",
-            "pos_x": 323.75,
-            "pos_y": -68.75,
-            "inputs": [
-                {
-                    "id": 2292353852688,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 1
-                }
-            ],
-            "outputs": [
-                {
-                    "id": 2292353852736,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                }
-            ],
-            "content": {
-                "value": "Condition"
-            },
-            "op_code": 1
-        },
-        {
-            "id": "bb02ff62-3a83-419c-ad54-99c63f7c3dde",
-            "title": "Medicine_with_patient?",
-            "pos_x": 275.0,
-            "pos_y": 126.25,
-            "inputs": [
-                {
-                    "id": 2292353852592,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 1
-                }
-            ],
-            "outputs": [],
-            "content": {
-                "value": "Medicine_with_patient?"
-            },
-            "op_code": 35
-        },
-        {
-            "id": "9378bd26-85cc-4be1-bd00-66ccd82af1c4",
-            "title": "Sequence",
-            "pos_x": 522.5,
-            "pos_y": 111.25,
-            "inputs": [
-                {
-                    "id": 2292353852352,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 1
-                }
-            ],
-            "outputs": [
-                {
-                    "id": 2292353852496,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                }
-            ],
-            "content": {
-                "value": "Condition"
-            },
-            "op_code": 2
-        },
-        {
-            "id": "d33ca5b1-1230-41a4-b314-85481ed9f6f9",
+            "id": "74c4080b-f029-42b9-8fb0-21e361f8a343",
             "title": "Move_to_medicine",
-            "pos_x": 435.0,
-            "pos_y": 285.0,
+            "pos_x": 207.81249999999997,
+            "pos_y": 182.81249999999997,
             "inputs": [
                 {
-                    "id": 2292353852784,
+                    "id": 2429284755376,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -196,13 +176,253 @@
             "op_code": 37
         },
         {
-            "id": "1de0ee76-0cb3-455d-93e1-05331b92a39c",
-            "title": "Move_to_patient",
-            "pos_x": 663.75,
-            "pos_y": 286.25,
+            "id": "9899802e-0a55-4b16-9144-70d05f1552a5",
+            "title": "Medicine_with_patient?",
+            "pos_x": 351.56249999999994,
+            "pos_y": 26.562499999999993,
             "inputs": [
                 {
-                    "id": 2292442698416,
+                    "id": 2429284755664,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Medicine_with_patient?"
+            },
+            "op_code": 35
+        },
+        {
+            "id": "412e36f0-c970-4b27-860c-7e6f8cbd7b2d",
+            "title": "Sequence",
+            "pos_x": 562.4999999999999,
+            "pos_y": 23.437499999999996,
+            "inputs": [
+                {
+                    "id": 2429149747328,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429149746944,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "035634dc-e246-46b3-9f9f-dad6077ff346",
+            "title": "Fallback",
+            "pos_x": 496.8749999999999,
+            "pos_y": 176.56249999999997,
+            "inputs": [
+                {
+                    "id": 2429147914768,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429148711536,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "96f034a1-a717-4b63-abd2-edb2f73500d5",
+            "title": "Fallback",
+            "pos_x": 771.8749999999999,
+            "pos_y": 181.24999999999997,
+            "inputs": [
+                {
+                    "id": 2429284754464,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429284754752,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "0c5c4bfa-2e73-456f-b074-6edcf305b554",
+            "title": "Robot_at_medicine?",
+            "pos_x": 393.74999999999994,
+            "pos_y": 329.68749999999994,
+            "inputs": [
+                {
+                    "id": 2429284760416,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Robot_at_medicine?"
+            },
+            "op_code": 36
+        },
+        {
+            "id": "a15d5153-f750-4d93-b7ed-9b0e345c5c68",
+            "title": "Sequence",
+            "pos_x": 585.9374999999999,
+            "pos_y": 339.06249999999994,
+            "inputs": [
+                {
+                    "id": 2429284760944,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429284761328,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "1cec467d-2c03-406c-9e74-b4d058ef0749",
+            "title": "Move_to_medicine",
+            "pos_x": 574.9999999999999,
+            "pos_y": 448.43749999999994,
+            "inputs": [
+                {
+                    "id": 2429284757680,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Move_to_medicine"
+            },
+            "op_code": 37
+        },
+        {
+            "id": "b8c1db97-5ea9-4b79-a713-803235f1a713",
+            "title": "Pick_up_medicine",
+            "pos_x": 749.9999999999999,
+            "pos_y": 443.74999999999994,
+            "inputs": [
+                {
+                    "id": 2429285401088,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Pick_up_medicine"
+            },
+            "op_code": 38
+        },
+        {
+            "id": "8f7d76e2-4aaa-44b8-ae58-0e4ac525b73f",
+            "title": "Robot_at_patient?",
+            "pos_x": 770.3124999999999,
+            "pos_y": 337.49999999999994,
+            "inputs": [
+                {
+                    "id": 2429285405504,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Robot_at_patient?"
+            },
+            "op_code": 39
+        },
+        {
+            "id": "c681a683-5648-4328-af37-9c38e31c4504",
+            "title": "Sequence",
+            "pos_x": 948.4374999999999,
+            "pos_y": 337.49999999999994,
+            "inputs": [
+                {
+                    "id": 2429149581952,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2429149582048,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "f4035f72-59d2-4207-9a27-2cdd97b595df",
+            "title": "Move_to_patient",
+            "pos_x": 885.9374999999999,
+            "pos_y": 454.68749999999994,
+            "inputs": [
+                {
+                    "id": 2429284513792,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -216,13 +436,13 @@
             "op_code": 33
         },
         {
-            "id": "6b033279-b132-4bbf-b1fd-3207fe0567d1",
+            "id": "f69bcd65-3fbe-461c-a0e6-74cf262f4ac7",
             "title": "Deliver_medicine",
-            "pos_x": 837.5,
-            "pos_y": 283.75,
+            "pos_x": 1046.8749999999998,
+            "pos_y": 453.12499999999994,
             "inputs": [
                 {
-                    "id": 2292442701680,
+                    "id": 2429284759024,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -238,58 +458,112 @@
     ],
     "edges": [
         {
-            "id": 2292093908752,
+            "id": 2429148138960,
             "edge_type": 2,
-            "start": 2292353487248,
-            "end": 2292353488448
+            "start": 2429284752352,
+            "end": 2429284752592
         },
         {
-            "id": 2292353493920,
+            "id": 2429284758064,
             "edge_type": 2,
-            "start": 2292353491856,
-            "end": 2292353851152
+            "start": 2429284752640,
+            "end": 2429284753264
         },
         {
-            "id": 2292353758416,
+            "id": 2429284758160,
             "edge_type": 2,
-            "start": 2292353491856,
-            "end": 2292353851488
+            "start": 2429284752640,
+            "end": 2429284753552
         },
         {
-            "id": 2292353852640,
+            "id": 2429284758304,
             "edge_type": 2,
-            "start": 2292353487248,
-            "end": 2292353852688
+            "start": 2429284753744,
+            "end": 2429284754800
         },
         {
-            "id": 2292353853120,
+            "id": 2429284752736,
             "edge_type": 2,
-            "start": 2292353852736,
-            "end": 2292353852592
+            "start": 2429284753744,
+            "end": 2429284755376
         },
         {
-            "id": 2292353484464,
+            "id": 2429284752976,
             "edge_type": 2,
-            "start": 2292353852736,
-            "end": 2292353852352
+            "start": 2429284752352,
+            "end": 2429284752928
         },
         {
-            "id": 2292353757840,
+            "id": 2429284753600,
             "edge_type": 2,
-            "start": 2292353852496,
-            "end": 2292353852784
+            "start": 2429284753072,
+            "end": 2429284755664
         },
         {
-            "id": 2292442702208,
+            "id": 2429284754032,
             "edge_type": 2,
-            "start": 2292353852496,
-            "end": 2292442698416
+            "start": 2429284753072,
+            "end": 2429149747328
         },
         {
-            "id": 2292442990160,
+            "id": 2429284754848,
             "edge_type": 2,
-            "start": 2292353852496,
-            "end": 2292442701680
+            "start": 2429149746944,
+            "end": 2429147914768
+        },
+        {
+            "id": 2429284755184,
+            "edge_type": 2,
+            "start": 2429148711536,
+            "end": 2429284760416
+        },
+        {
+            "id": 2429284754896,
+            "edge_type": 2,
+            "start": 2429148711536,
+            "end": 2429284760944
+        },
+        {
+            "id": 2429284755760,
+            "edge_type": 2,
+            "start": 2429284761328,
+            "end": 2429284757680
+        },
+        {
+            "id": 2429284755712,
+            "edge_type": 2,
+            "start": 2429284761328,
+            "end": 2429285401088
+        },
+        {
+            "id": 2429284756288,
+            "edge_type": 2,
+            "start": 2429149746944,
+            "end": 2429284754464
+        },
+        {
+            "id": 2428887049104,
+            "edge_type": 2,
+            "start": 2429284754752,
+            "end": 2429285405504
+        },
+        {
+            "id": 2429284756096,
+            "edge_type": 2,
+            "start": 2429284754752,
+            "end": 2429149581952
+        },
+        {
+            "id": 2429284759648,
+            "edge_type": 2,
+            "start": 2429149582048,
+            "end": 2429284513792
+        },
+        {
+            "id": 2429284760464,
+            "edge_type": 2,
+            "start": 2429149582048,
+            "end": 2429284759024
         }
     ]
 }

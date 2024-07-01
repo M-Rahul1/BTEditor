@@ -39,7 +39,8 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Parallel", icon=os.path.join(os.path.dirname(__file__), "icons/parallel.png"), op_code=PARALLEL, section_name="Control")
         self.addItem(self.create_spacer_item(20))
         
-        """# Add coffee Condition section
+        # Add coffee Condition section
+        """
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Is_coffee_ready?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=IS_COFFEE_READY, section_name="Condition")
@@ -56,6 +57,7 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Add_milk!", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=ADD_MILK, section_name="Action")   """  
         
         # Add ai car Condition section
+        """
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("No_traffic_light?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_TRAFFIC_LIGHT, section_name="Condition")
@@ -72,9 +74,10 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Proceed", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PROCEED, section_name="Action")
         self.addMyItem("Caution", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CAUTION, section_name="Action")
         self.addMyItem("Move_into_lane", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_INTO_LANE, section_name="Action")
-        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")
+        self.addMyItem("Keep_driving", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=KEEP_DRIVING, section_name="Action")"""
         
-        """# Add healthCare Condition section
+        # Add healthCare Condition section
+        
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("No_emergency?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=NO_EMERGENCY, section_name="Condition")
@@ -89,9 +92,10 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Move_to_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_MEDICINE, section_name="Action")
         self.addMyItem("Pick_up_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PICK_UP_MEDICINE, section_name="Action")
         self.addMyItem("Move_to_patient", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=MOVE_TO_PATIENT, section_name="Action")
-        self.addMyItem("Deliver_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=DELIVER_MEDICINE, section_name="Action")"""
-        
-        """# Add Energy Management for Hospital 
+        self.addMyItem("Deliver_medicine", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=DELIVER_MEDICINE, section_name="Action")
+                
+        # Add Energy Management for Hospital 
+        """
         self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Critical_system_power?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=CRITICAL_SYSTEM_POWER, section_name="Condition")
@@ -108,7 +112,9 @@ class QDMDragListbox(QListWidget):
         self.addMyItem("Power_non_critical_system", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=POWER_NON_CRITICAL_SYSTEM, section_name="Action")
         self.addMyItem("Use_stored_energy", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=USE_STORED_ENERGY, section_name="Action")"""
         
-        """self.add_section("Condition")
+        #Assembly
+        """
+        self.add_section("Condition")
         self.addItem(self.create_spacer_item(10))
         self.addMyItem("Parts_in_assembly?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_IN_ASSEMBLY, section_name="Condition")
         self.addMyItem("Parts_picked?", icon=os.path.join(os.path.dirname(__file__), "icons/action.png"), op_code=PARTS_PICKED, section_name="Condition")
