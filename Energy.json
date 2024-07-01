@@ -1,16 +1,16 @@
 {
-    "id": "810d4b5c-1ddb-426c-9da2-9bca6438ede3",
+    "id": "a4c9409c-b1ba-4eeb-a47b-59ace493dbd4",
     "scene_width": 64000,
     "scene_height": 64000,
     "nodes": [
         {
-            "id": "1fdd75e3-7361-4b74-b0d1-852d1a105374",
+            "id": "d1563dd0-1ab2-4d8b-8953-58bbacc9e710",
             "title": "Sequence",
-            "pos_x": -54.0,
-            "pos_y": -202.0,
+            "pos_x": 194.5,
+            "pos_y": -306.25,
             "inputs": [
                 {
-                    "id": 3010678381776,
+                    "id": 2047072641408,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -19,7 +19,7 @@
             ],
             "outputs": [
                 {
-                    "id": 3010690873168,
+                    "id": 2047058649664,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -27,18 +27,94 @@
                 }
             ],
             "content": {
-                "value": "Condition"
+                "value": "Desc.."
             },
             "op_code": 2
         },
         {
-            "id": "e8471caa-4711-4c00-9163-bbae0ab041ab",
-            "title": "Power_critical_system",
-            "pos_x": -182.0,
-            "pos_y": -47.0,
+            "id": "d202d9cd-1046-4db7-8de1-52a57e42b460",
+            "title": "Fallback",
+            "pos_x": -212.5,
+            "pos_y": -111.25,
             "inputs": [
                 {
-                    "id": 3010677745872,
+                    "id": 2047337815344,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2047337815392,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "af09a6be-e2d3-4e5b-95a7-f238be6cd83b",
+            "title": "Critical_system_power?",
+            "pos_x": -363.75,
+            "pos_y": 108.75,
+            "inputs": [
+                {
+                    "id": 2047337891456,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Critical_system_power?"
+            },
+            "op_code": 24
+        },
+        {
+            "id": "53dfd8c2-7530-49e6-bc95-0642f22e529d",
+            "title": "Sequence",
+            "pos_x": -100.0,
+            "pos_y": 103.75,
+            "inputs": [
+                {
+                    "id": 2047337891648,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2047337891888,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "288592bd-a70a-4a05-9c27-67dcacd01c06",
+            "title": "Power_critical_system",
+            "pos_x": -146.25,
+            "pos_y": 292.5,
+            "inputs": [
+                {
+                    "id": 2047337892416,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -52,13 +128,137 @@
             "op_code": 25
         },
         {
-            "id": "45080713-7601-4d77-bf47-b9ff8bfa27c2",
-            "title": "Store_excess_energy",
-            "pos_x": -12.0,
-            "pos_y": -28.0,
+            "id": "3cf84e94-f3dc-4fe1-a7a0-186dc1551874",
+            "title": "Notify_admin",
+            "pos_x": 40.0,
+            "pos_y": 286.25,
             "inputs": [
                 {
-                    "id": 3010690932624,
+                    "id": 2047337892560,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Notify_admin"
+            },
+            "op_code": 26
+        },
+        {
+            "id": "ccafd709-b6f9-49a4-96d2-e0a7852d7683",
+            "title": "Fallback",
+            "pos_x": 107.5,
+            "pos_y": -93.75,
+            "inputs": [
+                {
+                    "id": 2047337894576,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2047337894624,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "e8517223-d80f-421d-a2b9-fb92bc1eced3",
+            "title": "Fallback",
+            "pos_x": 366.25,
+            "pos_y": -88.75,
+            "inputs": [
+                {
+                    "id": 2047337894144,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2047337894720,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "152e727c-72ea-4881-9972-55a6c4714309",
+            "title": "Fallback",
+            "pos_x": 608.75,
+            "pos_y": -95.0,
+            "inputs": [
+                {
+                    "id": 2047337895488,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2047337895776,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "d793f0f3-279c-4333-b013-dfe2aae90c14",
+            "title": "No_excess_renewable_energy?",
+            "pos_x": 86.25,
+            "pos_y": 100.0,
+            "inputs": [
+                {
+                    "id": 2047337898464,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "No_excess_renewable_energy?"
+            },
+            "op_code": 27
+        },
+        {
+            "id": "4fa0a787-779d-467e-a97d-f1eaa2fcd470",
+            "title": "Store_excess_energy",
+            "pos_x": 228.75,
+            "pos_y": 101.25,
+            "inputs": [
+                {
+                    "id": 2047075166224,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -72,13 +272,33 @@
             "op_code": 28
         },
         {
-            "id": "026a14dd-6236-44fc-a1f1-2623b14011c2",
-            "title": "Power_non_critical_system",
-            "pos_x": 165.0,
-            "pos_y": -38.0,
+            "id": "e51675ae-4c28-44ec-9448-ff1c0075f20a",
+            "title": "Non_critical_system_power?",
+            "pos_x": 357.5,
+            "pos_y": 98.75,
             "inputs": [
                 {
-                    "id": 3010245396112,
+                    "id": 2047337897264,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Non_critical_system_power?"
+            },
+            "op_code": 29
+        },
+        {
+            "id": "11a011d2-aec8-437e-b860-ad10b1e2b752",
+            "title": "Power_non_critical_system",
+            "pos_x": 500.0,
+            "pos_y": 72.5,
+            "inputs": [
+                {
+                    "id": 2047337891552,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -92,13 +312,33 @@
             "op_code": 30
         },
         {
-            "id": "500d32d4-88d8-4cdb-bff3-1f36f1d98027",
-            "title": "Use_stored_energy",
-            "pos_x": 307.0,
-            "pos_y": -58.0,
+            "id": "bcbcf50e-358d-4422-991c-2b4e64421a82",
+            "title": "No_stored_energy_available?",
+            "pos_x": 596.25,
+            "pos_y": 138.75,
             "inputs": [
                 {
-                    "id": 3010675438992,
+                    "id": 2047337902976,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "No_stored_energy_available?"
+            },
+            "op_code": 31
+        },
+        {
+            "id": "d1835a01-4bfa-411b-873b-f3dfed600992",
+            "title": "Use_stored_energy",
+            "pos_x": 782.5,
+            "pos_y": 128.75,
+            "inputs": [
+                {
+                    "id": 2047337892656,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -114,28 +354,88 @@
     ],
     "edges": [
         {
-            "id": 3010691014416,
+            "id": 2047337815536,
             "edge_type": 2,
-            "start": 3010690873168,
-            "end": 3010677745872
+            "start": 2047058649664,
+            "end": 2047337815344
         },
         {
-            "id": 3010691020752,
+            "id": 2047074948144,
             "edge_type": 2,
-            "start": 3010690873168,
-            "end": 3010690932624
+            "start": 2047337815392,
+            "end": 2047337891456
         },
         {
-            "id": 3010691089168,
+            "id": 2047337891600,
             "edge_type": 2,
-            "start": 3010690873168,
-            "end": 3010245396112
+            "start": 2047337815392,
+            "end": 2047337891648
         },
         {
-            "id": 3010691093392,
+            "id": 2047337892752,
             "edge_type": 2,
-            "start": 3010690873168,
-            "end": 3010675438992
+            "start": 2047337891888,
+            "end": 2047337892416
+        },
+        {
+            "id": 2047337893136,
+            "edge_type": 2,
+            "start": 2047337891888,
+            "end": 2047337892560
+        },
+        {
+            "id": 2047337897696,
+            "edge_type": 2,
+            "start": 2047058649664,
+            "end": 2047337894576
+        },
+        {
+            "id": 2047337895872,
+            "edge_type": 2,
+            "start": 2047337894624,
+            "end": 2047337898464
+        },
+        {
+            "id": 2047337897312,
+            "edge_type": 2,
+            "start": 2047337894624,
+            "end": 2047075166224
+        },
+        {
+            "id": 2047337891792,
+            "edge_type": 2,
+            "start": 2047058649664,
+            "end": 2047337894144
+        },
+        {
+            "id": 2047337892128,
+            "edge_type": 2,
+            "start": 2047337894720,
+            "end": 2047337897264
+        },
+        {
+            "id": 2047337532448,
+            "edge_type": 2,
+            "start": 2047337894720,
+            "end": 2047337891552
+        },
+        {
+            "id": 2047337892800,
+            "edge_type": 2,
+            "start": 2047058649664,
+            "end": 2047337895488
+        },
+        {
+            "id": 2047336235472,
+            "edge_type": 2,
+            "start": 2047337895776,
+            "end": 2047337902976
+        },
+        {
+            "id": 2047073104336,
+            "edge_type": 2,
+            "start": 2047337895776,
+            "end": 2047337892656
         }
     ]
 }

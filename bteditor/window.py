@@ -18,7 +18,9 @@ from nodeeditor.utils import dumpException, pp
 from bteditor.conf import *
 from bteditor.output_log import OutputDock
 #from bteditor.simu_coffee import PygameSimulation
-from bteditor.simu_ai_car import PygameSimulation
+#from bteditor.simu_ai_car import PygameSimulation
+#from bteditor.simu_energy import PygameSimulation
+from bteditor.simu_health import PygameSimulation
 
 # Enabling edge validators
 from nodeeditor.node_edge import Edge

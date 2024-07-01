@@ -1,16 +1,16 @@
 {
-    "id": "adda4d06-55e7-4d70-9a97-f00b9fd0b37a",
+    "id": "919675dc-b798-4c0e-a35e-4c6cbe4049e1",
     "scene_width": 64000,
     "scene_height": 64000,
     "nodes": [
         {
-            "id": 1595941152544,
-            "title": "Fallback",
-            "pos_x": 15.0,
-            "pos_y": -213.0,
+            "id": "7ccf9e9e-9762-4fa4-8105-1b1e05d9f6b7",
+            "title": "Sequence",
+            "pos_x": 173.0,
+            "pos_y": -233.0,
             "inputs": [
                 {
-                    "id": 1595941152784,
+                    "id": 2183994999296,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -19,7 +19,7 @@
             ],
             "outputs": [
                 {
-                    "id": 1595941152832,
+                    "id": 2183994999344,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -27,18 +27,46 @@
                 }
             ],
             "content": {
-                "value": "Condition"
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "11f16cea-887f-4866-a9a5-ae89a617dfab",
+            "title": "Fallback",
+            "pos_x": 21.0,
+            "pos_y": -60.0,
+            "inputs": [
+                {
+                    "id": 2183995000208,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2183995000304,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
             },
             "op_code": 1
         },
         {
-            "id": "88bbdbb0-0328-425e-9eff-08bd8329d0d9",
+            "id": "d430274e-69ef-4462-adcb-2e2b013666fc",
             "title": "No_traffic_light?",
-            "pos_x": -135.0,
-            "pos_y": -51.0,
+            "pos_x": -288.0,
+            "pos_y": 79.0,
             "inputs": [
                 {
-                    "id": 1595680027664,
+                    "id": 2183995000448,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -52,13 +80,13 @@
             "op_code": 14
         },
         {
-            "id": "f78ce92f-cea5-4eb2-8215-95cecba65c99",
+            "id": "5d592d81-dffd-4e08-a0e5-c0b93c0b9dd8",
             "title": "Sequence",
-            "pos_x": 123.0,
-            "pos_y": -53.0,
+            "pos_x": -67.0,
+            "pos_y": 74.0,
             "inputs": [
                 {
-                    "id": 1595941226448,
+                    "id": 2183995000784,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -67,7 +95,7 @@
             ],
             "outputs": [
                 {
-                    "id": 1595941226496,
+                    "id": 2183995000928,
                     "index": 0,
                     "multi_edges": true,
                     "position": 5,
@@ -75,46 +103,18 @@
                 }
             ],
             "content": {
-                "value": "Condition"
+                "value": "Desc.."
             },
             "op_code": 2
         },
         {
-            "id": 1595941229424,
-            "title": "Fallback",
-            "pos_x": 133.0,
-            "pos_y": 76.0,
-            "inputs": [
-                {
-                    "id": 1595941235856,
-                    "index": 0,
-                    "multi_edges": false,
-                    "position": 2,
-                    "socket_type": 1
-                }
-            ],
-            "outputs": [
-                {
-                    "id": 1595941235952,
-                    "index": 0,
-                    "multi_edges": true,
-                    "position": 5,
-                    "socket_type": 1
-                }
-            ],
-            "content": {
-                "value": "Condition"
-            },
-            "op_code": 1
-        },
-        {
-            "id": "9dd55d1b-7ff2-4d93-9483-799f69f51250",
+            "id": "d9482c10-c8ce-45d7-9382-da65678ce0e8",
             "title": "Light_is_red?",
-            "pos_x": 27.0,
-            "pos_y": 204.0,
+            "pos_x": -200.0,
+            "pos_y": 211.0,
             "inputs": [
                 {
-                    "id": 1595941236192,
+                    "id": 2183995001168,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -128,13 +128,13 @@
             "op_code": 15
         },
         {
-            "id": "8497c4a5-189a-4107-91ce-729e271a8d03",
+            "id": "3b6abdae-4900-4e87-b191-f8c9f2e6f7f2",
             "title": "Stop",
-            "pos_x": 260.0,
-            "pos_y": 200.0,
+            "pos_x": -19.0,
+            "pos_y": 207.0,
             "inputs": [
                 {
-                    "id": 1595941236480,
+                    "id": 2183995001696,
                     "index": 0,
                     "multi_edges": false,
                     "position": 2,
@@ -146,38 +146,296 @@
                 "value": "Stop"
             },
             "op_code": 18
+        },
+        {
+            "id": "b2e87f59-3e49-4743-bfda-61e29cbf1b7d",
+            "title": "Sequence",
+            "pos_x": 153.0,
+            "pos_y": 77.0,
+            "inputs": [
+                {
+                    "id": 2183995001888,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2183995001936,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 2
+        },
+        {
+            "id": "9f78ac3d-c7be-4a74-afad-fc9dae7a1598",
+            "title": "Light_is_green?",
+            "pos_x": 120.0,
+            "pos_y": 211.0,
+            "inputs": [
+                {
+                    "id": 2183995003328,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Light_is_green?"
+            },
+            "op_code": 16
+        },
+        {
+            "id": "25bd5b68-6680-42ef-987b-b5138825f5db",
+            "title": "Proceed",
+            "pos_x": 253.0,
+            "pos_y": 211.0,
+            "inputs": [
+                {
+                    "id": 2183995004048,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Proceed"
+            },
+            "op_code": 19
+        },
+        {
+            "id": "8fdfdca0-05e1-461f-87ff-9cadeb341470",
+            "title": "Fallback",
+            "pos_x": 372.0,
+            "pos_y": 76.0,
+            "inputs": [
+                {
+                    "id": 2183995004816,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2183995004864,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "122f1ff9-011d-4348-9f30-d180e5e5d1db",
+            "title": "Light_is_yellow?",
+            "pos_x": 358.0,
+            "pos_y": 209.0,
+            "inputs": [
+                {
+                    "id": 2183995006064,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Light_is_yellow?"
+            },
+            "op_code": 17
+        },
+        {
+            "id": "be059f66-bd49-4c5b-9223-eaf9f616be78",
+            "title": "Caution",
+            "pos_x": 492.0,
+            "pos_y": 209.0,
+            "inputs": [
+                {
+                    "id": 2183995007312,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Caution"
+            },
+            "op_code": 20
+        },
+        {
+            "id": "4daae6a1-1a95-46cf-9346-3d9754c4692e",
+            "title": "Fallback",
+            "pos_x": 409.0,
+            "pos_y": -87.0,
+            "inputs": [
+                {
+                    "id": 2183995012736,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [
+                {
+                    "id": 2183995012784,
+                    "index": 0,
+                    "multi_edges": true,
+                    "position": 5,
+                    "socket_type": 1
+                }
+            ],
+            "content": {
+                "value": "Desc.."
+            },
+            "op_code": 1
+        },
+        {
+            "id": "a0a8c214-0926-43b0-8894-a54156f05ddc",
+            "title": "Within_lane?",
+            "pos_x": 546.0,
+            "pos_y": 77.0,
+            "inputs": [
+                {
+                    "id": 2183995012880,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Within_lane?"
+            },
+            "op_code": 21
+        },
+        {
+            "id": "15cd8c81-ed7b-468f-864f-69cb1590fd25",
+            "title": "Move_into_lane",
+            "pos_x": 708.0,
+            "pos_y": 91.0,
+            "inputs": [
+                {
+                    "id": 2183995001552,
+                    "index": 0,
+                    "multi_edges": false,
+                    "position": 2,
+                    "socket_type": 1
+                }
+            ],
+            "outputs": [],
+            "content": {
+                "value": "Move_into_lane"
+            },
+            "op_code": 22
         }
     ],
     "edges": [
         {
-            "id": 1595941226160,
+            "id": 2185999600144,
             "edge_type": 2,
-            "start": 1595941152832,
-            "end": 1595680027664
+            "start": 2183994999344,
+            "end": 2183995000208
         },
         {
-            "id": 1595941229472,
+            "id": 2186001238304,
             "edge_type": 2,
-            "start": 1595941152832,
-            "end": 1595941226448
+            "start": 2183995000304,
+            "end": 2183995000448
         },
         {
-            "id": 1595941226064,
+            "id": 2186001242960,
             "edge_type": 2,
-            "start": 1595941226496,
-            "end": 1595941235856
+            "start": 2183995000304,
+            "end": 2183995000784
         },
         {
-            "id": 1595941235904,
+            "id": 2183995006112,
             "edge_type": 2,
-            "start": 1595941235952,
-            "end": 1595941236192
+            "start": 2183995000928,
+            "end": 2183995001168
         },
         {
-            "id": 1595941236336,
+            "id": 2186001076432,
             "edge_type": 2,
-            "start": 1595941235952,
-            "end": 1595941236480
+            "start": 2183995000928,
+            "end": 2183995001696
+        },
+        {
+            "id": 2183994859424,
+            "edge_type": 2,
+            "start": 2183995000304,
+            "end": 2183995001888
+        },
+        {
+            "id": 2186001242864,
+            "edge_type": 2,
+            "start": 2183995001936,
+            "end": 2183995003328
+        },
+        {
+            "id": 2186001244016,
+            "edge_type": 2,
+            "start": 2183995001936,
+            "end": 2183995004048
+        },
+        {
+            "id": 2186001075760,
+            "edge_type": 2,
+            "start": 2183995000304,
+            "end": 2183995004816
+        },
+        {
+            "id": 2186001243392,
+            "edge_type": 2,
+            "start": 2183995004864,
+            "end": 2183995006064
+        },
+        {
+            "id": 2183995000544,
+            "edge_type": 2,
+            "start": 2183995004864,
+            "end": 2183995007312
+        },
+        {
+            "id": 2186001243200,
+            "edge_type": 2,
+            "start": 2183994999344,
+            "end": 2183995012736
+        },
+        {
+            "id": 2186001239120,
+            "edge_type": 2,
+            "start": 2183995012784,
+            "end": 2183995012880
+        },
+        {
+            "id": 2185739034096,
+            "edge_type": 2,
+            "start": 2183995012784,
+            "end": 2183995001552
         }
     ]
 }
